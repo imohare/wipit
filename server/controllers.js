@@ -18,6 +18,7 @@ exports.postWip = async (req, res) => {
       wip_title: req.body.wip_title,
       wip_date: req.body.wip_date,
       // wip_img: String,
+      wip_seen: req.body.wip_seen,
     });
     res.send(post);
     res.status(201);
