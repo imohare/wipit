@@ -1,11 +1,7 @@
-const { Wip, WipCard } = require('./models');
+const  Wip  = require('./models');
 
 
-// get wips (you only need to get wips and not
-// wip cards bc you will only be accessing wip
-// cards through a wip)
-// question: will this get the wip and the wipCard?
-// if so, how do you acess the wip card?
+// get wips
 
 exports.getWips = async (req, res) => {
   try {
@@ -19,37 +15,30 @@ exports.getWips = async (req, res) => {
   }
 };
 
-// // create wip
-
-// exports.postWipAndCard = async (req, res) => {
-//   try {
-//     const postCard = await wipCard.create({
-//       img: req.body.img,
-//       date: req.body.date,
-//       seen_by: [
-//         {
-//           state: req.body.state,
-//           users: req.body.users, 
-//           date: req.body.date
-//         }
-//       ]
-//     });
-
-//     const postWip = await wip.create({
-//       title: req.body.title,
-//       wip_card: wipCard._id,
-//     });
-
-//     res.send(postCard, postWip);
-//     res.status(201);
-//   } catch (e) {
-//     console.error('postWipAndCard is failing');
-//     res.status(500);
-//     res.end();
-//   }
-// };
-//first create a card so that it gets an id from db
-//second you create the new work and in the wip_cards you use that id
+// create wip
+exports.postWip = async (req, res) => {
+  try {
+    const post = await Wip.create({
+      wip_title: req.body.wip_title,
+      wip_card: [
+        {
+          img: req.body.wip_card.img,
+          date: req.body.wip_card.date,
+          seen_by_state: req.body.wip_card.seen_by_state,
+          seen_by_user: req.body.wip_card.seen_by_user, 
+          seen_by_date: req.body.wip_card.seen_by_date,
+        }
+      ]
+    });
+    res.send(post);
+    res.status(201);
+  } catch (e) {
+    console.log(e);
+    console.error('postWip is failing');
+    res.status(500);
+    res.end();
+  }
+};
 
 
 // delete wip
@@ -66,32 +55,9 @@ exports.getWips = async (req, res) => {
 //   }
 // };
 
-// create card
+// update wip
 
-exports.postWipCard = async (req, res) => {
-  try {
-    const post = await WipCard.create({
-      img: req.body.img,
-      date: req.body.date,
-      seen_by: [
-        {
-          state: req.body.seen_by.state,
-          users: req.body.seen_by.users, 
-          date: req.body.seen_by.date
-        }
-      ]
-    });
-    res.send(post);
-    res.status(201);
-  } catch (e) {
-    console.log(e);
-    console.error('postWipCard is failing');
-    res.status(500);
-    res.end();
-  }
-};
 
-// delete card
 
 
 

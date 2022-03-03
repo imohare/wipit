@@ -7,7 +7,7 @@ const methods = require('./controllers');
 
 router.get('/wips', methods.getWips);
 // router.post('/wips', methods.postWipAndCard);
-router.post('/wips', methods.postWipCard);
+router.post('/wips', methods.postWip);
 // router.delete('/wips/:_id', methods.deleteWip); 
 // router.delete('/wips/:_id', methods.deleteWipCard);  //what should the url here be????
 
