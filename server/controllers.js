@@ -95,7 +95,19 @@ exports.postCard = async (req, res) => {
 };
 
 // update seen_by_state, seen_by_user, seen_by_date
-
+//how on earth do you loop into the right card
+exports.updateCard = async (req, res) => {
+  try {
+    const id = req.params.wipId;
+    await Wip.findByIdAndUpdate( {_id : id}, 
+      {$set: {'wip_card.seen_by_state': req.body.seen_by_state}});
+  } catch (e) {
+    console.log(e);
+    console.error('updateCard is failing');
+    res.status(500);
+    res.end();
+  }
+};
 
 
 
