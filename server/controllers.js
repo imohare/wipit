@@ -43,19 +43,24 @@ exports.postWip = async (req, res) => {
 
 // delete wip
 
-// exports.deleteWip = async (req, res) => {
-//   try {
-//     const id = req.params.id;
-//     await topic.deleteWip({ _id: id });
-//     res.status(200).send();
-//   } catch (e) {
-//     console.error('delete is failing');
-//     res.status(500);
-//     res.end();
-//   }
-// };
+exports.deleteWip = async (req, res) => {
+  try {
+    const id = req.params.id;
+    await Wip.deleteOne({ _id: id });
+    res.status(200).send();
+  } catch (e) {
+    console.log(e);
+    console.error('deleteWip is failing');
+    res.status(500);
+    res.end();
+  }
+};
+
+//delete wip_card
 
 // update wip
+
+
 
 
 
