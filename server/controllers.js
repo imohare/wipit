@@ -16,15 +16,19 @@ exports.postWip = async (req, res) => {
   try {
     const post = await wip.create({
       wip_title: req.body.wip_title,
-      wip_card: {
-        img: req.body.wip_card.img,
-        date: req.body.wip_card.date,
-        seen: {
-          state: req.body.wip_card.seen.state,
-          user: req.body.wip_card.seen.user, 
-          date: req.body.wip_card.seen.date
+      wip_cards: [
+        { //id: figure out how to generate ids
+          img: req.body.wip_card.img,
+          date: req.body.wip_card.date,
+          seen_by: [
+            {
+              state: req.body.wip_card.seen.state,
+              users: req.body.wip_card.seen.user, 
+              date: req.body.wip_card.seen.date
+            }
+          ]
         }
-      }
+      ]
     });
     res.send(post);
     res.status(201);
