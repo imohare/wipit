@@ -17,8 +17,12 @@ exports.postWip = async (req, res) => {
     const post = await wip.create({
       wip_title: req.body.wip_title,
       wip_date: req.body.wip_date,
-      // wip_img: String,
-      wip_seen: req.body.wip_seen,
+      wip_img: req.body.wip_img,
+      wip_seen: {
+        state: req.body.state,
+        user: req.body.user,
+        date: req.body.date
+      },
     });
     res.send(post);
     res.status(201);

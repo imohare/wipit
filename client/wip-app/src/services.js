@@ -1,6 +1,6 @@
 const methods = {
-  getTopics: async () => {
-    const result = await fetch("http://localhost:3001/topics");
+  getWips: async () => {
+    const result = await fetch("http://localhost:3456/wips");
     return result.json();
   }
 }

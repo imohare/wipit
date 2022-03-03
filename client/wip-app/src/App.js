@@ -4,16 +4,7 @@ import methods from './services';
 
 function App() {
 
-  // const [wips, setWips] = useState([]);
-  // useEffect(() => {
-  //   methods.getTopics()
-  //   .then(response => {
-  //     setWips(response)
-  //   })
-  //   .catch( error => {
-  //    console.log("Error occured.")
-  //   })
-  // }, []);
+
 
   return (
     <div className="App">

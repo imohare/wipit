@@ -13,8 +13,12 @@ mongoose
 const wipSchema = new Schema({
   wip_title: String,
   wip_date: String,
-  // wip_img: String,
-  wip_seen: Boolean,
+  wip_img: String,
+  wip_seen: {
+    state: Boolean, 
+    user: String,
+    date: String,
+  },
 });
 
 const Wip = mongoose.model('wip', wipSchema);
