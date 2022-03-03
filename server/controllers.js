@@ -2,7 +2,6 @@ const  Wip  = require('./models');
 
 
 // get wips
-
 exports.getWips = async (req, res) => {
   try {
     const results = await Wip.find();
@@ -42,7 +41,6 @@ exports.postWip = async (req, res) => {
 
 
 // delete wip
-
 exports.deleteWip = async (req, res) => {
   try {
     const id = req.params.id;
@@ -56,22 +54,51 @@ exports.deleteWip = async (req, res) => {
   }
 };
 
-//delete wip_card
-
-exports.deleteWipCard = async (req, res) => {
+//delete card
+exports.deleteCard = async (req, res) => {
   try {
     const id = req.params.id;
     await Wip.updateOne({}, {$pull: {wip_card: {_id: id}} });
     res.status(200).send();
   } catch (e) {
     console.log(e);
-    console.error('deleteWip is failing');
+    console.error('deleteCard is failing');
     res.status(500);
     res.end();
   }
 };
 
-// update wip
+// add card
+exports.postCard = async (req, res) => {
+  try {
+    const id = req.params.id;
+    await Wip.findOneAndUpdate(
+      {_id: id}, 
+      {$push: {
+        wip_card: [
+          {
+            img: req.body.wip_card.img,
+            date: req.body.wip_card.date,
+            seen_by_state: req.body.wip_card.seen_by_state,
+            seen_by_user: req.body.wip_card.seen_by_user, 
+            seen_by_date: req.body.wip_card.seen_by_date
+          }
+        ]
+      }});
+    res.sendStatus(201);
+  } catch (e) {
+    console.log(e);
+    console.error('postCard is failing');
+    res.status(500);
+    res.end();
+  }
+};
+
+// update seen_by_state, seen_by_user, seen_by_date
+
+
+
+
 
 
 
