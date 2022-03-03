@@ -12,23 +12,20 @@ mongoose
 
 const wipSchema = new Schema({
   wip_title: String,
-  wip_cards: [{ type: Schema.Types.ObjectId, ref: 'WipCard' }],
 });
 
+// wip_id will connect the card to the wip 
 const wipCardSchema = new Schema({
+  wip_id: String,
   img: String,
   date: String,
-  seen_by: [
-    {
-      state: Boolean,
-      users: String, 
-      date: String
-    }
-  ]
+  seen_by_state: Boolean,
+  seen_by_user: String, 
+  seen_by_date: String,
 });
 
 const Wip = mongoose.model('wip', wipSchema);
-const WipCard = mongoose.model('wip-card', wipCardSchema);
+const WipCard = mongoose.model('wipCard', wipCardSchema);
 
 
 module.exports = { Wip, WipCard };
