@@ -6,10 +6,9 @@ const methods = require('./controllers');
 //one for wips and one for wipCards?
 
 router.get('/wips', methods.getWips);
-// router.post('/wips', methods.postWipAndCard);
 router.post('/wips', methods.postWip);
 router.delete('/wips/:id', methods.deleteWip); 
-//router.delete('/wips/:_id', methods.deleteWipCard);  //what should the url here be????
+router.delete('/wips/card/:id', methods.deleteWipCard);  //what should the url here be????
 
 
 module.exports = router;

@@ -58,6 +58,19 @@ exports.deleteWip = async (req, res) => {
 
 //delete wip_card
 
+exports.deleteWipCard = async (req, res) => {
+  try {
+    const id = req.params.id;
+    await Wip.updateOne({}, {$pull: {wip_card: {_id: id}} });
+    res.status(200).send();
+  } catch (e) {
+    console.log(e);
+    console.error('deleteWip is failing');
+    res.status(500);
+    res.end();
+  }
+};
+
 // update wip
 
 
