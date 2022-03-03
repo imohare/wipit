@@ -1,16 +1,22 @@
-import './App.css';
-import { useEffect, useState } from "react";
-import methods from './services';
-
-function App() {
-
+// import './App.css';
+// import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+// import logo from './wipit-logo.png';
+// import Login from './routes/login-page'
 
 
-  return (
-    <div className="App">
-      <header className="App-header">
-      </header>
-    </div>
-  );
-}
-export default App;
+// function App() {
+
+//   return (
+//     <Router>
+//       <div className="App">
+//         <img src={logo} alt="Logo"/>
+//         {/* login button that links to login-page */}
+//         <Routes>
+//           <Route path="/login" element={<Login />} />
+//         </Routes>
+//       </div>
+//     </Router>
+//   );
+// }
+
+// export default App;
