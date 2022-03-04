@@ -1,8 +1,6 @@
 import React from 'react';
-import moment from 'moment';
 
-
-function WipsList(props) {
+function WipsListPreview(props) {
   return (
     props.wips.map ( el => 
       <ul key={el._id}>
@@ -13,4 +11,4 @@ function WipsList(props) {
   )
 }
 
-export default WipsList
+export default WipsListPreview

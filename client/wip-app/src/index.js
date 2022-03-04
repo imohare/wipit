@@ -11,8 +11,13 @@ import reportWebVitals from './reportWebVitals';
 
 import Theme from './theme/theme';
 import methods from './services';
-import WipsList from './styled-components/WipsList';
 import {storage} from './firebase/index'
+import WipsListPreview from './styled-components/WipsListPreview';
+import WipsList from './styled-components/WipsList';
+
+import ProfileButton from './styled-components/route-buttons/ProfileButton';
+import WipsButton from './styled-components/route-buttons/WipsButton';
+import WipButton from './styled-components/route-buttons/WipButton';
 
 import logo from './wipit-logo.png';
 import plus from './plus-button.png';
@@ -90,21 +95,14 @@ function ArtistProfile () {
     })
   }, [])
 
-  let navigate = useNavigate(); 
-  const routeChange = () =>{ 
-    let path = `/a/wips`; 
-    navigate(path);
-  }
-
   return (
     <div>
-      <Button variant='outline' mr={2} onClick={routeChange}>wips.
-      </Button>
+      <WipsButton/>
       <p> @BEX_MASSEY </p>
       <p> followers. </p>
       <p> @ROMAN_ROAD </p>
       <p> wips. </p>
-      <WipsList wips={wips}></WipsList>
+      <WipsListPreview wips={wips}></WipsListPreview>
     </div>
   )
 }
@@ -136,7 +134,8 @@ function ArtistWips() {
 
   return (
     <div>
-      <Link to="/a">profile</Link>
+      {/* <Button variant='outline' mr={2} onClick={profileRouteChange}>profile.</Button> */}
+      <ProfileButton/>
       <p>Artist Wips</p>
       <WipsList wips={wips}></WipsList>
       <form className='wip-form' onSubmit={handleWipSubmit}>
@@ -201,11 +200,8 @@ function ArtistWip() {
 
   return (
     <div>
-      <Link to="/a">profile</Link>
-      <br />
-      <Link to="/a/wips">wips</Link>
-      <br />
-      <p> Artist Wip</p>
+      <ProfileButton/>
+      <WipsButton/>
       <br />
       <Link to="/a/wip/:wip_title/:wip_card_id">wip {wip_title} card</Link>
       <br />
@@ -223,14 +219,11 @@ function ArtistWip() {
 
 function ArtistWipCard () {
 
-  const {wip_title} = useParams()
-
-
   return (
     <div>
-      <Link to="/a">profile</Link>
-      <Link to="/a/wips">wips</Link>
-      <Link to="/a/wip/:wip_title">{wip_title}</Link>
+      <ProfileButton/>
+      <WipsButton/>
+      <WipButton/>
       <p> Artist Wip Card</p>
     </div> 
   )
