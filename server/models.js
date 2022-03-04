@@ -16,7 +16,7 @@ const wipSchema = new Schema({
     {
       img: String,
       date: String,
-      seen_by_state: Boolean,
+      seen_by_state: String,
       seen_by_user: String, 
       seen_by_date: String,
     }

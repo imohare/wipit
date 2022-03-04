@@ -95,19 +95,27 @@ exports.addCard = async (req, res) => {
 };
 
 // update seen_by_state, seen_by_user, seen_by_date
-//how on earth do you loop into the right card
-// exports.updateCard = async (req, res) => {
-//   try {
-//     const id = req.params.wipId;
-//     await Wip.findByIdAndUpdate( {_id : id}, 
-//       {$set: {'wip_card.seen_by_state': req.body.seen_by_state}});
-//   } catch (e) {
-//     console.log(e);
-//     console.error('updateCard is failing');
-//     res.status(500);
-//     res.end();
-//   }
-// };
+// how on earth do you loop into the right card
+exports.updateCard = async (req, res) => {
+  try {
+    const wipId = req.params.wipId;
+    const cardId = req.params.cardId;
+    await Wip.updateOne({_id : wipId, 'wip_card._id': cardId},  
+      {$set: {'wip_card.$.seen_by_state': req.body.wip_card.seen_by_state, 
+        'wip_card.$.seen_by_user': req.body.wip_card.seen_by_user,
+        'wip_card.$.seen_by_date': req.body.wip_card.seen_by_date
+      }});
+    res.sendStatus(201);
+    console.log('wipId: ' + wipId);
+    console.log('cardId: ' + cardId);
+    console.log('created');
+  } catch (e) {
+    console.log(e);
+    console.error('updateCard is failing');
+    res.status(500);
+    res.end();
+  }
+};
 
 
 
