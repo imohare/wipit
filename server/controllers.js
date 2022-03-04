@@ -15,7 +15,7 @@ exports.getWips = async (req, res) => {
 };
 
 // create wip
-exports.postWip = async (req, res) => {
+exports.addWip = async (req, res) => {
   try {
     const post = await Wip.create({
       wip_title: req.body.wip_title,
@@ -33,7 +33,7 @@ exports.postWip = async (req, res) => {
     res.status(201);
   } catch (e) {
     console.log(e);
-    console.error('postWip is failing');
+    console.error('addWip is failing');
     res.status(500);
     res.end();
   }
@@ -57,7 +57,7 @@ exports.deleteWip = async (req, res) => {
 //delete card
 exports.deleteCard = async (req, res) => {
   try {
-    const id = req.params.id;
+    const id = req.params.cardId;
     await Wip.updateOne({}, {$pull: {wip_card: {_id: id}} });
     res.status(200).send();
   } catch (e) {
@@ -69,9 +69,9 @@ exports.deleteCard = async (req, res) => {
 };
 
 // add card
-exports.postCard = async (req, res) => {
+exports.addCard = async (req, res) => {
   try {
-    const id = req.params.id;
+    const id = req.params.wipId;
     await Wip.findOneAndUpdate(
       {_id: id}, 
       {$push: {
@@ -88,7 +88,7 @@ exports.postCard = async (req, res) => {
     res.sendStatus(201);
   } catch (e) {
     console.log(e);
-    console.error('postCard is failing');
+    console.error('addCard is failing');
     res.status(500);
     res.end();
   }
@@ -96,18 +96,18 @@ exports.postCard = async (req, res) => {
 
 // update seen_by_state, seen_by_user, seen_by_date
 //how on earth do you loop into the right card
-exports.updateCard = async (req, res) => {
-  try {
-    const id = req.params.wipId;
-    await Wip.findByIdAndUpdate( {_id : id}, 
-      {$set: {'wip_card.seen_by_state': req.body.seen_by_state}});
-  } catch (e) {
-    console.log(e);
-    console.error('updateCard is failing');
-    res.status(500);
-    res.end();
-  }
-};
+// exports.updateCard = async (req, res) => {
+//   try {
+//     const id = req.params.wipId;
+//     await Wip.findByIdAndUpdate( {_id : id}, 
+//       {$set: {'wip_card.seen_by_state': req.body.seen_by_state}});
+//   } catch (e) {
+//     console.log(e);
+//     console.error('updateCard is failing');
+//     res.status(500);
+//     res.end();
+//   }
+// };
 
 
 
