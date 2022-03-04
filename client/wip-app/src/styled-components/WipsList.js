@@ -2,6 +2,7 @@ import { Slider } from '@rebass/forms';
 import React from 'react';
 
 function WipsList(props) {
+
   return (
     props.wips.map( el => 
       <ul key={el._id}>
@@ -9,7 +10,8 @@ function WipsList(props) {
         {/* find a way to use string interpolation
         so that you can make the wip_titles into Links */}
         {/* find a way to add the card images */}
-        <button></button>
+        <button className='DeleteWipButton' onClick={() => props.deleteWip(el._id)}> - </button>
+        {/* this only deletes it on the web page not in the db */}
         <Slider></Slider>
       </ul>
       )

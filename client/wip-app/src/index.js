@@ -12,6 +12,7 @@ import reportWebVitals from './reportWebVitals';
 import Theme from './theme/theme';
 import methods from './services';
 import {storage} from './firebase/index'
+
 import WipsListPreview from './styled-components/WipsListPreview';
 import WipsList from './styled-components/WipsList';
 
@@ -21,6 +22,7 @@ import WipButton from './styled-components/route-buttons/WipButton';
 
 import logo from './wipit-logo.png';
 import plus from './plus-button.png';
+import WipInputBar from './styled-components/input-bars/WipInputBar';
 
 ReactDOM.render(
   <Router>
@@ -80,20 +82,6 @@ function Login() {
 //--------------------------------------------------
 
 function ArtistProfile () {
-  
-  const [wips, setWips] = useState([]);
-
-  useEffect(() => {
-    methods.getWips()
-    .then(response => {
-      response.sort()
-      setWips(response)
-    })
-    .catch( error => {
-      console.log(error)
-      console.log("Error occured.")
-    })
-  }, [])
 
   return (
     <div>
@@ -102,7 +90,7 @@ function ArtistProfile () {
       <p> followers. </p>
       <p> @ROMAN_ROAD </p>
       <p> wips. </p>
-      <WipsListPreview wips={wips}></WipsListPreview>
+      <WipsListPreview/>
     </div>
   )
 }
@@ -132,23 +120,19 @@ function ArtistWips() {
     setNewWip(newWip=> newWip ="");
   }
 
+  const deleteWip = (wipId) => {
+    const editedWipsList = wips.filter(el => el._id !== wipId)
+    methods.deleteWip(wipId)
+    setWips(editedWipsList);
+  }
+
   return (
     <div>
       {/* <Button variant='outline' mr={2} onClick={profileRouteChange}>profile.</Button> */}
       <ProfileButton/>
       <p>Artist Wips</p>
-      <WipsList wips={wips}></WipsList>
-      <form className='wip-form' onSubmit={handleWipSubmit}>
-        add wip
-        <Box>
-          <Label htmlFor='email'>title</Label>
-          <Input className="wip-title-input" id='wip_title' name='newTitle' type='text' placeholder='Paradise Is Not Just a Place'
-          value={newWip} onChange={(evt) => setNewWip(evt.target.value)} required/>
-          {/* make sure the text is in italics */}
-        </Box>
-        <button src={plus} alt="+"></button> 
-        {/* find a way to make the button the image of plus */}
-      </form>
+      <WipsList wips={wips} deleteWip={deleteWip}></WipsList>
+      <WipInputBar newWip={newWip} setNewWip={setNewWip} handleWipSubmit={handleWipSubmit}></WipInputBar>
       <Link to="/a/wip/:wip_title">wip {wip_title}</Link>
     </div>
   )
