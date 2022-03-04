@@ -19,15 +19,6 @@ exports.addWip = async (req, res) => {
   try {
     const post = await Wip.create({
       wip_title: req.body.wip_title,
-      wip_card: [
-        {
-          img: req.body.wip_card.img,
-          date: req.body.wip_card.date,
-          seen_by_state: req.body.wip_card.seen_by_state,
-          seen_by_user: req.body.wip_card.seen_by_user, 
-          seen_by_date: req.body.wip_card.seen_by_date,
-        }
-      ]
     });
     res.send(post);
     res.status(201);
@@ -106,9 +97,6 @@ exports.updateCard = async (req, res) => {
         'wip_card.$.seen_by_date': req.body.wip_card.seen_by_date
       }});
     res.sendStatus(201);
-    console.log('wipId: ' + wipId);
-    console.log('cardId: ' + cardId);
-    console.log('created');
   } catch (e) {
     console.log(e);
     console.error('updateCard is failing');
