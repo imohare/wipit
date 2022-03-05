@@ -114,9 +114,16 @@ function ArtistWips() {
     })
   }, [])
 
+  const addWip = async (wip_title) => {
+    const newWips = wips.slice();
+    const response = await methods.addWip(wip_title)
+    newWips.push(response)
+    setWips(newWips);
+  }
+
   const handleWipSubmit = (evt) => {
     evt.preventDefault();
-    methods.addWip(newWip);
+    addWip(newWip);
     setNewWip(newWip=> newWip ="");
   }
 
@@ -125,6 +132,7 @@ function ArtistWips() {
     methods.deleteWip(wipId)
     setWips(editedWipsList);
   }
+  // this deletes on the front end but not back end
 
   return (
     <div>

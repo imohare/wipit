@@ -18,7 +18,7 @@ const methods = {
     const response = await fetch(`http://localhost:3456/wips/${wipId}`, {
       method: "POST", 
       headers: {'Content-type': 'application/json'},
-      body: JSON.stringify(wip_card)
+      body: JSON.stringify({wip_card: wip_card})
     })
     .then(response => response.json())
     return response
@@ -33,10 +33,12 @@ const methods = {
     await fetch(`http://localhost:3456/wips/card/${cardId}`,
     {method: "DELETE"});
   },
+
   updateCard: async (wipId, cardId) => {
     await fetch(`http://localhost:3456/wips/card/${wipId}/${cardId}`,
     {method: "PATCH"});
   }
+  ///surely something else needs to happen here
 }
 
 export default methods  
