@@ -41,19 +41,6 @@ exports.deleteWip = async (req, res) => {
   }
 };
 
-exports.getWips = async (req, res) => {
-  try {
-    const results = await Wips.find();
-    res.send(results);
-    res.status(200);
-  } catch (e) {
-    console.log(e);
-    console.error('getWips is failing');
-    res.status(500);
-    res.end();
-  }
-};
-
 exports.getCards = async (req, res) => {
   try {
     const id = req.params.wipId;
@@ -113,8 +100,9 @@ exports.addCard = async (req, res) => {
 
 exports.deleteCard = async (req, res) => {
   try {
-    const id = req.params.cardId;
-    await Wips.updateOne({}, {$pull: {wip_cards: {_id: id}} });
+    const wipId = req.params.wipId;
+    const cardId = req.params.cardId;
+    await Wips.updateOne({_id: wipId}, {$pull: {wip_cards: {_id: cardId}} });
     res.status(200).send();
   } catch (e) {
     console.log(e);

@@ -7,28 +7,8 @@ mongoose.connection.once('open', function () {
   console.log('MongoDB database connection established successfully');
 });
 
-// .then(() => {
-//   console.log('connected');
-// })
-// .catch((e) => {
-//   console.error(e);
-// });
-
-// const wipSchema = new Schema({
-//   wip_title: String,
-//   wip_card: [
-//     {
-//       img_url: String,
-//       date: String,
-//       seen_by_state: String,
-//       seen_by_user: String, 
-//       seen_by_date: String,
-//     }
-//   ]
-// });
-
 const cardSchema = new Schema({
-  img: String,
+  img_url: String,
   upload_date: String,
   seen_by_state: String,
   seen_by_user: String, 
