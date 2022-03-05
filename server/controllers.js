@@ -34,7 +34,7 @@ exports.addWip = async (req, res) => {
 // delete wip
 exports.deleteWip = async (req, res) => {
   try {
-    const id = req.params.id;
+    const id = req.params.wipId;
     await Wip.deleteOne({ _id: id });
     res.status(200).send();
   } catch (e) {
@@ -85,8 +85,6 @@ exports.addCard = async (req, res) => {
   }
 };
 
-// update seen_by_state, seen_by_user, seen_by_date
-// how on earth do you loop into the right card
 exports.updateCard = async (req, res) => {
   try {
     const wipId = req.params.wipId;
