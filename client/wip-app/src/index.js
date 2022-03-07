@@ -15,6 +15,7 @@ import {storage} from './firebase/index'
 import WipsListPreview from './styled-components/artist/lists/WipsListPreview';
 import WipsList from './styled-components/artist/lists/WipsList';
 import CardsListForWipsList from './styled-components/artist/lists/CardsListForWipsList';
+import CardsList from "./styled-components/artist/lists/CardsList";
 
 import GalleristWipsList from "./styled-components/gallerist/lists/GalleristWipsList";
 
@@ -161,6 +162,7 @@ function ArtistWip() {
   const {wip_card_id} = useParams();
 
   const [wip, setWip] = useState([]);
+  // const [cards, setCards] = useState([]);
 
   useEffect(() => {
     methods.getWips()
@@ -172,21 +174,17 @@ function ArtistWip() {
       console.log(error)
       console.log("Error occured.")
     })
-  }, [])
+  }, [title])
 
   //const wipCardsImg = wip.wip_cards.map(one_card => one_card)
   console.log("correct wip", wip);
-  console.log("wip_card_id", wip._id);
-  console.log("wip_cards", wip.wip_cards);
-  //console.log("wip_cards_individuals", wip.wip_cards.map(cards => cards))
-
+  console.log("wipcards", wip.wip_cards);
 
   return (
     <div>
-      <ArtistProfileButton/>
+      <ArtistProfileButton />
       <ArtistWipsButton />
-      <div>
-      </div>
+      { (wip.wip_cards) ? <CardsList cards={wip.wip_cards} wip={wip}></CardsList> : null}
       <br />
       <Link to="/a/wip/:wip_title/:wip_card_id"> {title} cards</Link>
       <br />

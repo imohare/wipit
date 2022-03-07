@@ -11,7 +11,7 @@ function WipsList(props) {
         <NavLink to={`/a/wip/${one_wip.wip_title}`}>{one_wip.wip_title}</NavLink>
         <button className='DeleteWipButton' onClick={() => props.deleteWip(one_wip._id)}> - </button>
         {/* if wip_cards exist then....  */}
-        <CardsList one_wip={one_wip}/>
+        { (one_wip.wip_cards) ? <CardsList one_wip={one_wip}/> : null}
       </div>
       )
   )
