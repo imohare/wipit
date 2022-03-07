@@ -62,7 +62,7 @@ exports.addCard = async (req, res) => {
       img_url: req.body.img_url,
       upload_date: req.body.upload_date,
       seen_by_state: req.body.seen_by_state,
-      seen_by_user: req.body.seen_by_user,
+      seen_by_user: req.body.seen_by_user, 
       seen_by_date: req.body.seen_by_date
     };
     await wip.wip_cards.push(card);
@@ -77,37 +77,36 @@ exports.addCard = async (req, res) => {
   }
 };
 
-// exports.updateCard = async (req, res) => {
-//   try {
-//     const id = req.params.cardId;
-//     console.log(req.body);
-//     await Cards.updateOne({'_id': id},  
-//       {
-//         $set: {
-//           seen_by_state: req.body.seen_by_state, 
-//           seen_by_user: req.body.seen_by_user,
-//           seen_by_date: req.body.seen_by_date
-//         }
-//       });
-//     res.status(201).send();
-//   } catch (e) {
-//     console.log(e);
-//     console.error('updateCard is failing');
-//     res.status(500);
-//     res.end();
-//   }
-// };
-
 exports.deleteCard = async (req, res) => {
   try {
     const wipId = req.params.wipId;
     const cardId = req.params.cardId;
-    console.log('cardId', cardId);
     await Wips.updateOne({_id: wipId}, {$pull: {wip_cards: {_id: cardId}} });
     res.status(200).send();
   } catch (e) {
     console.log(e);
     console.error('deleteCard is failing');
+    res.status(500);
+    res.end();
+  }
+};
+
+exports.updateCard = async (req, res) => {
+  try {
+    await Wips.updateMany(
+      {_id:req.params.wipId, 'wip_cards._id' : req.params.cardId},
+      {
+        $set: {
+          'wip_cards.$.seen_by_state' : req.body.seen_by_state,
+          'wip_cards.$.seen_by_user' : req.body.seen_by_user,
+          'wip_cards.$.seen_by_date' : req.body.seen_by_date
+        }
+      }
+    );
+    res.status(201).send();
+  } catch (e) {
+    console.log(e);
+    console.error('updateCard is failing');
     res.status(500);
     res.end();
   }
