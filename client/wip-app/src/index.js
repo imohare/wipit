@@ -41,7 +41,7 @@ ReactDOM.render(
         <Route path="/a" element={<ArtistProfile/>}/>
         <Route path="/a/wips" element={<ArtistWips/>} />
         <Route path="/a/wip/:title" element={<ArtistWip/>}/>
-        <Route path="/a/wip/:tile/:wip_card_id" element={<ArtistWipCard/>} />
+        <Route path="/a/wip/:title/:wip_card_id" element={<ArtistWipCard/>} />
         <Route path="/g" element={<GalleristProfile/>} />
         <Route path="/g/wips" element={<GalleristWips/>} />
         {/* <Route path="/g/wip/:wip_title" element={<GalleristWip/>}/>
@@ -122,9 +122,6 @@ function ArtistWips() {
     })
   }, [])
 
-  console.log("wips:", wips)
-
-
   const addWip = async (wip_title) => {
     const newWips = wips.slice();
     const response = await methods.addWip(wip_title)
@@ -150,7 +147,6 @@ function ArtistWips() {
       <p>Artist Wips</p>
       <WipsList wips={wips} deleteWip={deleteWip}></WipsList>
       <WipInputBar newWip={newWip} setNewWip={setNewWip} handleWipSubmit={handleWipSubmit}></WipInputBar>
-      <Link to="/a/wip/:title">wip {title}</Link>
     </div>
   )
 }
@@ -159,10 +155,8 @@ function ArtistWips() {
 
 function ArtistWip() {
   const {title} = useParams();
-  const {wip_card_id} = useParams();
 
   const [wip, setWip] = useState([]);
-  // const [cards, setCards] = useState([]);
 
   useEffect(() => {
     methods.getWips()
@@ -176,17 +170,11 @@ function ArtistWip() {
     })
   }, [title])
 
-  //const wipCardsImg = wip.wip_cards.map(one_card => one_card)
-  console.log("correct wip", wip);
-  console.log("wipcards", wip.wip_cards);
-
   return (
     <div>
       <ArtistProfileButton />
       <ArtistWipsButton />
       { (wip.wip_cards) ? <CardsList cards={wip.wip_cards} wip={wip}></CardsList> : null}
-      <br />
-      <Link to="/a/wip/:wip_title/:wip_card_id"> {title} cards</Link>
       <br />
       <CardInputBar wip={wip}/>
     </div>
@@ -197,13 +185,33 @@ function ArtistWip() {
 
 
 function ArtistWipCard () {
+  const {title} = useParams();
+  const {wip_card_id} = useParams();
+
+  const [wip, setWip] = useState([]);
+  const [wipCard, setWipCard] = useState([]);
+
+  useEffect(() => {
+    methods.getWips()
+    .then(response => {
+      const wip = response.filter(card => card.wip_title.includes(title))[0]
+      setWip(wip)
+      const card = wip.wip_cards.filter(card => card._id.includes(wip_card_id))[0];
+      setWipCard(card);
+    })
+    .catch( error => {
+      console.log(error)
+      console.log("Error occured.")
+    })
+  }, [title])
 
   return (
     <div>
       <ArtistProfileButton/>
       <ArtistWipsButton/>
-      <ArtistWipButton/>
-      <p> Artist Wip Card</p>
+      <ArtistWipButton wip_title={title}/>
+      <br/>
+      <img src={wipCard.img_url} alt="card img"></img>
     </div> 
   )
 }
