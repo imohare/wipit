@@ -102,6 +102,7 @@ exports.deleteCard = async (req, res) => {
   try {
     const wipId = req.params.wipId;
     const cardId = req.params.cardId;
+    console.log('cardId', cardId);
     await Wips.updateOne({_id: wipId}, {$pull: {wip_cards: {_id: cardId}} });
     res.status(200).send();
   } catch (e) {

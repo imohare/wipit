@@ -1,6 +1,6 @@
 import React from 'react';
 import { useEffect, useState } from "react";
-import methods from '../services';
+import methods from '../../../services';
 
 function WipsListPreview() {
   const [wips, setWips] = useState([]);
@@ -26,5 +26,15 @@ function WipsListPreview() {
       )
   )
 }
+
+// wips.map ( one_wip => 
+//   one_wip.map (one_wip_card => 
+//     <div key={one_wip._id} >
+//       <span>{one_wip_card.img_url}</span>
+//     </div>
+//   )
+// )
+
+// this gives WipsListPreview.jsx:20 Uncaught TypeError: one_wip.map is not a function
 
 export default WipsListPreview

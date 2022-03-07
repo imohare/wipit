@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { Button } from 'rebass'
 
-function ProfileButton () {
+function ArtistProfileButton () {
 
   let navigate = useNavigate(); 
   const profileRouteChange = () =>{ 
@@ -16,4 +16,4 @@ function ProfileButton () {
   )
 }
 
-export default ProfileButton;
+export default ArtistProfileButton;

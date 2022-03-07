@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { Button } from 'rebass'
 
-function WipsButton () {
+function ArtistWipsButton () {
 
   let navigate = useNavigate(); 
   const WipsRouteChange = () =>{ 
@@ -16,4 +16,4 @@ function WipsButton () {
   )
 }
 
-export default WipsButton;
+export default ArtistWipsButton;
