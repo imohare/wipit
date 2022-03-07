@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from "react-router-dom";
 
-import { Button } from 'rebass'
+import { Button } from 'rebass/styled-components'
 
 function ArtistProfileButton () {
 

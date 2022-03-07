@@ -11,10 +11,9 @@ function CardInputBar (props) {
   const [cards, setCards] = useState([]);
   const [progress, setProgress] = useState(0);
 
-  const addCard = async (wipId, img_url, upload_date, seen_by_state) => {
+  const addCard = async (wipId, img_url, upload_date, seen_by_state, seen_by_user, seen_by_date) => {
     const newCards = props.wip.wip_cards.slice();
-    const response = await methods.addCard(wipId, img_url, upload_date, seen_by_state)
-    console.log(upload_date)
+    const response = await methods.addCard(wipId, img_url, upload_date, seen_by_state, seen_by_user, seen_by_date)
     newCards.push(response)
     setCards(newCards);
   }
@@ -43,17 +42,12 @@ function CardInputBar (props) {
           .ref('images')
           .child(image.name)
           .getDownloadURL()
-          .then(imgUrl => {
-            setImgUrl(imgUrl)
+          .then(img => {
+            addCard(props.wip._id, img, uploadDate, "false", "@ROMAN_ROAD", "");
           })
       }
     )
-    console.log("imgUrl", imgUrl)
-    console.log()
     evt.preventDefault();
-    addCard(props.wip._id, imgUrl, uploadDate, "false");
-    setImgUrl(imgUrl => imgUrl = '');
-    //for some reason this isn't making it be empty after uplaod is pressed
     setUploadDate(uploadDate => uploadDate = '');
   };
 
