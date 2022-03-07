@@ -176,17 +176,9 @@ function ArtistWip() {
 
   //const wipCardsImg = wip.wip_cards.map(one_card => one_card)
   console.log("correct wip", wip);
-  // console.log("wip_card_id", wip._id);
+  console.log("wip_card_id", wip._id);
   console.log("wip_cards", wip.wip_cards);
   //console.log("wip_cards_individuals", wip.wip_cards.map(cards => cards))
-
-  // const addCard = async (img_url, upload_date, seen_by_state) => {
-  //   const newCards = wip.wip_cards.slice();
-  //   const response = await methods.addTopic(title, date)
-  //   console.log(date)
-  //   newTopics.push(response)
-  //   setTopics(newTopics);
-  // }
 
 
   return (
@@ -198,7 +190,7 @@ function ArtistWip() {
       <br />
       <Link to="/a/wip/:wip_title/:wip_card_id"> {title} cards</Link>
       <br />
-      <CardInputBar/>
+      <CardInputBar wip={wip}/>
     </div>
   )  
 }

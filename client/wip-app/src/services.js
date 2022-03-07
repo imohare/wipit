@@ -14,11 +14,11 @@ const methods = {
   return response
   },
 
-  addCard: async (wipId, wip_card) => {
+  addCard: async (wipId, img_url, upload_date, seen_by_state) => {
     const response = await fetch(`http://localhost:3456/wips/${wipId}`, {
       method: "POST", 
       headers: {'Content-type': 'application/json'},
-      body: JSON.stringify({wip_card: wip_card})
+      body: JSON.stringify({img_url: img_url, upload_date: upload_date, seen_by_state:seen_by_state})
     })
     .then(response => response.json())
     return response
