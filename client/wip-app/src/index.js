@@ -14,10 +14,10 @@ import {storage} from './firebase/index'
 
 import WipsListPreview from './styled-components/artist/lists/WipsListPreview';
 import WipsList from './styled-components/artist/lists/WipsList';
-import CardsListForWipsList from './styled-components/artist/lists/CardsListForWipsList';
 import CardsList from "./styled-components/artist/lists/CardsList";
 
 import GalleristWipsList from "./styled-components/gallerist/lists/GalleristWipsList";
+import GalleristCardsList from "./styled-components/gallerist/lists/GalleristCardList";
 
 import WipInputBar from './styled-components/artist/input-bars/WipInputBar';
 import CardInputBar from "./styled-components/artist/input-bars/CardInputBar";
@@ -44,8 +44,8 @@ ReactDOM.render(
         <Route path="/a/wip/:title/:wip_card_id" element={<ArtistWipCard/>} />
         <Route path="/g" element={<GalleristProfile/>} />
         <Route path="/g/wips" element={<GalleristWips/>} />
-        {/* <Route path="/g/wip/:wip_title" element={<GalleristWip/>}/>
-        <Route path="/g/wip-card/:wip_card_id" element={<GalleristWipCard/>} /> */}
+        <Route path="/g/wip/:title" element={<GalleristWip/>}/>
+        <Route path="/g/wip/:title/:wip_card_id" element={<GalleristWipCard/>} />
     </Routes>
   </Router>,
   document.getElementById('root')
@@ -240,7 +240,6 @@ function GalleristProfile() {
 //--------------------------------------------------
 
 function GalleristWips() {
-  const {title} = useParams()
   const [wips, setWips] = useState([]);
 
   useEffect(() => {
@@ -265,27 +264,65 @@ function GalleristWips() {
 
 //--------------------------------------------------
 
-// function GalleristWip() {
-//   return (
-//     <div> 
-//       <Link to="/g">profile</Link>
-//       <Link to="/g/wips">wips</Link>
-//       <p> Wip </p>
-//       <Link to="g/wip-card/:title">wip title card</Link>    
-//     </div>
-//   )
-// }
+function GalleristWip() {
+  const {title} = useParams();
 
-// function GalleristWipCard() {
-//   return (
-//     <div> 
-//       <Link to="/g">profile</Link>
-//       <Link to="/g/wips">wips</Link>
-//       <Link to="g/wip/:title">wip title</Link>
-//       <p> Wip Card </p>
-//     </div>
-//   )
-// }
+  const [wip, setWip] = useState([]);
+
+  useEffect(() => {
+    methods.getWips()
+    .then(response => {
+      const wip = response.filter(card => card.wip_title.includes(title))[0]
+      setWip(wip)
+    })
+    .catch( error => {
+      console.log(error)
+      console.log("Error occured.")
+    })
+  }, [title])
+
+  return (
+    <div> 
+      <GalleristProfileButton/>
+      <GalleristWipsButton/>
+      { (wip.wip_cards) ? <GalleristCardsList cards={wip.wip_cards} wip={wip}></GalleristCardsList> : null}
+      <Link to="g/wip-card/:title">wip title card</Link>    
+    </div>
+  )
+}
+
+function GalleristWipCard() {
+  const {title} = useParams();
+  const {wip_card_id} = useParams();
+
+  const [wip, setWip] = useState([]);
+  const [wipCard, setWipCard] = useState([]);
+
+  useEffect(() => {
+    methods.getWips()
+    .then(response => {
+      const wip = response.filter(card => card.wip_title.includes(title))[0]
+      setWip(wip)
+      const card = wip.wip_cards.filter(card => card._id.includes(wip_card_id))[0];
+      setWipCard(card);
+    })
+    .catch( error => {
+      console.log(error)
+      console.log("Error occured.")
+    })
+  }, [title])
+  
+  return (
+    <div> 
+      <GalleristProfileButton/>
+      <GalleristWipsButton/>
+      <GalleristWipButton wip_title={title}/>
+      <img src={wipCard.img_url} alt="card img"></img>
+    </div>
+  )
+}
+
+//--------------------------------------------------
 
 
 reportWebVitals();
