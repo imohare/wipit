@@ -110,7 +110,7 @@ function ArtistProfile () {
     <div>
       <ArtistWipsButton/>
       <LogoutButton/>
-      <p> @BEX_MASSEY </p>
+      <p> @ELIZA_BLAKEMORE </p>
       <p> followers. </p>
       <p> @ROMAN_ROAD </p>
       <p> wips. </p>
@@ -377,20 +377,21 @@ function ArtistWipCard () {
 function GalleristProfile() {
   const [wips, setWips] = useState([]);
   const [cards, setCards] = useState([]);
-  const correctCards = [];
 
   useEffect(() => {
     methods.getWips()
     .then(response => {
       setWips(response)
     })
+    methods.getAllCards()
+    .then(response => {
+      setCards(response)
+    })
     .catch( error => {
       console.log(error)
       console.log("Error occured.")
     })
   }, [])
-
-  console.log(wips)
 
   return (
     <div>
@@ -401,15 +402,12 @@ function GalleristProfile() {
         <form>
           <input placeholder="Artist Name"></input>
         </form>
-        {/* here when you type in the input
-        the name of the artist should come up with
-        a follow button next to it */}
           <p>
             @ANNA_SKLADMANN
             <br/>
             @ARIANE_HUGHES
             <br/>
-            <Link to="/g/wips"> @BEX_MASSEY </Link>
+            <Link to="/g/wips"> @ELIZA_BLAKEMORE </Link>
             <br/>
             @JACK_LAVER
             <br/>
@@ -417,14 +415,9 @@ function GalleristProfile() {
           </p>
       </Box>
       <Text> New Wip Updates from</Text>
-      <NavLink to={`/g/wip/`}>@BEX_MASSEY:</NavLink>
-      {/* {wips.map(wip => wip.wip_cards.map(card =>forEarch(card => (card.seen_by_state === "false") ? 
-      cards.push(correctCards)
-    }))
-      null} */}
-{/*       
-      {cards.map(card => card.seen_by_state === "false" ? <Card><Image src={card.img_url}></Image><Text>{card.upload_date}</Text></Card> :
-      null)} */}
+      <NavLink to={`/g/wips`}>@ELIZA_BLAKEMORE:</NavLink>   
+      {cards.map(card => card.seen_by_state === "false" ? <Card width={[ 256, 320 ]} mx='auto'><Image src={card.img_url}></Image><Text>{card.upload_date}</Text></Card> :
+      null)}
 
     </div>
   )
@@ -449,7 +442,7 @@ function GalleristWips() {
   return (
     <div>
       <GalleristProfileButton/>
-      <p>@BEX_MASSEY</p>
+      <p>@ELIZA_BLAKEMORE</p>
       <GalleristWipsList wips={wips}/>
     </div>
   )

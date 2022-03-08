@@ -20,7 +20,20 @@ exports.getAllCards = async (req, res) => {
     res.status(200);
   } catch (e) {
     console.log(e);
-    console.error('getWips is failing');
+    console.error('getCards is failing');
+    res.status(500);
+    res.end();
+  }
+};
+
+exports.getAllComments = async (req, res) => {
+  try {
+    const results = await Comments.find();
+    res.send(results);
+    res.status(200);
+  } catch (e) {
+    console.log(e);
+    console.error('getComments is failing');
     res.status(500);
     res.end();
   }
@@ -161,7 +174,17 @@ exports.updateCard = async (req, res) => {
           'wip_cards.$.seen_by_date' : req.body.seen_by_date
         }
       }
-    );    
+    );
+    await Cards.updateOne(
+      {_id:req.params.cardId},
+      {
+        $set: {
+          'seen_by_state' : req.body.seen_by_state,
+          'seen_by_user' : req.body.seen_by_user,
+          'seen_by_date' : req.body.seen_by_date
+        }
+      }
+    );
     res.status(201).send();
   } catch (e) {
     console.log(e);
@@ -198,24 +221,39 @@ exports.addComment = async (req, res) => {
   }
 };
 
-// exports.updateComments = async (req, res) => {
+// exports.updateComment = async (req, res) => {
 //   try {
-//     console.log(req.params.cardId);
-//     await Cards.updateMany(
-//       {_id: req.params.cardId},
+//     await Wips.updateMany(
+//       {'_id':req.params.wipId},
 //       {
 //         $set: {
-//           'comments.$.seen_by_date' : req.body.seen_by_date,
-//           'comments.$.seen_by_state' : req.body.seen_by_state,
-//           'comments.$.seen_by_user' : req.body.seen_by_user
+//           'wip_cards.$[i].comments.$[j].seen_by_state' : req.body.seen_by_state,
+//           'wip_cards.$[i].comments.$[j].seen_by_user' : '@ELIZA_BLAKEMORE',
 //         }
-//       },
-//       {multi: true},
+//       }
+//     );
+//     await Cards.updateOne(
+//       {_id:req.params.cardId, 'comments._id':req.params.commentId},
+//       {
+//         $set: {
+//           'comments.$.seen_by_state' : req.body.seen_by_state,
+//           'comments.$.seen_by_user' : '@ELIZA_BLAKEMORE'
+//         }
+//       }
+//     );
+//     await Comments.updateOne(
+//       {_id:req.params.cardId},
+//       {
+//         $set: {
+//           'seen_by_state' : req.body.seen_by_state,
+//           'seen_by_user' : '@ELIZA_BLAKEMORE'
+//         }
+//       }
 //     );
 //     res.status(201).send();
 //   } catch (e) {
 //     console.log(e);
-//     console.error('updateComments is failing');
+//     console.error('updateComment is failing');
 //     res.status(500);
 //     res.end();
 //   }
