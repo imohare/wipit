@@ -12,7 +12,7 @@ function ArtistWipButton (props) {
   }
 
   return (
-    <Button variant='outline' mr={2} onClick={WipRouteChange}>{props.wip_title}</Button>
+    <Button backgroundColor="#33e" variant='outline' mr={2} onClick={WipRouteChange}>{props.wip_title}</Button>
   )
 }
 

@@ -2,10 +2,11 @@ import {React, useEffect, useState } from "react";
 
 import ReactDOM from 'react-dom';
 
-import { BrowserRouter as Router, Routes, Route, Link, useParams, Navlink, useNavigate, NavLink} from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, useParams, NavLink} from 'react-router-dom';
 
-import { Label, Input, Switch } from '@rebass/forms'
-import { Box, Button, Card, Image, Heading, Text } from 'rebass/styled-components'
+import { Label, Input } from '@rebass/forms'
+import { Box, Button, Card, Image, Text, Flex, flexWrap } from 'rebass'
+import {Tiles} from '@rebass/layout'
 import Theme from './styled-components/theme/theme';
 
 import reportWebVitals from './reportWebVitals';
@@ -14,17 +15,16 @@ import {storage} from './firebase/index'
 
 import WipsListPreview from './styled-components/artist/lists/WipsListPreview';
 import WipsList from './styled-components/artist/lists/WipsList';
-import CardsList from "./styled-components/artist/lists/CardsList";
 
 import GalleristWipsList from "./styled-components/gallerist/lists/GalleristWipsList";
-import GalleristCardsList from "./styled-components/gallerist/lists/GalleristCardList";
+import GalleristCardList from "./styled-components/gallerist/lists/GalleristCardList";
 
 import WipInputBar from './styled-components/artist/input-bars/WipInputBar';
-import CardInputBar from "./styled-components/artist/input-bars/CardInputBar";
 
 import ArtistProfileButton from './styled-components/artist/route-buttons/ProfileButton';
 import ArtistWipsButton from './styled-components/artist/route-buttons/WipsButton';
 import ArtistWipButton from './styled-components/artist/route-buttons/WipButton';
+import LogoutButton from "./styled-components/LogoutButton";
 
 import GalleristProfileButton from "./styled-components/gallerist/route-buttons/ProfileButton"; 
 import GalleristWipsButton from "./styled-components/gallerist/route-buttons/WipsButton";
@@ -32,6 +32,11 @@ import GalleristWipButton from "./styled-components/gallerist/route-buttons/WipB
 
 import logo from './wipit-logo.png';
 import plus from './plus-button.png';
+
+import { Controller, Scene } from 'react-scrollmagic';
+
+
+
 
 ReactDOM.render(
   <Router>
@@ -67,23 +72,32 @@ function Home() {
 function Login() {
   return (
     <Theme>
-      <img src={logo} alt="Logo"/>
-      <p>Login Page</p>
-        <form className='login-form'>
-        <Box>
-          <Label htmlFor='email'>Email</Label>
-          <Input id='login-email' name='email' type='email' placeholder='jane@example.com'/>
-        </Box>
-        <br/>
-        <Box>
-          <Label htmlFor='password'>Password</Label>
-          <Input id='login-password' name='password' type='password' placeholder='...' />
-        </Box>          
-        </form>
-      <Link to="/a">artist</Link> 
-      <Switch />
-      <Link to="/g"> gallerist</Link>
-      <Button variant='outline' mr={2}>Sign In</Button>
+      <Image src={logo} alt="Logo" width={200} />
+      <Flex alignItems='center'>
+      <Box mx='auto'>
+        <Text fonFamily="Roboto" textAlign="center">Login Page</Text>
+          <form className='login-form'>
+          <Box>
+            <Label htmlFor='email'>Email</Label>
+            <Input id='login-email' name='email' type='email' placeholder='jane@example.com'/>
+          </Box>
+          <br/>
+          <Box>
+            <Label htmlFor='password'>Password</Label>
+            <Input id='login-password' name='password' type='password' placeholder='...' />
+          </Box>          
+          </form>
+            <Box>
+              <Link to="/a">
+                <Button backgroundColor="#33e" variant='outline' mr={2}> Artist </Button>
+              </Link> 
+              <Link to="/g"> 
+                <Button backgroundColor="#33e" variant='outline' mr={2}> Gallerist </Button>
+              </Link>
+              <br/>
+            </Box>
+      </Box>
+          </Flex>
     </Theme>
   )
 }
@@ -95,6 +109,7 @@ function ArtistProfile () {
   return (
     <div>
       <ArtistWipsButton/>
+      <LogoutButton/>
       <p> @BEX_MASSEY </p>
       <p> followers. </p>
       <p> @ROMAN_ROAD </p>
@@ -124,7 +139,7 @@ function ArtistWips() {
 
   const addWip = async (wip_title) => {
     const newWips = wips.slice();
-    const response = await methods.addWip(wip_title)
+    const response = await methods.addWip(wip_title, "false", "")
     newWips.push(response)
     setWips(newWips);
   }
@@ -143,10 +158,18 @@ function ArtistWips() {
 
   return (
     <div>
-      <ArtistProfileButton/>
-      <p>Artist Wips</p>
-      <WipsList wips={wips} deleteWip={deleteWip}></WipsList>
-      <WipInputBar newWip={newWip} setNewWip={setNewWip} handleWipSubmit={handleWipSubmit}></WipInputBar>
+      <Flex>
+        <ArtistProfileButton />
+        <LogoutButton />
+      </Flex>
+      <Flex flexWrap='wrap' mx={-2}>
+        <Box px={2} py={2} width={2/3}>
+          <WipsList wips={wips} deleteWip={deleteWip}></WipsList>
+        </Box>
+        <Box px={2} py={2} width={1/3} >
+          <WipInputBar newWip={newWip} setNewWip={setNewWip} handleWipSubmit={handleWipSubmit}></WipInputBar>
+        </Box>
+      </Flex>
     </div>
   )
 }
@@ -162,6 +185,12 @@ function ArtistWip() {
   const [uploadDate, setUploadDate] = useState('');
   const [cards, setCards] = useState([]);
   const [progress, setProgress] = useState(0);
+  const [newWipTitle, setNewWipTitle] = useState('');
+
+  // const updateTitle = async (wipId, wip_title) => {
+  //   const response = await methods.updateTitle(wipId,wip_title)
+  //   setNewWipTitle(response);
+  // }
 
   useEffect(() => {
     methods.getWips()
@@ -175,8 +204,18 @@ function ArtistWip() {
       console.log(error)
       console.log("Error occured.")
     })
-  }, [title])
+  }, [])
 
+  const updateTitle = async (wipId, wip_title) => {
+    await methods.updateTitle(wip._id, newWipTitle)
+  }
+
+  const handleTitleSubmit = (evt) => {
+    evt.preventDefault();
+    updateTitle(wip._id, newWipTitle)
+    setNewWipTitle(newWipTitle=> newWipTitle ="");
+  }
+  
   const addCard = async (wipId, img_url, upload_date, seen_by_state, seen_by_user, seen_by_date) => {
     const newCards = wip.wip_cards.slice();
     const response = await methods.addCard(wipId, img_url, upload_date, seen_by_state, seen_by_user, seen_by_date)
@@ -218,36 +257,62 @@ function ArtistWip() {
     setUploadDate(uploadDate => uploadDate = '');
   };
 
-
   return (
     <div>
-      <ArtistProfileButton />
-      <ArtistWipsButton />
-      {cards.map( one_card => 
-        <div key={one_card._id}>
-          <NavLink to={`/a/wip/${wip.wip_title}/${one_card._id}`}>
-            <img src={one_card.img_url} alt="card url"/>
-            <p> {one_card.upload_date}</p>
-          </NavLink>
-          <button className='DeleteWipButton' onClick={() => methods.deleteCard(wip._id, one_card._id)}> - </button>
-        </div>
-        )
-      }
-      {/* { (wip.wip_cards) ? <CardsList cards={wip.wip_cards} wip={wip}></CardsList> : null} */}
-      <br />
-      <div>
-      <form onSubmit={handleSubmit}>
-        <progress value={progress} max="100"/>
-        <br />
-        <input type="file" onChange={handleChange} />
-        <br />
-        <input type="date" name="uploadDate" value={uploadDate} onChange={(evt) => setUploadDate(evt.target.value)} required></input>
-        <br />
-        <button type="submit">Upload</button>
+      <Flex px={2} color='white' alignItems='center'>
+        <ArtistProfileButton />
+        <ArtistWipsButton />
+        <LogoutButton/>
+      </Flex>
+      <br/>
+      <Text fontFamily='Roboto'>Update Title</Text>
+      <form onSubmit={handleTitleSubmit}>
+        <Input fontFamily='Roboto'name='updatedTitle' type='text' placeholder={title} value={newWipTitle} 
+        onChange={(evt) => setNewWipTitle(evt.target.value)} required/>
+        <Button>Update</Button>
       </form>
+    <Flex flexWrap='wrap' mx={-2}>
+        <Box px={2} py={2} width={2 / 3}>
+          <Tiles width={[96, null, 128]}>
+            {cards.map(one_card => <div key={one_card._id}>
+              <NavLink to={`/a/wip/${wip.wip_title}/${one_card._id}`}>
+                <Card width={[256, 320]} mx='auto' boxShadow='card'>
+                  <Image src={one_card.img_url} alt="card url" />
+                  <Text fontFamily='Roboto'> {one_card.upload_date}</Text>
+                </Card>
+              </NavLink>
+              <button className='DeleteWipButton' onClick={() => methods.deleteCard(wip._id, one_card._id)}> - </button>
+            </div>
+            )}
+          </Tiles>
+        </Box>
+        <Controller>
+          <Scene duration={600} pin>
+            <Box px={2} py={2} width={1 / 3}>
+              <div>
+                { wip.update_request === "true" ? 
+                  <Text fontFamily='Roboto'>@ROMAN_ROAD has requested an update on {title}. <br/> Upload an update? </Text> 
+                  : 
+                  <Text fontFamily='Roboto'> Would you like to upload an update?</Text>
+                }
+              </div>
+              <div>
+                <form onSubmit={handleSubmit}>
+                  <progress value={progress} max="100" />
+                  <br />
+                  <Input type="file" onChange={handleChange} />
+                  <br />
+                  <Input type="date" name="uploadDate" value={uploadDate} onChange={(evt) => setUploadDate(evt.target.value)} required></Input>
+                  <br />
+                  <Button type="submit">Upload</Button>
+                </form>
+              </div>
+            </Box>
+          </Scene>
+        </Controller>
+      </Flex>
     </div>
-    </div>
-  )  
+  )
 }
 
 //--------------------------------------------------
@@ -260,6 +325,9 @@ function ArtistWipCard () {
   const [wip, setWip] = useState([]);
   const [wipCard, setWipCard] = useState([]);
 
+  const [card, setCard] = useState([]);
+  const [cardComments, setCardComments] = useState([]);
+
   useEffect(() => {
     methods.getWips()
     .then(response => {
@@ -267,21 +335,39 @@ function ArtistWipCard () {
       setWip(wip)
       const card = wip.wip_cards.filter(card => card._id.includes(wip_card_id))[0];
       setWipCard(card);
+    methods.getAllCards()
+      .then(response => {
+        const card = response.filter(card => card._id.includes(wip_card_id))[0]
+        setCard(card)
+        const cardComments = card.comments
+        setCardComments(cardComments)
+    })
     })
     .catch( error => {
       console.log(error)
       console.log("Error occured.")
     })
-  }, [title])
+  }, [])
 
   return (
     <div>
-      <ArtistProfileButton/>
-      <ArtistWipsButton/>
-      <ArtistWipButton wip_title={title}/>
+      <Flex px={2} color='white' alignItems='center' position="sticky">
+        <ArtistProfileButton/>
+        <ArtistWipsButton/>
+        <ArtistWipButton wip_title={title}/>
+      </Flex>
       <br/>
-      <img src={wipCard.img_url} alt="card img"></img>
-      { wipCard.seen_by_state === "true" ? <p> seen by {wipCard.seen_by_user} on {wipCard.seen_by_date} </p> : <p> This wip remains unseen. </p>}
+      <Card width={[ 256, 320 ]} mx='auto'>
+        <Image src={wipCard.img_url} alt="card img"></Image>
+        <Text> {wipCard.upload_date} </Text>
+        <Text>
+          {wipCard.seen_by_state === "true" ? <p> seen by {wipCard.seen_by_user} on {wipCard.seen_by_date} </p> : <p> This wip remains unseen. </p>}
+        </Text>
+        <Text>
+          {cardComments.length !== 0  ? cardComments.map(comment => <Text>"{comment.comment}" posted at {comment.upload_date} {comment.seen_by_date}</Text> ) : <Text> no comments yet </Text> }
+        </Text>
+      </Card>
+
     </div> 
   )
 }
@@ -289,20 +375,57 @@ function ArtistWipCard () {
 //--------------------------------------------------
 
 function GalleristProfile() {
+  const [wips, setWips] = useState([]);
+  const [cards, setCards] = useState([]);
+  const correctCards = [];
+
+  useEffect(() => {
+    methods.getWips()
+    .then(response => {
+      setWips(response)
+    })
+    .catch( error => {
+      console.log(error)
+      console.log("Error occured.")
+    })
+  }, [])
+
+  console.log(wips)
+
   return (
     <div>
-    <div>
+      <LogoutButton/>
       <p> @ROMAN_ROAD </p>
-      <p> following. </p>
-      <Link to="/g/wips">@BEX_MASSEY</Link>
-      <p> followed artsits.</p>
-      <form>
-        <input placeholder="Artist Name"></input>
-      </form>
-      {/* here when you type in the input
-      the name of the artist should come up with
-      a follow button next to it */}
-    </div>
+      <Box>
+        <p> followed artists.</p>
+        <form>
+          <input placeholder="Artist Name"></input>
+        </form>
+        {/* here when you type in the input
+        the name of the artist should come up with
+        a follow button next to it */}
+          <p>
+            @ANNA_SKLADMANN
+            <br/>
+            @ARIANE_HUGHES
+            <br/>
+            <Link to="/g/wips"> @BEX_MASSEY </Link>
+            <br/>
+            @JACK_LAVER
+            <br/>
+            @YULIA_IOLSIZON
+          </p>
+      </Box>
+      <Text> New Wip Updates from</Text>
+      <NavLink to={`/g/wip/`}>@BEX_MASSEY:</NavLink>
+      {/* {wips.map(wip => wip.wip_cards.map(card =>forEarch(card => (card.seen_by_state === "false") ? 
+      cards.push(correctCards)
+    }))
+      null} */}
+{/*       
+      {cards.map(card => card.seen_by_state === "false" ? <Card><Image src={card.img_url}></Image><Text>{card.upload_date}</Text></Card> :
+      null)} */}
+
     </div>
   )
 }
@@ -351,15 +474,22 @@ function GalleristWip() {
     })
   }, [title])
 
+  const handleClick = () => {
+    methods.updateRequest(wip._id, "true");
+  }
+
   return (
     <div> 
       <GalleristProfileButton/>
       <GalleristWipsButton/>
-      { (wip.wip_cards) ? <GalleristCardsList cards={wip.wip_cards} wip={wip}></GalleristCardsList> : null}
-      <Link to="g/wip-card/:title">wip title card</Link>    
+      <LogoutButton/>
+      { (wip.wip_cards) ? <GalleristCardList cards={wip.wip_cards} wip={wip}></GalleristCardList> : null}
+      {wip.update_request === "false" ? <Button backgroundColor="#33e" mr={2} onClick={handleClick}> Request Update </Button> : <Text> You have requested an update</Text>}
     </div>
   )
 }
+
+//--------------------------------------------------
 
 function GalleristWipCard() {
   const {title} = useParams();
@@ -368,6 +498,27 @@ function GalleristWipCard() {
   const [wip, setWip] = useState([]);
   const [wipCard, setWipCard] = useState([]);
 
+  const [card, setCard] = useState([]);
+  const [cardComments, setCardComments] = useState([]);
+  const [newComment, setNewComment] = useState('');
+
+  const addComment = async (comment) => {
+    const newComments = cardComments.slice();
+    const response = await methods.addComment(wip_card_id, comment, Date(), 'false')
+    newComments.push(response)
+    setCardComments(newComments);
+  }
+
+  const handleCommentSubmit = (evt) => {
+    evt.preventDefault();
+    addComment(newComment);
+    setNewComment(newComment=> newComment ="");
+  }
+
+  const handleClick = () => {
+    methods.updateCard(wip._id, wipCard._id, "true", "@ROMAN_ROAD", Date());
+  };
+
   useEffect(() => {
     methods.getWips()
     .then(response => {
@@ -375,22 +526,41 @@ function GalleristWipCard() {
       setWip(wip)
       const card = wip.wip_cards.filter(card => card._id.includes(wip_card_id))[0];
       setWipCard(card);
+    methods.getAllCards()
+    .then(response => {
+      const card = response.filter(card => card._id.includes(wip_card_id))[0]
+      setCard(card)
+      const cardComments = card.comments
+      setCardComments(cardComments)
+    })
     })
     .catch( error => {
       console.log(error)
       console.log("Error occured.")
     })
   }, [title])
+
+  //addComment(cardId, comment, upload_date, seen_by_state, seen_by_user)
   
   return (
     <div> 
       <GalleristProfileButton/>
       <GalleristWipsButton/>
       <GalleristWipButton wip_title={title}/>
-      <img src={wipCard.img_url} alt="card img"></img>
-      { wipCard.seen_by_state === "true"}
-      <p> {wipCard.seen_by_state}</p>
-      <Switch></Switch>
+        <Box>
+          <Card width={[ 256, 320 ]} mx='auto'>
+            <Image src={wipCard.img_url} alt="card img" />
+            <Text> {wipCard.upload_date}</Text>
+          </Card>
+        </Box>
+        <Box>
+          {wipCard.seen_by_state === "false" ? <Button backgroundColor="#33e" mr={2} onClick={handleClick}> Seen </Button> : <Text> Viewed at {wipCard.seen_by_date}</Text>}
+        </Box>
+        <form onSubmit={handleCommentSubmit}>
+          <Input placeholder="Add a comment" value={newComment} onChange={(evt) => setNewComment(evt.target.value)} required></Input>
+          <button>+</button> 
+        </form>
+        {cardComments.length !== 0  ? cardComments.map(comment => <Text>"{comment.comment}" posted at {comment.upload_date} {comment.seen_by_date}</Text>) : <Text> no comments yet </Text> }
     </div>
   )
 }

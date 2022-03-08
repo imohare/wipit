@@ -12,7 +12,7 @@ function GalleristProfileButton () {
   }
 
   return (
-    <Button variant='outline' mr={2} onClick={profileRouteChange}>profile.</Button>
+    <Button backgroundColor="#33e" mr={2} onClick={profileRouteChange} >profile.</Button>
   )
 }
 

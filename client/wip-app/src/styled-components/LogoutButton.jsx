@@ -3,21 +3,21 @@ import { useNavigate } from "react-router-dom";
 
 import { Button, Text } from 'rebass'
 
-function ArtistProfileButton () {
+function LogoutButton () {
 
   let navigate = useNavigate(); 
-  const profileRouteChange = () =>{ 
-    let path = `/a`; 
+  const logoutRouteChange = () =>{ 
+    let path = `/login`; 
     navigate(path);
   }
 
   return (
-    <Button mr={2} onClick={profileRouteChange} backgroundColor="#33e">
+    <Button mr={2} onClick={logoutRouteChange} backgroundColor="#33e">
       <Text>
-        profile.
+        logout.
       </Text>
     </Button>
   )
 }
 
-export default ArtistProfileButton;
+export default LogoutButton;

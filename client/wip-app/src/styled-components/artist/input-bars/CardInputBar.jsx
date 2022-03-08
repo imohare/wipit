@@ -1,6 +1,8 @@
 import {React, useState} from 'react';
 import {storage} from '../../../firebase/index'
 import methods from '../../../services'
+import { Button, Input } from '@rebass/forms'
+import { Text} from "rebass";
 
 
 function CardInputBar (props) {
@@ -56,11 +58,15 @@ function CardInputBar (props) {
       <form onSubmit={handleSubmit}>
         <progress value={progress} max="100"/>
         <br />
-        <input type="file" onChange={handleChange} />
+        <Input type="file" onChange={handleChange} />
         <br />
-        <input type="date" name="uploadDate" value={uploadDate} onChange={(evt) => setUploadDate(evt.target.value)} required></input>
+        <Input type="date" name="uploadDate" value={uploadDate} onChange={(evt) => setUploadDate(evt.target.value)} required></Input>
         <br />
-        <button type="submit">Upload</button>
+        <Button type="submit">
+          <Text fontFamily='Roboto'>
+            Upload
+          </Text>
+        </Button>
       </form>
     </div>
   )

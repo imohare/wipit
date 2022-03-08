@@ -12,7 +12,7 @@ function ArtistWipsButton () {
   }
 
   return (
-    <Button variant='outline' mr={2} onClick={WipsRouteChange}>wips.</Button>
+    <Button backgroundColor="#33e" variant='outline' mr={2} onClick={WipsRouteChange}>wips.</Button>
   )
 }
 

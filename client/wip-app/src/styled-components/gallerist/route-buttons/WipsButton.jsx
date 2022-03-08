@@ -12,7 +12,7 @@ function GalleristWipsButton () {
   }
 
   return (
-    <Button variant='outline' mr={2} onClick={WipsRouteChange}>wips.</Button>
+    <Button backgroundColor="#33e" mr={2} onClick={WipsRouteChange} >wips.</Button>
   )
 }
 
