@@ -1,8 +1,8 @@
-import { React, useEffect, useState } from 'react';
-import methods from '../services';
-import LogoutButton from '../styled-components/LogoutButton';
-import { Box, Card, Image, Text } from 'rebass';
-import { Link, NavLink } from 'react-router-dom';
+import { React, useEffect, useState } from "react";
+import methods from "../services";
+import LogoutButton from "../components/LogoutButton";
+import { Box, Card, Image, Text } from "rebass";
+import { Link, NavLink } from "react-router-dom";
 
 function GalleristProfile() {
   const [wips, setWips] = useState([]);
@@ -19,7 +19,7 @@ function GalleristProfile() {
       })
       .catch((error) => {
         console.log(error);
-        console.log('Error occured.');
+        console.log("Error occured.");
       });
   }, []);
 
@@ -30,14 +30,14 @@ function GalleristProfile() {
       <Box>
         <p> followed artists.</p>
         <form>
-          <input placeholder='Artist Name'></input>
+          <input placeholder="Artist Name"></input>
         </form>
         <p>
           @ANNA_SKLADMANN
           <br />
           @ARIANE_HUGHES
           <br />
-          <Link to='/g/wips'> @ELIZA_BLAKEMORE </Link>
+          <Link to="/g/wips"> @ELIZA_BLAKEMORE </Link>
           <br />
           @JACK_LAVER
           <br />
@@ -47,8 +47,8 @@ function GalleristProfile() {
       <Text> New Wip Updates from</Text>
       <NavLink to={`/g/wips`}>@ELIZA_BLAKEMORE:</NavLink>
       {cards.map((card) =>
-        card.seen_by_state === 'false' ? (
-          <Card width={[256, 320]} mx='auto'>
+        card.seen_by_state === "false" ? (
+          <Card width={[256, 320]} mx="auto">
             <Image src={card.img_url}></Image>
             <Text>{card.upload_date}</Text>
           </Card>

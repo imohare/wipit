@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react';
-import methods from '../services';
-import { useParams } from 'react-router-dom';
-import { Button, Text } from 'rebass';
-import LogoutButton from '../styled-components/LogoutButton';
-import GalleristProfileButton from '../styled-components/gallerist/route-buttons/ProfileButton';
-import GalleristCardList from '../styled-components/gallerist/lists/GalleristCardList';
-import GalleristWipsButton from '../styled-components/gallerist/route-buttons/WipsButton';
+import { useState, useEffect } from "react";
+import methods from "../services";
+import { useParams } from "react-router-dom";
+import { Button, Text } from "rebass";
+import LogoutButton from "./LogoutButton";
+import GalleristProfileButton from "../styled-components/gallerist/route-buttons/ProfileButton";
+import GalleristCardList from "../styled-components/gallerist/lists/GalleristCardList";
+import GalleristWipsButton from "../styled-components/gallerist/route-buttons/WipsButton";
 
 function GalleristWip() {
   const { title } = useParams();
@@ -23,12 +23,12 @@ function GalleristWip() {
       })
       .catch((error) => {
         console.log(error);
-        console.log('Error occured.');
+        console.log("Error occured.");
       });
   }, [title]);
 
   const handleClick = () => {
-    methods.updateRequest(wip._id, 'true');
+    methods.updateRequest(wip._id, "true");
   };
 
   return (
@@ -39,10 +39,10 @@ function GalleristWip() {
       {wip.wip_cards ? (
         <GalleristCardList cards={wip.wip_cards} wip={wip}></GalleristCardList>
       ) : null}
-      {wip.update_request === 'false' ? (
-        <Button backgroundColor='#33e' mr={2} onClick={handleClick}>
-          {' '}
-          Request Update{' '}
+      {wip.update_request === "false" ? (
+        <Button backgroundColor="#33e" mr={2} onClick={handleClick}>
+          {" "}
+          Request Update{" "}
         </Button>
       ) : (
         <Text> You have requested an update</Text>
