@@ -2,10 +2,10 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.js"
+    "start": "nodemon index.ts"
   },
   "author": "",
   "license": "ISC",
@@ -17,5 +17,9 @@
     "morgan": "^1.10.0",
     "multer": "^1.4.4",
     "nodemon": "^2.0.15"
+  },
+  "devDependencies": {
+    "@types/mongoose": "^5.11.97",
+    "@types/node": "^17.0.21"
   }
 }

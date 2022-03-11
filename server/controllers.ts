@@ -1,8 +1,9 @@
-const {Wips, Cards, Comments}  = require('./models');
+const {Wips,Cards, Comments} = require('./models');
 
-exports.getWips = async (req, res) => {
+exports.getWips = async (req:any, res:any) => {
   try {
-    const results = await Wips.find();
+    const results: Array<any> = await Wips.find();
+    console.log(results)
     res.send(results);
     res.status(200);
   } catch (e) {
@@ -13,7 +14,7 @@ exports.getWips = async (req, res) => {
   }
 };
 
-exports.getAllCards = async (req, res) => {
+exports.getAllCards = async (req:any, res:any) => {
   try {
     const results = await Cards.find();
     res.send(results);
@@ -26,9 +27,12 @@ exports.getAllCards = async (req, res) => {
   }
 };
 
-exports.getAllComments = async (req, res) => {
-  try {
-    const results = await Comments.find();
+exports.getAllComments = async (req:any, res:any) => {
+  const results: Array<typeof Comments> = await Comments.find();
+  console.log(results);
+  res.send("YAY");
+  /*try {
+    const results: Array<commentInterface> = await Comments.find();
     res.send(results);
     res.status(200);
   } catch (e) {
@@ -36,10 +40,10 @@ exports.getAllComments = async (req, res) => {
     console.error('getComments is failing');
     res.status(500);
     res.end();
-  }
+  }*/
 };
 
-exports.addWip = async (req, res) => {
+exports.addWip = async (req:any, res:any) => {
   try {
     const post = await Wips.create({
       wip_title: req.body.wip_title,
@@ -57,7 +61,7 @@ exports.addWip = async (req, res) => {
   }
 };
 
-exports.deleteWip = async (req, res) => {
+exports.deleteWip = async (req:any, res:any) => {
   try {
     const id = req.params.wipId;
     await Wips.deleteOne({ _id: id });
@@ -70,7 +74,7 @@ exports.deleteWip = async (req, res) => {
   }
 };
 
-exports.getCards = async (req, res) => {
+exports.getCards = async (req:any, res:any) => {
   try {
     const id = req.params.wipId;
     const wip = await Wips.findById(id);
@@ -84,7 +88,7 @@ exports.getCards = async (req, res) => {
   }
 };
 
-exports.updateTitle = async (req, res) => {
+exports.updateTitle = async (req:any, res:any) => {
   try {
     await Wips.findOneAndUpdate(
       {_id:req.params.wipId},
@@ -103,7 +107,7 @@ exports.updateTitle = async (req, res) => {
   }
 };
 
-exports.updateRequest = async (req, res) => {
+exports.updateRequest = async (req:any, res:any) => {
   try {
     await Wips.findOneAndUpdate(
       {_id:req.params.wipId},
@@ -123,14 +127,14 @@ exports.updateRequest = async (req, res) => {
   }
 };
 
-exports.addCard = async (req, res) => {
+exports.addCard = async (req:any, res:any) => {
   try {
     const wip = await Wips.findById(req.params.wipId).exec();
     const card = {
       img_url: req.body.img_url,
       upload_date: req.body.upload_date,
       seen_by_state: req.body.seen_by_state,
-      seen_by_user: req.body.seen_by_user, 
+      seen_by_user: req.body.seen_by_user,
       seen_by_date: req.body.seen_by_date,
       comments: [],
       wipId: wip._id
@@ -148,7 +152,7 @@ exports.addCard = async (req, res) => {
   }
 };
 
-exports.deleteCard = async (req, res) => {
+exports.deleteCard = async (req:any, res:any) => {
   try {
     const wipId = req.params.wipId;
     const cardId = req.params.cardId;
@@ -163,7 +167,7 @@ exports.deleteCard = async (req, res) => {
   }
 };
 
-exports.updateCard = async (req, res) => {
+exports.updateCard = async (req:any, res:any) => {
   try {
     await Wips.updateMany(
       {_id:req.params.wipId, 'wip_cards._id' : req.params.cardId},
@@ -194,20 +198,20 @@ exports.updateCard = async (req, res) => {
   }
 };
 
-exports.addComment = async (req, res) => {
+exports.addComment = async (req:any, res:any) => {
   try {
     const card = await Cards.findById(req.params.cardId);
     const wip = await Wips.findById(card.wipId);
     const comment = {
       comment: req.body.comment,
-      upload_date: req.body.upload_date, 
-      seen_by_state: req.body.seen_by_state, 
+      upload_date: req.body.upload_date,
+      seen_by_state: req.body.seen_by_state,
       seen_by_user: req.body.seen_by_user,
     };
     const updatedComment = await Comments.create(comment);
     await card.comments.push(updatedComment);
     const updated = await card.save();
-    const card2 = await wip.wip_cards.filter(id => id = card._id)[0];
+    const card2 = await wip.wip_cards.filter((id:any) => id = card._id)[0];
     await card2.comments.push(updatedComment);
     await wip.markModified('wip_cards');
     await wip.save();
