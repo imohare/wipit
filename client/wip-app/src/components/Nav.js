@@ -1,5 +1,6 @@
 import React from 'react';
 // import logo from './wipit-logo.png';
+//I was thinking about adding a navbar
 
 function Nav() {
   return (

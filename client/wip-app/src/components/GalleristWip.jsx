@@ -1,3 +1,12 @@
+import { useState, useEffect } from 'react';
+import methods from '../services';
+import { useParams } from 'react-router-dom';
+import { Button, Text } from 'rebass';
+import LogoutButton from '../styled-components/LogoutButton';
+import GalleristProfileButton from '../styled-components/gallerist/route-buttons/ProfileButton';
+import GalleristCardList from '../styled-components/gallerist/lists/GalleristCardList';
+import GalleristWipsButton from '../styled-components/gallerist/route-buttons/WipsButton';
+
 function GalleristWip() {
   const { title } = useParams();
 
@@ -41,3 +50,5 @@ function GalleristWip() {
     </div>
   );
 }
+
+export default GalleristWip;

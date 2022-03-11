@@ -1,3 +1,12 @@
+import { useState, useEffect } from 'react';
+import methods from '../services';
+import { useParams } from 'react-router-dom';
+import { Box, Button, Card, Image, Text } from 'rebass';
+import GalleristProfileButton from '../styled-components/gallerist/route-buttons/ProfileButton';
+import GalleristWipsButton from '../styled-components/gallerist/route-buttons/WipsButton';
+import GalleristWipButton from '../styled-components/gallerist/route-buttons/WipButton';
+import { Input } from '@rebass/forms';
+
 function GalleristWipCard() {
   const { title } = useParams();
   const { wip_card_id } = useParams();
@@ -103,3 +112,5 @@ function GalleristWipCard() {
     </div>
   );
 }
+
+export default GalleristWipCard;
