@@ -10,10 +10,10 @@ app.use(mainRouter);
 
 app.get('/', (req:any, res:any) => {
   try {
-    res.send('server is connected!')
+    res.send("server is connected!");
   } catch {
-    res.send('server failed to connect')
-    res.status(404)
+    res.send("server failed to connect");
+    res.status(404);
   }
 });
 
