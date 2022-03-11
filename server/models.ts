@@ -58,6 +58,6 @@ const wipSchema = new Schema<wipInterface>({
   update_request_date: String,
 });
 
-export const Wips = model<wipInterface>('Wip', wipSchema);
+const Wips = model<wipInterface>('Wip', wipSchema);
 
 module.exports = {Wips, Cards, Comments}
