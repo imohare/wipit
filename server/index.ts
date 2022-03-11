@@ -1,21 +1,23 @@
-const mainExpress = require('express')
-const app = mainExpress()
-const port = 3456
-const mainRouter = require('./router')
-const cors = require('cors')
+import express from 'express';
+import cors from 'cors';
 
-app.use(cors())
-app.use(mainExpress.json()) //body parser
-app.use(mainRouter)
+const router = require('./router');
 
-app.get('/', (req: any, res: any) => {
+const app = express();
+const port = 3456;
+
+app.use(cors());
+app.use(express.json()); //body parser
+app.use(router);
+
+app.get('/', (req:express.Request, res:express.Response) => {
   try {
-    res.send('server is connected!')
+    res.send("server is connected!");
   } catch {
-    res.send('server failed to connect')
-    res.status(404)
+    res.send("server failed to connect");
+    res.status(404);
   }
-})
+});
 app.listen(port, () => {
   console.log(`I'm listening on port ${port}`)
 })
