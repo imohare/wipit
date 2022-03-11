@@ -1,4 +1,5 @@
-import { React, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import React from 'react';
 import methods from '../services';
 import LogoutButton from '../styled-components/LogoutButton';
 import { Box, Card, Image, Text } from 'rebass';

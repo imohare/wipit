@@ -9,13 +9,20 @@ import GalleristWipsButton from '../styled-components/gallerist/route-buttons/Wi
 
 function GalleristWip() {
   const { title } = useParams();
-
   const [wip, setWip] = useState([]);
+
+  type wipType = {
+  wip_title: string,
+  wip_cards: [any],
+  update_request: string,
+  update_request_date: string,
+  }
 
   useEffect(() => {
     methods
       .getWips()
       .then((response) => {
+        console.log(response);
         const wip = response.filter((card) =>
           card.wip_title.includes(title)
         )[0];
@@ -26,6 +33,12 @@ function GalleristWip() {
         console.log('Error occured.');
       });
   }, [title]);
+
+  // console.log(wip);
+  // wip_title: {type: String, required: true},
+  // wip_cards: [cardSchema],
+  // update_request: String,
+  // update_request_date: String,
 
   const handleClick = () => {
     methods.updateRequest(wip._id, 'true');
