@@ -13,14 +13,14 @@ interface commentInterface {
   seen_by_user?: string
 }
 
-const commentSchema = new Schema({
+const commentSchema = new Schema<commentInterface>({
   comment: String,
   upload_date: String,
   seen_by_state: String,
   seen_by_user: String,
 });
 
-const commentList = model<commentInterface>('Comment', commentSchema);
+const Comments = model<commentInterface>('Comment', commentSchema);
 
 interface cardInterface {
   img_url?: String;
@@ -42,7 +42,7 @@ const cardSchema = new Schema<cardInterface>({
   wipId: Schema.Types.ObjectId
 });
 
-const cardList = model<cardInterface>('Card', cardSchema);
+const Cards = model<cardInterface>('Card', cardSchema);
 
 interface wipInterface {
   wip_title: string;
@@ -58,6 +58,6 @@ const wipSchema = new Schema<wipInterface>({
   update_request_date: String,
 });
 
-export const wipList = model<wipInterface>('Wip', wipSchema);
+export const Wips = model<wipInterface>('Wip', wipSchema);
 
-module.exports = {wipList, cardList, commentList}
+module.exports = {Wips, Cards, Comments}

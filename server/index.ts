@@ -1,14 +1,16 @@
-const mainExpress = require('express');
-const app = mainExpress();
+import express from 'express';
+import cors from 'cors';
+
+const router = require('./router');
+
+const app = express();
 const port = 3456;
-const mainRouter = require('./router');
-const cors = require('cors');
 
 app.use(cors());
-app.use(mainExpress.json()); //body parser
-app.use(mainRouter);
+app.use(express.json()); //body parser
+app.use(router);
 
-app.get('/', (req:any, res:any) => {
+app.get('/', (req:express.Request, res:express.Response) => {
   try {
     res.send("server is connected!");
   } catch {

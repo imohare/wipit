@@ -97,12 +97,5 @@
     /* Completeness */
     // "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
     "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
-<<<<<<< HEAD:server/tsconfig.json
-  },
-  "include": [
-      "./*.ts"
-  ],
-=======
   }
->>>>>>> 9abaaaf79c06e0737288a5a66cff89adb914e274:tsconfig.json
 }
