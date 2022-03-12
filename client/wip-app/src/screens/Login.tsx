@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
 import { Label, Input } from "@rebass/forms";
-import { Box, Button, Image, Text, Flex } from "rebass";
+import { Image, Box, Flex, Button } from "@chakra-ui/react";
 // import Theme from "../styled-components/theme/theme";
 import logo from "../assets/wipit-logo.png";
 
