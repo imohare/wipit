@@ -1,27 +1,49 @@
-import { React, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import React from 'react';
 import methods from '../services';
-import LogoutButton from '../styled-components/LogoutButton';
+import LogoutButton from '../components/LogoutButton';
 import { Box, Card, Image, Text } from 'rebass';
 import { Link, NavLink } from 'react-router-dom';
 
-function GalleristProfile() {
-  const [wips, setWips] = useState([]);
-  const [cards, setCards] = useState([]);
+function GalleristProfile(): JSX.Element {
 
-  useEffect(() => {
-    methods.getWips().then((response) => {
-      setWips(response);
-    });
-    methods
-      .getAllCards()
-      .then((response) => {
-        setCards(response);
-      })
-      .catch((error) => {
-        console.log(error);
-        console.log('Error occured.');
-      });
-  }, []);
+  type wipType = {
+    _id: string
+    wip_title: string
+    wip_cards: [any]
+    update_request: string
+    update_request_date: string
+    }
+
+  const [wips, setWips] = useState<[wipType] | null>(null);
+
+  type cardType = {
+    img_url: string
+    upload_date: string
+    seen_by_state: string
+    seen_by_user: string
+    seen_by_date: string
+    comments: [any]
+    wipId?: {}
+    //object id???
+  }
+  const [cards, setCards] = useState<[cardType] | null>(null);
+
+
+  // useEffect(() => {
+  //   methods.getWips().then((response) => {
+  //     setWips(response);
+  //   });
+  //   methods
+  //     .getAllCards()
+  //     .then((response) => {
+  //       setCards(response);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //       console.log('Error occured.');
+  //     });
+  // }, []);
 
   return (
     <div>
@@ -46,14 +68,14 @@ function GalleristProfile() {
       </Box>
       <Text> New Wip Updates from</Text>
       <NavLink to={`/g/wips`}>@ELIZA_BLAKEMORE:</NavLink>
-      {cards.map((card) =>
+      {/* {cards.map((card) =>
         card.seen_by_state === 'false' ? (
           <Card width={[256, 320]} mx='auto'>
             <Image src={card.img_url}></Image>
             <Text>{card.upload_date}</Text>
           </Card>
         ) : null
-      )}
+      )} */}
     </div>
   );
 }
