@@ -13,6 +13,8 @@ import {
   Image,
   Flex,
   Box,
+  RadioGroup,
+  Radio,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { EmailIcon, InfoIcon, LockIcon } from "@chakra-ui/icons";
@@ -20,6 +22,7 @@ import logo from "../assets/wipit-logo-2.png";
 import { Link } from "react-router-dom";
 
 export function Register() {
+  const [value, setValue] = React.useState("1");
   return (
     <>
       <Flex
@@ -67,6 +70,14 @@ export function Register() {
                 <Input type="password" placeholder="Enter New Password" />
               </InputGroup>
             </FormControl>
+
+            <RadioGroup onChange={setValue} value={value}>
+              <Stack direction="row">
+                <Text fontWeight={"700"}>Would you like to register as:</Text>
+                <Radio value="artist">Artist</Radio>
+                <Radio value="Gallerist">Gallerist</Radio>
+              </Stack>
+            </RadioGroup>
 
             <Button colorScheme="teal" size="md" type="submit">
               Create User
