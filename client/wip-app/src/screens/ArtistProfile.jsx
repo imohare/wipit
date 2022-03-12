@@ -1,6 +1,6 @@
-import ArtistWipsButton from '../styled-components/artist/route-buttons/WipsButton';
-import LogoutButton from '../styled-components/LogoutButton';
-import WipsListPreview from '../styled-components/artist/lists/WipsListPreview';
+import ArtistWipsButton from "../styled-components/artist/route-buttons/WipsButton";
+import LogoutButton from "../components/LogoutButton";
+import WipsListPreview from "../styled-components/artist/lists/WipsListPreview";
 
 function ArtistProfile() {
   return (
