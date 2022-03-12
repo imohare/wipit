@@ -19,7 +19,6 @@ import {
   Link,
 } from "@chakra-ui/react";
 import Register from "./screens/Register";
-import { useNavigate } from "react-router-dom";
 
 //all the imports in case we need anything from here
 // import Nav from './components/Nav';
@@ -50,7 +49,25 @@ function App(): JSX.Element {
   return (
     <ChakraProvider>
       <Router>
-        <Register />
+        <Routes>
+          <Route path="/" element={<Register />} />
+
+          <Route path="/login" element={<Login />} />
+          <Route path="/a" element={<ArtistProfile />} />
+          <Route path="/a/wips" element={<ArtistWips />} />
+          <Route path="/a/wip/:title" element={<ArtistWip />} />
+          <Route
+            path="/a/wip/:title/:wip_card_id"
+            element={<ArtistWipCard />}
+          />
+          <Route path="/g" element={<GalleristProfile />} />
+          <Route path="/g/wips" element={<GalleristWips />} />
+          <Route path="/g/wip/:title" element={<GalleristWip />} />
+          <Route
+            path="/g/wip/:title/:wip_card_id"
+            element={<GalleristWipCard />}
+          />
+        </Routes>
       </Router>
     </ChakraProvider>
   );

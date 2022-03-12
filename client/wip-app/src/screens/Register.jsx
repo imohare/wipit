@@ -17,6 +17,7 @@ import {
 import React, { useState } from "react";
 import { EmailIcon, InfoIcon, LockIcon } from "@chakra-ui/icons";
 import logo from "../assets/wipit-logo-2.png";
+import { Link } from "react-router-dom";
 
 export function Register() {
   return (
@@ -30,10 +31,11 @@ export function Register() {
         justifyContent="space-between"
       >
         <Image src={logo} width="100px" />
-
-        <Button marginTop="2" colorScheme="teal" size="sm">
-          Login
-        </Button>
+        <Link to="/login">
+          <Button marginTop="2" colorScheme="teal" size="sm">
+            Login
+          </Button>
+        </Link>
       </Flex>
 
       <Flex
@@ -65,6 +67,7 @@ export function Register() {
                 <Input type="password" placeholder="Enter New Password" />
               </InputGroup>
             </FormControl>
+
             <Button colorScheme="teal" size="md" type="submit">
               Create User
             </Button>
