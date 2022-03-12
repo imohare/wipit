@@ -1,9 +1,20 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { Label, Input } from "@rebass/forms";
-import { Image, Box, Flex, Button } from "@chakra-ui/react";
+import {
+  Image,
+  Box,
+  Flex,
+  Button,
+  Stack,
+  Text,
+  FormControl,
+  InputGroup,
+  InputLeftElement,
+  Input,
+} from "@chakra-ui/react";
 // import Theme from "../styled-components/theme/theme";
 import logo from "../assets/wipit-logo.png";
+import { EmailIcon, InfoIcon, LockIcon } from "@chakra-ui/icons";
 
 function Login(): JSX.Element {
   return (
@@ -11,42 +22,51 @@ function Login(): JSX.Element {
       <Image src={logo} alt="Logo" width={200} />
       <Flex alignItems="center">
         <Box mx="auto">
-          <form className="login-form">
-            <Box>
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="login-email"
-                name="email"
-                type="email"
-                placeholder="jane@example.com"
-              />
-            </Box>
-            <br />
-            <Box>
-              <Label htmlFor="password">Password</Label>
-              <Input
-                id="login-password"
-                name="password"
-                type="password"
-                placeholder="..."
-              />
-            </Box>
+          <form action="submit">
+            <Stack spacing={3} marginTop="50%">
+              <Text fontSize={"34"} align="center">
+                Login
+              </Text>
+
+              <FormControl isRequired>
+                <InputGroup>
+                  <InputLeftElement children={<EmailIcon />} />
+                  <Input type="email" placeholder="Enter Email" />
+                </InputGroup>
+              </FormControl>
+              <FormControl isRequired>
+                <InputGroup>
+                  <InputLeftElement children={<LockIcon />} />
+                  <Input type="password" placeholder="Enter Password" />
+                </InputGroup>
+              </FormControl>
+              <Flex flexDirection={"row"}>
+                <Link to="/a">
+                  <Button colorScheme="teal" size="md" type="submit" mr={8}>
+                    Artist
+                  </Button>
+                </Link>
+                <Link to="/g">
+                  <Button
+                    colorScheme="teal"
+                    size="md"
+                    type="submit"
+                    color="white"
+                  >
+                    Gallerist
+                  </Button>
+                </Link>
+              </Flex>
+            </Stack>
           </form>
-          <Box>
-            <Link to="/a">
-              <Button backgroundColor="#33e" variant="outline" mr={2}>
-                {" "}
-                Artist{" "}
-              </Button>
+          <Flex flexDirection={"row"}>
+            <Text mr={2} mt={3}>
+              Don't have a login?{" "}
+            </Text>
+            <Link to="/">
+              <Text mt={3}> Register here.</Text>
             </Link>
-            <Link to="/g">
-              <Button backgroundColor="#33e" variant="outline" mr={2}>
-                {" "}
-                Gallerist{" "}
-              </Button>
-            </Link>
-            <br />
-          </Box>
+          </Flex>
         </Box>
       </Flex>
     </>
