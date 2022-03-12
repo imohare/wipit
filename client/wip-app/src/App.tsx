@@ -19,6 +19,10 @@ import {
   Link,
 } from "@chakra-ui/react";
 import Register from "./screens/Register";
+import Home from "./screens/Home";
+import { createContext, useMemo, useState } from "react";
+import UserContext from "./userContext";
+import { userInfo } from "os";
 
 //all the imports in case we need anything from here
 // import Nav from './components/Nav';
@@ -46,28 +50,34 @@ import Register from "./screens/Register";
 // import { Tiles } from '@rebass/layout';
 
 function App(): JSX.Element {
+  const [user, setUser] = useState(null);
+  const value = useMemo(() => ({ user, setUser }), [user, setUser]);
+
   return (
     <ChakraProvider>
       <Router>
-        <Routes>
-          <Route path="/" element={<Register />} />
+        <UserContext.Provider value={value}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/register" element={<Register />} />
 
-          <Route path="/login" element={<Login />} />
-          <Route path="/a" element={<ArtistProfile />} />
-          <Route path="/a/wips" element={<ArtistWips />} />
-          <Route path="/a/wip/:title" element={<ArtistWip />} />
-          <Route
-            path="/a/wip/:title/:wip_card_id"
-            element={<ArtistWipCard />}
-          />
-          <Route path="/g" element={<GalleristProfile />} />
-          <Route path="/g/wips" element={<GalleristWips />} />
-          <Route path="/g/wip/:title" element={<GalleristWip />} />
-          <Route
-            path="/g/wip/:title/:wip_card_id"
-            element={<GalleristWipCard />}
-          />
-        </Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/a" element={<ArtistProfile />} />
+            <Route path="/a/wips" element={<ArtistWips />} />
+            <Route path="/a/wip/:title" element={<ArtistWip />} />
+            <Route
+              path="/a/wip/:title/:wip_card_id"
+              element={<ArtistWipCard />}
+            />
+            <Route path="/g" element={<GalleristProfile />} />
+            <Route path="/g/wips" element={<GalleristWips />} />
+            <Route path="/g/wip/:title" element={<GalleristWip />} />
+            <Route
+              path="/g/wip/:title/:wip_card_id"
+              element={<GalleristWipCard />}
+            />
+          </Routes>
+        </UserContext.Provider>
       </Router>
     </ChakraProvider>
   );

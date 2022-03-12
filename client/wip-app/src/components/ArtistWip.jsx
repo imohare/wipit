@@ -1,5 +1,5 @@
 import ArtistProfileButton from "../styled-components/artist/route-buttons/ProfileButton";
-import ArtistWipsButton from "../styled-components/artist/route-buttons/WipsButton";
+// import ArtistWipsButton from "../styled-components/artist/route-buttons/WipsButton";
 import LogoutButton from "./LogoutButton";
 import { useState, useEffect } from "react";
 import methods from "../services";
@@ -113,7 +113,7 @@ function ArtistWip() {
     <div>
       <Flex px={2} color="white" alignItems="center">
         <ArtistProfileButton />
-        <ArtistWipsButton />
+        {/* <ArtistWipsButton /> */}
         <LogoutButton />
       </Flex>
       <br />
