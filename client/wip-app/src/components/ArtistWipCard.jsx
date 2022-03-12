@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
-import ArtistProfileButton from '../styled-components/artist/route-buttons/ProfileButton';
-import ArtistWipsButton from '../styled-components/artist/route-buttons/WipsButton';
-import ArtistWipButton from '../styled-components/artist/route-buttons/WipButton';
-import methods from '../services';
-import { useParams } from 'react-router-dom';
-import { Card, Image, Text, Flex } from 'rebass';
+import { useState, useEffect } from "react";
+import ArtistProfileButton from "../styled-components/artist/route-buttons/ProfileButton";
+// import ArtistWipsButton from "../styled-components/artist/route-buttons/WipsButton";
+// import ArtistWipButton from "../styled-components/artist/route-buttons/WipButton";
+import methods from "../services";
+import { useParams } from "react-router-dom";
+import { Card, Image, Text, Flex } from "rebass";
 
 function ArtistWipCard() {
   const { title } = useParams();
@@ -39,26 +39,27 @@ function ArtistWipCard() {
       })
       .catch((error) => {
         console.log(error);
-        console.log('Error occured.');
+        console.log("Error occured.");
       });
   }, []);
 
   return (
     <div>
-      <Flex px={2} color='white' alignItems='center' position='sticky'>
+      <Flex px={2} color="white" alignItems="center" position="sticky">
         <ArtistProfileButton />
-        <ArtistWipsButton />
-        <ArtistWipButton wip_title={title} />
+        {/* <ArtistWipsButton /> */}
+
+        {/* <ArtistWipButton wip_title={title} /> */}
       </Flex>
       <br />
-      <Card width={[256, 320]} mx='auto'>
-        <Image src={wipCard.img_url} alt='card img'></Image>
+      <Card width={[256, 320]} mx="auto">
+        <Image src={wipCard.img_url} alt="card img"></Image>
         <Text> {wipCard.upload_date} </Text>
         <Text>
-          {wipCard.seen_by_state === 'true' ? (
+          {wipCard.seen_by_state === "true" ? (
             <p>
-              {' '}
-              seen by {wipCard.seen_by_user} on {wipCard.seen_by_date}{' '}
+              {" "}
+              seen by {wipCard.seen_by_user} on {wipCard.seen_by_date}{" "}
             </p>
           ) : (
             <p> This wip remains unseen. </p>
@@ -68,7 +69,7 @@ function ArtistWipCard() {
           {cardComments.length !== 0 ? (
             cardComments.map((comment) => (
               <Text>
-                "{comment.comment}" posted at {comment.upload_date}{' '}
+                "{comment.comment}" posted at {comment.upload_date}{" "}
                 {comment.seen_by_date}
               </Text>
             ))
