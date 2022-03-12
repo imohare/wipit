@@ -8,15 +8,16 @@ import GalleristCardList from '../styled-components/gallerist/lists/GalleristCar
 import GalleristWipsButton from '../styled-components/gallerist/route-buttons/WipsButton';
 
 function GalleristWip() {
-  const { title } = useParams();
-  const [wip, setWip] = useState([]);
-
   type wipType = {
   wip_title: string,
   wip_cards: [any],
   update_request: string,
   update_request_date: string,
   }
+
+  const { title } = useParams();
+  const [wip, setWip] = useState<wipType | null>(null);
+
 
   useEffect(() => {
     methods
@@ -41,7 +42,7 @@ function GalleristWip() {
   // update_request_date: String,
 
   const handleClick = () => {
-    methods.updateRequest(wip._id, 'true');
+    // methods.updateRequest(wip._id, 'true');
   };
 
   return (
