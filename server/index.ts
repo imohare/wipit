@@ -18,7 +18,6 @@ app.get('/', (req:express.Request, res:express.Response) => {
     res.status(404);
   }
 });
-
 app.listen(port, () => {
   console.log(`I'm listening on port ${port}`)
 })

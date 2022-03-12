@@ -32,6 +32,13 @@ exports.getAllCards = async (req:express.Request, res:express.Response) => {
 exports.getAllComments = async (req:express.Request, res:express.Response) => {
   try {
     const results: Array<typeof Comments> = await Comments.find();
+=======
+exports.getAllComments = async (req:any, res:any) => {
+  const results: Array<typeof Comments> = await Comments.find();
+  console.log(results);
+  res.send("YAY");
+  /*try {
+    const results: Array<commentInterface> = await Comments.find();
     res.send(results);
     res.status(200);
   } catch (e) {
@@ -165,7 +172,7 @@ exports.deleteCard = async (req:express.Request, res:express.Response) => {
     res.end();
   }
 };
-
+  
 exports.updateCard = async (req:express.Request, res:express.Response) => {
   try {
     await Wips.updateMany(
