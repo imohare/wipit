@@ -39,7 +39,4 @@ Wips.init({
   }
 );
 
-//Wips.belongsTo(UserProfile);
-Wips.hasMany(Cards);
-
 export default Wips;
