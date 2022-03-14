@@ -65,7 +65,7 @@ function App(): JSX.Element {
               element={<Register userType={userType} />}
             />
 
-            <Route path="/login" element={<Login />} />
+            <Route path="/login" element={<Login userType={userType}/>} />
             <Route path="/a" element={<ArtistProfile />} />
             <Route path="/a/wips" element={<ArtistWips />} />
             <Route path="/a/wip/:title" element={<ArtistWip />} />
