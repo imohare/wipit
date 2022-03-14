@@ -8,23 +8,23 @@ import { Wrap, WrapItem } from '@chakra-ui/react'
 
 function GalleristProfile(): JSX.Element {
 
-  type wipType = {
-    _id: string
-    wip_title: string
-    wip_cards: [any]
-    update_request: string
-    update_request_date: string
+  interface wipType {
+    _id: String;
+    wip_title: String
+    wip_cards: String[];
+    update_request: String;
+    update_request_date: String;
     }
 
   const [wips, setWips] = useState<[wipType] | null>(null);
 
-  type cardType = {
-    img_url: string
-    upload_date: string
-    seen_by_state: string
-    seen_by_user: string
-    seen_by_date: string
-    comments: [any]
+  interface cardType {
+    img_url: String;
+    upload_date: String;
+    seen_by_state: String;
+    seen_by_user: String;
+    seen_by_date: String;
+    comments: String[];
     wipId?: {}
     //object id???
   }
