@@ -18,15 +18,8 @@ const methods = {
       method: "POST",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify({
-<<<<<<< HEAD
-        // eslint-disable-next-line no-undef
-        email: newUser.email,
-        // eslint-disable-next-line no-undef
-        password: newUser.password,
-=======
         email: user.email,
         password: user.password,
->>>>>>> origin/master
       }),
     });
     return result.json();

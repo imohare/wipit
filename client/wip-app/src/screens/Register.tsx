@@ -12,7 +12,7 @@ import {
 import React, { useContext, useState } from "react";
 import { EmailIcon, InfoIcon, LockIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
-import UserContext from "../userContext";
+import { UserContext } from "../userContext";
 import methods from "../services";
 const logo = require("../assets/wipit-logo-2.png");
 
@@ -27,21 +27,25 @@ interface registerProps {
 }
 
 export function Register({ userType }: registerProps): JSX.Element {
-  const { user, setUser, loginStatus, updateLoginStatus } = useContext(UserContext);
+  const { user, setUser, loginStatus, updateLoginStatus } =
+    useContext(UserContext);
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [uid, setUid] = useState("");
 
   async function handleSubmit(): Promise<void> {
-    const newUser = { name, email, password, type: userType };
+    const newUser = { name, email, password, type: userType, uid };
     setUser(newUser);
     setName("");
     setEmail("");
     setPassword("");
     console.log(user, "this is the user state");
 
-    updateLoginStatus(await methods.createUser(newUser));
+    const userInfo = await methods.createUser(newUser);
+    updateLoginStatus(userInfo[0]);
+    setUid(userInfo[1].profileId);
   }
 
   return (
