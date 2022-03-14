@@ -1,21 +1,20 @@
 import {DataTypes, Model} from '@sequelize/core';
 import sequelize from './config';
-import Wips from './wips';
 
 interface UserProfileInterface {
-  uid: string;
+  profileId: string;
   name: string;
   type: string;
 }
 
 class UserProfile extends Model<UserProfileInterface> implements UserProfileInterface {
-  public uid!: string;
+  public profileId!: string;
   public name!: string;
   public type!: string;
 }
 
 UserProfile.init({
-    uid: {
+    profileId: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true
@@ -33,7 +32,5 @@ UserProfile.init({
     sequelize: sequelize,
   }
 );
-
-UserProfile.hasMany(Wips);
 
 export default UserProfile;

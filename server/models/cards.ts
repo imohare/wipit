@@ -1,7 +1,5 @@
 import {DataTypes, Model} from '@sequelize/core';
 import sequelize from './config';
-import Wips from './wips';
-import UserProfile from './userProfile';
 
 interface CardsInterface {
   id: string;
@@ -34,9 +32,5 @@ Cards.init({
     sequelize: sequelize
   }
 );
-
-//Wips.hasMany(Cards);
-//Cards.belongsTo(Wips);
-//Cards.hasOne(UserProfile);
 
 export default Cards;

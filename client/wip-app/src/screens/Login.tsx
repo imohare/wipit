@@ -12,12 +12,44 @@ import {
   InputLeftElement,
   Input,
 } from "@chakra-ui/react";
-// import Theme from "../styled-components/theme/theme";
+import { useContext, useState } from "react";
 import { EmailIcon, LockIcon } from "@chakra-ui/icons";
-
+import UserContext from "../userContext";
+import methods from "../services";
 const logo = require("../assets/wipit-logo-2.png");
+// import Theme from "../styled-components/theme/theme";
 
-function Login(): JSX.Element {
+interface User {
+  name: string;
+  email: string;
+  password: string;
+  type: string;
+}
+interface loginProps {
+  userType: string;
+}
+
+function Login({ userType }: loginProps): JSX.Element {
+  const { user, setUser, loginStatus, updateLoginStatus } = useContext(UserContext);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  async function handleSubmit(): Promise<void> {
+    const userLogin = { email, password, type: userType };
+    setEmail("");
+    setPassword("");
+    console.log(user, "this is the user state");
+
+    //setting the user and updating the status with the info from the fetch request
+    const userInfo = await methods.getUser(userLogin);
+    if (userInfo) {
+      updateLoginStatus(userInfo[0]);
+      setUser(userInfo[1]);
+    } else {
+      alert("Wrong email or password");
+    }
+    console.log("userInfo ",userInfo);
+  }
   return (
     <>
       <Image src={logo} alt="Logo" width={200} />
@@ -32,13 +64,13 @@ function Login(): JSX.Element {
               <FormControl isRequired>
                 <InputGroup>
                   <InputLeftElement children={<EmailIcon />} />
-                  <Input type="email" placeholder="Enter Email" />
+                  <Input type="email" placeholder="Enter Email" onChange={(e) => setEmail(e.target.value)} isRequired/>
                 </InputGroup>
               </FormControl>
               <FormControl isRequired>
                 <InputGroup>
                   <InputLeftElement children={<LockIcon />} />
-                  <Input type="password" placeholder="Enter Password" />
+                  <Input type="password" placeholder="Enter Password" onChange={(e) => setPassword(e.target.value)} isRequired/>
                 </InputGroup>
               </FormControl>
               <Flex flexDirection={"row"}>
@@ -53,6 +85,7 @@ function Login(): JSX.Element {
                     size="md"
                     type="submit"
                     color="white"
+                    onClick={handleSubmit}
                   >
                     Gallerist
                   </Button>

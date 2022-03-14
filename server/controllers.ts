@@ -4,9 +4,10 @@ import bcrypt from 'bcrypt';
 import assert from 'assert';
 
 import db from './models/index';
+import UserProfile from './models/userProfile';
 
 const {Wips, Cards, Comments} = require('./models');
-
+/*
 exports.registerUser = async(req:express.Request, res:express.Response) => {
     try {
       const {name, email, password, type} = req.body;
@@ -16,12 +17,21 @@ exports.registerUser = async(req:express.Request, res:express.Response) => {
       bcrypt.genSalt(saltRounds, (err, salt) => {
         if(err) err
         bcrypt.hash(password, salt, async () => {
-          await db.UserLogin.create({uid: uuidv4(), name: name, email: email, password: password});
-          await db.UserProfile.create({uid: uuidv4(), name: name, type: type})
-        });
+          const userId = uuidv4();
+          const profileId = uuidv4();
+          const userLogin = await db.UserLogin.create({
+            loginId: userId,
+            email: email,
+            password: password
+          });
+          const newUserProfile = await db.UserProfile.create({
+            profileId: profileId,
+            name: name,
+            type: type
+          })
         res.send(true);
         res.status(200);
-      });
+      })});
     } catch (e) {
       console.log(e);
       console.error('failed registration');
@@ -29,6 +39,56 @@ exports.registerUser = async(req:express.Request, res:express.Response) => {
       res.status(400);
     }
   }
+*/
+exports.registerUser = async(req:express.Request, res:express.Response) => {
+    try {
+      const {name, email, password, type} = req.body;
+      const myUser = await db.UserLogin.findOne({where: {email: email}});
+      assert(myUser === null);
+      const saltRounds = 12;
+      bcrypt.genSalt(saltRounds, (err, salt) => {
+        if(err) err
+        bcrypt.hash(password, salt, async () => {
+          const userId = uuidv4();
+          const profileId = uuidv4();
+          const userLogin = await db.UserLogin.create({
+            loginId: userId,
+            name: name,
+            email: email,
+            password: password
+          });
+          const newUserProfile = await db.UserProfile.create({
+            profileId: profileId,
+            name: name,
+            type: type
+          })
+        res.send(true);
+        res.status(200);
+      })});
+    } catch (e) {
+      console.log(e);
+      console.error('failed registration');
+      res.send(false);
+      res.status(400);
+    }
+  }
+
+exports.loginUser = async (req:express.Request, res:express.Response) => {
+  try {
+    const {email, password} = req.body;
+    const userCheck = await db.UserLogin.findOne({where: {email: email, password: password}});
+    assert(userCheck !== null && bcrypt.compare(userCheck.getDataValue('password'), password));
+    const userInfo = await db.UserProfile.findOne({where: {name: userCheck.getDataValue('name')}});
+    assert(userInfo !== null);
+    res.send([true, userInfo]);
+    res.status(200);
+  } catch(e) {
+    console.log(e);
+    console.error('failed login');
+    res.send([false, []]);
+    res.status(401);
+  }
+}
 
 exports.loginUser = async (req:express.Request, res:express.Response) => {
   try {

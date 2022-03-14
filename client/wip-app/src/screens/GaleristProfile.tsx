@@ -4,7 +4,7 @@ import methods from '../services';
 import LogoutButton from '../components/LogoutButton';
 import {Box, Text, Flex, Center } from '@chakra-ui/react';
 import { Link, NavLink } from 'react-router-dom';
-import { Wrap, WrapItem } from '@chakra-ui/react'
+import { Wrap, WrapItem } from '@chakra-ui/react';
 
 function GalleristProfile(): JSX.Element {
 
