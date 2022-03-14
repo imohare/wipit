@@ -9,8 +9,6 @@ import {
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-
-// import logo from "../assets/wipit-logo-2.png";
 const logo = require("../assets/wipit-logo-2.png");
 
 interface homeProps {
