@@ -8,23 +8,23 @@ import { Wrap, WrapItem } from '@chakra-ui/react'
 
 function GalleristProfile(): JSX.Element {
 
-  type wipType = {
-    _id: string
-    wip_title: string
-    wip_cards: [any]
-    update_request: string
-    update_request_date: string
+  interface wipType {
+    _id: String;
+    wip_title: String
+    wip_cards: String[];
+    update_request: String;
+    update_request_date: String;
     }
 
   const [wips, setWips] = useState<[wipType] | null>(null);
 
-  type cardType = {
-    img_url: string
-    upload_date: string
-    seen_by_state: string
-    seen_by_user: string
-    seen_by_date: string
-    comments: [any]
+  interface cardType {
+    img_url: String;
+    upload_date: String;
+    seen_by_state: String;
+    seen_by_user: String;
+    seen_by_date: String;
+    comments: String[];
     wipId?: {}
     //object id???
   }
@@ -38,20 +38,22 @@ function GalleristProfile(): JSX.Element {
     password: 'secret',
     followed_artists: ['@ANNA_SKLADMANN', '@ARIANE_HUGHES', '@JACK_LAVER', '@YULIA_IOLSIZON', '@ELIZA_BLAKEMORE']
   }
-  // useEffect(() => {
-  //   methods.getWips().then((response) => {
-  //     setWips(response);
-  //   });
-  //   methods
-  //     .getAllCards()
-  //     .then((response) => {
-  //       setCards(response);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //       console.log('Error occured.');
-  //     });
-  // }, []);
+  useEffect(() => {
+    methods.getWips().then((response) => {
+      setWips(response);
+    });
+    // methods
+    //   .getAllCards()
+    //   .then((response) => {
+    //     setCards(response);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //     console.log('Error occured.');
+    //   });
+    console.log("inside ",wips);
+  }, []);
+  console.log("outside ",wips);
   // flexDirection='row' justifyContent='flex-end'
   return (
     <Flex backgroundColor='#f0f0f0' flexDirection='column'>
