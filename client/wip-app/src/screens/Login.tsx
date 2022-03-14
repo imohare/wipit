@@ -14,7 +14,7 @@ import {
 } from "@chakra-ui/react";
 import { useContext, useState } from "react";
 import { EmailIcon, LockIcon } from "@chakra-ui/icons";
-import UserContext from "../userContext";
+import { UserContext } from "../userContext";
 import methods from "../services";
 const logo = require("../assets/wipit-logo-2.png");
 // import Theme from "../styled-components/theme/theme";
@@ -30,7 +30,8 @@ interface loginProps {
 }
 
 function Login({ userType }: loginProps): JSX.Element {
-  const { user, setUser, loginStatus, updateLoginStatus } = useContext(UserContext);
+  const { user, setUser, loginStatus, updateLoginStatus } =
+    useContext(UserContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -48,7 +49,7 @@ function Login({ userType }: loginProps): JSX.Element {
     } else {
       alert("Wrong email or password");
     }
-    console.log("userInfo ",userInfo);
+    console.log("userInfo ", userInfo);
   }
   return (
     <>
@@ -64,13 +65,23 @@ function Login({ userType }: loginProps): JSX.Element {
               <FormControl isRequired>
                 <InputGroup>
                   <InputLeftElement children={<EmailIcon />} />
-                  <Input type="email" placeholder="Enter Email" onChange={(e) => setEmail(e.target.value)} isRequired/>
+                  <Input
+                    type="email"
+                    placeholder="Enter Email"
+                    onChange={(e) => setEmail(e.target.value)}
+                    isRequired
+                  />
                 </InputGroup>
               </FormControl>
               <FormControl isRequired>
                 <InputGroup>
                   <InputLeftElement children={<LockIcon />} />
-                  <Input type="password" placeholder="Enter Password" onChange={(e) => setPassword(e.target.value)} isRequired/>
+                  <Input
+                    type="password"
+                    placeholder="Enter Password"
+                    onChange={(e) => setPassword(e.target.value)}
+                    isRequired
+                  />
                 </InputGroup>
               </FormControl>
               <Flex flexDirection={"row"}>
