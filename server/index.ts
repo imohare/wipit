@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import db from './models/index';
 
 const router = require('./router');
 
@@ -18,6 +19,12 @@ app.get('/', (req:express.Request, res:express.Response) => {
     res.status(404);
   }
 });
-app.listen(port, () => {
-  console.log(`I'm listening on port ${port}`)
-})
+
+async function bootstrap(){
+  await db.sequelize.sync()
+  app.listen(port, () => {
+    console.log(`I'm listening on port ${port}`)
+  });
+};
+
+bootstrap();

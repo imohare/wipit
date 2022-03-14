@@ -1,6 +1,29 @@
 import express from 'express';
+import {v4 as uuidv4} from 'uuid';
+import bcrypt from 'bcrypt';
+
+import db from './models/index';
 
 const {Wips, Cards, Comments} = require('./models');
+
+exports.registerUser = async(req:express.Request, res:express.Response) => {
+    try {
+      const {name, email, password, type} = req.body;
+      const saltRounds = 12;
+      bcrypt.genSalt(saltRounds, (err, salt) => {
+        if(err) err
+        bcrypt.hash(password, salt, async () => {
+          await db.UserLogin.create({uid: uuidv4(), email: email, password: password});
+        });
+        res.send(true);
+      });
+    } catch (e) {
+      console.log(e);
+      console.error('failed registration');
+      res.send(false);
+      res.status(400);
+    }
+  }
 
 exports.getWips = async (req:express.Request, res:express.Response) => {
   try {
