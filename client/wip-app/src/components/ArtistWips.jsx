@@ -1,69 +1,61 @@
-import * as React from "react";
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import {
+  Button,
+  FormControl,
+  Input,
+  InputGroup,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
 import ArtistProfileButton from "../styled-components/artist/route-buttons/ProfileButton";
+// import ArtistWipsButton from "../styled-components/artist/route-buttons/WipsButton";
 import LogoutButton from "./LogoutButton";
-import WipInputBar from "../styled-components/artist/input-bars/WipInputBar";
-import WipsList from "../styled-components/artist/lists/WipsList";
-import methods from "../services";
-import { Box, Flex } from "rebass";
 
-function ArtistWips() {
-  const { title } = useParams();
-  const [wips, setWips] = useState([]);
-  const [newWip, setNewWip] = useState("");
-
-  useEffect(() => {
-    methods
-      .getWips()
-      .then((response) => {
-        setWips(response);
-      })
-      .catch((error) => {
-        console.log(error);
-        console.log("Error occured.");
-      });
-  }, []);
-
-  const addWip = async (wip_title) => {
-    const newWips = wips.slice();
-    const response = await methods.addWip(wip_title, "false", "");
-    newWips.push(response);
-    setWips(newWips);
-  };
-
-  const handleWipSubmit = (evt) => {
-    evt.preventDefault();
-    addWip(newWip);
-    setNewWip((newWip) => (newWip = ""));
-  };
-  //below was commented out for some reason
-  const deleteWip = (wipId) => {
-    const editedWipsList = wips.filter((el) => el._id !== wipId);
-    methods.deleteWip(wipId);
-    setWips(editedWipsList);
-  };
-
+function ArtistWip() {
   return (
-    <div>
-      <Flex>
-        <ArtistProfileButton />
-        <LogoutButton />
-      </Flex>
-      <Flex flexWrap="wrap" mx={-2}>
-        <Box px={2} py={2} width={2 / 3}>
-          <WipsList wips={wips} deleteWip={deleteWip}></WipsList>
-        </Box>
-        <Box px={2} py={2} width={1 / 3}>
-          <WipInputBar
-            newWip={newWip}
-            setNewWip={setNewWip}
-            handleWipSubmit={handleWipSubmit}
-          ></WipInputBar>
-        </Box>
-      </Flex>
-    </div>
+    <>
+      <LogoutButton />
+      <ArtistProfileButton />
+      <form action="submit">
+        <Stack spacing={3} marginTop="50%">
+          <Text fontSize={"34"} align="center">
+            Add New WIP
+          </Text>
+          <FormControl isRequired>
+            <Input
+              type="title"
+              placeholder="Enter Title of New WIP"
+              value="Title"
+              onChange={(e) => console.log("hi")}
+            />
+          </FormControl>
+          <FormControl isRequired>
+            <Input
+              type="collectionName"
+              placeholder="What collection"
+              value="collectionName"
+              onChange={(e) => console.log("hi")}
+            />
+          </FormControl>
+
+          {/* <RadioGroup onChange={setValue} value={value}>
+              <Stack direction="row">
+                <Text fontWeight={"700"}>Would you like to register as:</Text>
+                <Radio value="artist">Artist</Radio>
+                <Radio value="Gallerist">Gallerist</Radio>
+              </Stack>
+            </RadioGroup> */}
+
+          <Button
+            colorScheme="teal"
+            size="md"
+            type="submit"
+            onClick={() => console.log("submit")}
+          >
+            Create User
+          </Button>
+        </Stack>
+      </form>
+    </>
   );
 }
-
-export default ArtistWips;
+export default ArtistWip;
