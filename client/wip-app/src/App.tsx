@@ -51,6 +51,7 @@ import { userInfo } from "os";
 
 function App(): JSX.Element {
   const [user, setUser] = useState(null);
+  const [userType, setUserType] = useState<string>("");
   const value = useMemo(() => ({ user, setUser }), [user, setUser]);
 
   return (
@@ -58,8 +59,11 @@ function App(): JSX.Element {
       <Router>
         <UserContext.Provider value={value}>
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/register" element={<Register />} />
+            <Route path="/" element={<Home setUserType={setUserType} />} />
+            <Route
+              path="/register"
+              element={<Register userType={userType} />}
+            />
 
             <Route path="/login" element={<Login />} />
             <Route path="/a" element={<ArtistProfile />} />

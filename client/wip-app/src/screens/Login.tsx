@@ -13,8 +13,9 @@ import {
   Input,
 } from "@chakra-ui/react";
 // import Theme from "../styled-components/theme/theme";
-import logo from "../assets/wipit-logo.png";
-import { EmailIcon, InfoIcon, LockIcon } from "@chakra-ui/icons";
+import { EmailIcon, LockIcon } from "@chakra-ui/icons";
+
+const logo = require("../assets/wipit-logo-2.png");
 
 function Login(): JSX.Element {
   return (

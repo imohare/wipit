@@ -3,7 +3,7 @@ import LogoutButton from "../components/LogoutButton";
 import { Button } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 
-function ArtistProfile() {
+function ArtistProfile(): JSX.Element {
   return (
     <>
       {/* <ArtistWipsButton /> */}

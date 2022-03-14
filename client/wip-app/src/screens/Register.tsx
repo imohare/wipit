@@ -8,34 +8,40 @@ import {
   Button,
   Image,
   Flex,
-  Box,
-  RadioGroup,
-  Radio,
 } from "@chakra-ui/react";
 import React, { useContext, useState } from "react";
 import { EmailIcon, InfoIcon, LockIcon } from "@chakra-ui/icons";
-import logo from "../assets/wipit-logo-2.png";
 import { Link } from "react-router-dom";
 import UserContext from "../userContext";
 import methods from "../services";
+const logo = require("../assets/wipit-logo-2.png");
 
-export function Register(props) {
+interface User {
+  name: string;
+  email: string;
+  password: string;
+  type: string;
+}
+interface registerProps {
+  userType: string;
+}
+
+export function Register({ userType }: registerProps): JSX.Element {
   const { user, setUser } = useContext(UserContext);
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [type, setType] = useState("");
 
-  async function handleSubmit(e) {
-    const newUser = { name, email, password, type };
+  async function handleSubmit(): Promise<void> {
+    const newUser = { name, email, password, type: userType };
     setUser(newUser);
     setName("");
     setEmail("");
     setPassword("");
-    setType("");
-    await methods.createUser(newUser);
     console.log(user, "this is the user state");
+
+    await methods.createUser(newUser);
   }
 
   return (
