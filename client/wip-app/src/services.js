@@ -10,6 +10,7 @@ const methods = {
         type: newUser.type,
       }),
     });
+    return result.json();
   },
   getWips: async () => {
     const result = await fetch('http://localhost:3456/wips');
