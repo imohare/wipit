@@ -1,6 +1,7 @@
 import express from 'express';
 import {v4 as uuidv4} from 'uuid';
 import bcrypt from 'bcrypt';
+import assert from 'assert';
 
 import db from './models/index';
 
@@ -9,13 +10,17 @@ const {Wips, Cards, Comments} = require('./models');
 exports.registerUser = async(req:express.Request, res:express.Response) => {
     try {
       const {name, email, password, type} = req.body;
+      const myUser = await db.UserLogin.findOne({where: {email: email}});
+      assert(myUser === null);
       const saltRounds = 12;
       bcrypt.genSalt(saltRounds, (err, salt) => {
         if(err) err
         bcrypt.hash(password, salt, async () => {
-          await db.UserLogin.create({uid: uuidv4(), email: email, password: password});
+          await db.UserLogin.create({uid: uuidv4(), name: name, email: email, password: password});
+          await db.UserProfile.create({uid: uuidv4(), name: name, type: type})
         });
         res.send(true);
+        res.status(200);
       });
     } catch (e) {
       console.log(e);
@@ -24,6 +29,23 @@ exports.registerUser = async(req:express.Request, res:express.Response) => {
       res.status(400);
     }
   }
+
+exports.loginUser = async (req:express.Request, res:express.Response) => {
+  try {
+    const {email, password} = req.body;
+    const userCheck = await db.UserLogin.findOne({where: {email: email, password: password}});
+    assert(userCheck !== null && bcrypt.compare(userCheck.getDataValue('password'), password));
+    const userInfo = await db.UserProfile.findOne({where: {name: userCheck.getDataValue('name')}});
+    assert(userInfo !== null);
+    res.send([true, userInfo]);
+    res.status(200);
+  } catch(e) {
+    console.log(e);
+    console.error('failed login');
+    res.send([false, []]);
+    res.status(401);
+  }
+}
 
 exports.getWips = async (req:express.Request, res:express.Response) => {
   try {

@@ -3,7 +3,8 @@ import express from 'express';
 const router = express.Router();
 const methods = require('./controllers');
 
-router.post('/register', methods.registerUser)
+router.post('/register', methods.registerUser);
+router.post('/login', methods.loginUser);
 router.get('/wips', methods.getWips);
 router.get('/cards', methods.getAllCards);
 router.get('/comments', methods.getAllComments);

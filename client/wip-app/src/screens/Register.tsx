@@ -27,7 +27,7 @@ interface registerProps {
 }
 
 export function Register({ userType }: registerProps): JSX.Element {
-  const { user, setUser } = useContext(UserContext);
+  const { user, setUser, loginStatus, updateLoginStatus } = useContext(UserContext);
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -41,7 +41,7 @@ export function Register({ userType }: registerProps): JSX.Element {
     setPassword("");
     console.log(user, "this is the user state");
 
-    await methods.createUser(newUser);
+    updateLoginStatus(await methods.createUser(newUser));
   }
 
   return (

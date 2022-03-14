@@ -1,4 +1,5 @@
 const methods = {
+
   createUser: async (newUser) => {
     const result = await fetch('http://localhost:3456/register', {
       method: 'POST',
@@ -12,6 +13,19 @@ const methods = {
     });
     return result.json();
   },
+
+  getUser: async (user) => {
+    const result = await fetch('http://localhost:3456/login', {
+      method: 'POST',
+      headers: { 'Content-type': 'application/json' },
+      body: JSON.stringify({
+        email: newUser.email,
+        password: newUser.password,
+      }),
+    });
+    return result.json();
+  },
+
   getWips: async () => {
     const result = await fetch('http://localhost:3456/wips');
     return result.json();
