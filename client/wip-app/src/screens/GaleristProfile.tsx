@@ -38,20 +38,22 @@ function GalleristProfile(): JSX.Element {
     password: 'secret',
     followed_artists: ['@ANNA_SKLADMANN', '@ARIANE_HUGHES', '@JACK_LAVER', '@YULIA_IOLSIZON', '@ELIZA_BLAKEMORE']
   }
-  // useEffect(() => {
-  //   methods.getWips().then((response) => {
-  //     setWips(response);
-  //   });
-  //   methods
-  //     .getAllCards()
-  //     .then((response) => {
-  //       setCards(response);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //       console.log('Error occured.');
-  //     });
-  // }, []);
+  useEffect(() => {
+    methods.getWips().then((response) => {
+      setWips(response);
+    });
+    // methods
+    //   .getAllCards()
+    //   .then((response) => {
+    //     setCards(response);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //     console.log('Error occured.');
+    //   });
+    console.log("inside ",wips);
+  }, []);
+  console.log("outside ",wips);
   // flexDirection='row' justifyContent='flex-end'
   return (
     <Flex backgroundColor='#f0f0f0' flexDirection='column'>
