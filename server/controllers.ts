@@ -28,7 +28,7 @@ exports.registerUser = async(req:express.Request, res:express.Response) => {
           password: password,
           profileId: profileId
         });
-        res.send(newUserLogin)
+        res.send(newUserProfile)
         res.status(200);
       })
     });
