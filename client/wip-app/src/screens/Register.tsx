@@ -14,7 +14,7 @@ import { EmailIcon, InfoIcon, LockIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
 import { UserContext } from "../userContext";
 import methods from "../services";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const logo = require("../assets/wipit-logo-2.png");
 
@@ -46,10 +46,14 @@ export function Register({ userType }: registerProps): JSX.Element {
 
     const userInfo = await methods.createUser(newUser);
     setUser(userInfo);
-    let path = ''
-    console.log('user created: ', userInfo[1])
-    if(userInfo) {
-      path = path.concat(userInfo[1].type == 'artist' ? `/a` : `/g`);
+    let path = "";
+    console.log("user created: ", userInfo);
+    if (userInfo) {
+      path = path.concat(
+        userInfo.type == "artist"
+          ? `/a/${userInfo.profileId}`
+          : `/g/${userInfo.profileId}`
+      );
       console.log(path);
       navigate(path);
     } else {
