@@ -7,7 +7,7 @@ import {
   Text,
   Box,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 const logo = require("../assets/wipit-logo-2.png");
 

@@ -10,7 +10,7 @@ import GalleristWipCard from "./components/GalleristWipCard";
 import { ChakraProvider } from "@chakra-ui/react";
 import Register from "./screens/Register";
 import Home from "./screens/Home";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { CollectionContext, UserContext, WipContext } from "./userContext";
 
 function App(): JSX.Element {
