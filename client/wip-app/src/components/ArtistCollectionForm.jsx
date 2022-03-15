@@ -11,7 +11,7 @@ function ArtistCollectionForm() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    setCollectionName([name, ...collectionName]);
+    setCollectionName([...collectionName, name]);
     setCollection({ ...collection, collectionName: collectionName });
     setName("");
 

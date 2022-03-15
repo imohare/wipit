@@ -18,9 +18,9 @@ function ArtistCardForm(): JSX.Element {
 
   function handleSubmit(e: any) {
     e.preventDefault();
-    const newWip = { wipName, wipImage, wipCol };
-    setWip(newWip);
-    console.log(newWip, "newWip is here");
+
+    setWip([wip, { name: wipName, image: wipImage, col: wipCol }]);
+    console.log(wip, "newWip is here");
     setWipName("");
     setWipImage("");
     setWipCol("");
