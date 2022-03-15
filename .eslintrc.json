@@ -7,21 +7,17 @@
     "mocha": true
   },
   "extends": "eslint:recommended",
+  "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "ecmaVersion": 8,
-    "sourceType": "module"
+    "ecmaVersion": "latest",
+    "sourceType": "module",
+    "ecmaFeatures": { "jsx": true }
   },
   "rules": {
-    "indent": [
-      "error",
-      2
-    ],
+    "indent": ["error", 2],
     "keyword-spacing": "error",
     "linebreak-style": "error",
-    "quotes": [
-      "error",
-      "single"
-    ],
+    "quotes": ["error", "single"],
     "semi": "error",
     "space-before-blocks": "error",
     "space-before-function-paren": "error",
