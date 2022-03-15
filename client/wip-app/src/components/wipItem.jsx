@@ -9,14 +9,13 @@ function WipItem() {
     <Box
       ml={10}
       w="400px"
-      h="150px"
+      h="250px"
       boxShadow="lg"
       rounded="7px"
       bg={"whiteAlpha.100"}
       overflow="hidden"
     >
-      {/* <Text>{wip.newWip.name}</Text> */}
-      <Image src={wip.newWip.image} alt="user Image" />
+      <Image src={wip?.newWip?.image} alt="user Image" />
     </Box>
   );
 }

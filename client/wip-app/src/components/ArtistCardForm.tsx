@@ -27,7 +27,7 @@ function ArtistCardForm(): JSX.Element {
     const newWip = { name: wipName, image: wipImage, col: wipCol };
 
     setWip({ ...wip, newWip });
-
+    setWipImage("");
     setWipName("");
     setWipCol("");
     // const wipCard = await methods.createWipCard(newWip);
