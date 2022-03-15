@@ -15,6 +15,7 @@ import { Link } from "react-router-dom";
 import { UserContext } from "../userContext";
 import methods from "../services";
 import { useNavigate } from 'react-router-dom';
+
 const logo = require("../assets/wipit-logo-2.png");
 
 interface User {
@@ -45,10 +46,11 @@ export function Register({ userType }: registerProps): JSX.Element {
 
     const userInfo = await methods.createUser(newUser);
     setUser(userInfo);
-    console.log('user created: ', user)
-    if(user) {
-      let path = '/';
-      userType === 'artist' ? path.concat(`a/${user.uid}`) : path.concat(`g/${user.uid}`);
+    let path = ''
+    console.log('user created: ', userInfo[1])
+    if(userInfo) {
+      path = path.concat(userInfo[1].type == 'artist' ? `/a` : `/g`);
+      console.log(path);
       navigate(path);
     } else {
       alert("Try again with a different email!");
