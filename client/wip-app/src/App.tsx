@@ -42,14 +42,14 @@ function App(): JSX.Element {
 
                 <Route path="/login" element={<Login userType={userType} />} />
                 <Route
-                  path={`/a/${user.profileId}`}
+                  path={`/a/${user?.profileId}`}
                   element={<ArtistProfile />}
                 />
                 <Route path="/a/wips" element={<ArtistWips />} />
                 <Route path="/a/wip/:title" element={<ArtistWip />} />
                 <Route path="/collection" element={<Collection />} />
                 <Route
-                  path={`/g/${user.profileId}`}
+                  path={`/g/${user?.profileId}`}
                   element={<GalleristProfile />}
                 />
                 <Route path="/g/wips" element={<GalleristWips />} />
