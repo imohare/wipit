@@ -3,7 +3,6 @@ const { rest } = require('msw');
 // import { setupWorker } from 'msw';
 const { setupServer } = require('msw/node');
 const methods = require('./services');
-
 const mockWips = [
   {
     wip_title: 'Art',
@@ -42,6 +41,7 @@ describe('Api service getting wips', () => {
     const result = await methods.getWips();
     expect(result).toEqual(mockWips);
   });
+
   it('handles failure', async () => {
     server.use(
       rest.get('http://localhost:3456/wips', (req, res, ctx) => {
@@ -52,10 +52,11 @@ describe('Api service getting wips', () => {
       'Unexpected end of JSON input'
     );
   });
+
   it('checks for unhandled routes', async () => {
-    rest.get('http://localhost:3456678fhdjskahad/wips', (req, res, ctx) => {
-      expect(res.status).toEqual(500);
-      // console.log(res);
+    rest.get('http://localhost:54323456678fhdjskahad/wips', (req, res, ctx) => {
+      console.log(res);
+      expect(res).toEqual(200);
     });
   });
 });
