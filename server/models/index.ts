@@ -21,6 +21,7 @@ const db = {
   'Profile': Profile,
   'WipCollections': WipCollections,
   'Wips': Wips,
+  'Followers': Followers,
   Sequelize: Sequelize,
   sequelize: sequelize,
 };
