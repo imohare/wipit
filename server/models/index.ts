@@ -1,39 +1,26 @@
 import Sequelize from '@sequelize/core';
 import sequelize from './config';
-import userLogin from './userLogin';
-import userProfile from './userProfile';
+import Login from './userLogin';
+import Profile from './userProfile';
+import WipCollections from './wipcollections';
 import Wips from './wips';
-import Cards from './cards';
-/*
-userLogin.hasOne(userProfile, {
-  foreignKey: 'userId', sourceKey: 'profileId'
-});
+import Followers from './followers';
 
-userProfile.belongsTo(userLogin, {
-  foreignKey: 'userId', targetKey: 'profileId'
-});
-userProfile.hasMany(Wips, {
-  foreignKey: 'wipId'
-});
-userProfile.hasMany(Cards, {
-  foreignKey: 'cardId'
-});
-
-Wips.belongsTo(userProfile);
-Wips.hasMany(Cards, {
-  foreignKey: 'wipId'
-});
-
-Cards.belongsTo(Wips, {
-  foreignKey: 'wipId'
-});
-Cards.hasOne(userProfile);*/
+Login.belongsTo(Profile, {foreignKey: 'profileId'});
+Profile.hasOne(Login, {foreignKey: 'profileId'});
+WipCollections.belongsTo(Profile, {foreignKey: 'profileId'});
+Profile.hasMany(WipCollections, {foreignKey: 'profileId'});
+Wips.belongsTo(WipCollections, {foreignKey: 'wipId'});
+WipCollections.hasMany(Wips, {foreignKey: 'wipId'});
+Profile.hasOne(Followers, {foreignKey: 'profileId'});
+Followers.belongsTo(Profile, {foreignKey: 'userId'});
+Followers.belongsTo(Profile, {foreignKey: 'followerId'});
 
 const db = {
-  'UserLogin': userLogin,
-  'UserProfile': userProfile,
+  'Login': Login,
+  'Profile': Profile,
+  'WipCollections': WipCollections,
   'Wips': Wips,
-  'Cards': Cards,
   Sequelize: Sequelize,
   sequelize: sequelize,
 };
