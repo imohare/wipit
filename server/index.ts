@@ -21,7 +21,7 @@ app.get('/', (req:express.Request, res:express.Response) => {
 });
 
 async function bootstrap(){
-  await db.sequelize.sync()
+  await db.sequelize.sync();
   app.listen(port, () => {
     console.log(`I'm listening on port ${port}`)
   });

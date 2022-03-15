@@ -1,24 +1,24 @@
-import {DataTypes, Model} from '@sequelize/core';
+import {DataTypes, Model, Sequelize} from '@sequelize/core';
 import sequelize from './config';
-import UserProfile from './userProfile';
-import Cards from './cards';
 
 interface WipsInterface {
-  id: string;
+  wipId: string;
   title: string;
-  update_request: string | undefined;
-  update_request_date: string | undefined;
+  image: string;
+  uploadDate: string;
+  wipCollectionId: string;
 }
 
 class Wips extends Model<WipsInterface> implements WipsInterface {
-  public id!: string;
+  public wipId!: string;
   public title!: string;
-  public update_request: string | undefined;
-  public update_request_date: string | undefined;
+  public image!: string;
+  public uploadDate!: string;
+  public wipCollectionId!: string;
 }
 
 Wips.init({
-    id: {
+    wipId: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true
@@ -27,15 +27,22 @@ Wips.init({
       type: DataTypes.STRING,
       allowNull: false
     },
-    update_request: {
-      type:  DataTypes.STRING,
+    image: {
+      type: DataTypes.STRING,
+      allowNull: false
     },
-    update_request_date: {
-      type: DataTypes.DATE
+    uploadDate: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: Date.now().toString()
+    },
+    wipCollectionId: {
+      type: DataTypes.UUID
     }
   },
   {
-    sequelize: sequelize
+    sequelize: sequelize,
+    freezeTableName: true
   }
 );
 

@@ -1,19 +1,20 @@
 import {DataTypes, Model} from '@sequelize/core';
 import sequelize from './config';
 
-interface UserProfileInterface {
+interface ProfileInterface {
   profileId: string;
   name: string;
   type: string;
+
 }
 
-class UserProfile extends Model<UserProfileInterface> implements UserProfileInterface {
+class Profile extends Model<ProfileInterface> implements ProfileInterface {
   public profileId!: string;
   public name!: string;
   public type!: string;
 }
 
-UserProfile.init({
+Profile.init({
     profileId: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
@@ -30,7 +31,8 @@ UserProfile.init({
   },
   {
     sequelize: sequelize,
+    freezeTableName: true
   }
 );
 
-export default UserProfile;
+export default Profile;

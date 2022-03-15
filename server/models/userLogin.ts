@@ -1,28 +1,25 @@
 import {DataTypes, HasOne, Model} from '@sequelize/core';
 import sequelize from './config';
 
-interface userLoginInterface {
+interface LoginInterface {
   loginId: string;
-  name: string;
   email: string;
   password: string;
+  profileId: string;
 }
 
-class userLogin extends Model<userLoginInterface> implements userLoginInterface {
+class Login extends Model<LoginInterface> implements LoginInterface {
   public loginId!: string;
-  public name!: string;
   public email!: string;
   public password!: string;
+  public profileId!: string;
 }
 
-userLogin.init({
+Login.init({
     loginId: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
-    },
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false
+      primaryKey: true
     },
     email: {
       type: DataTypes.STRING,
@@ -31,11 +28,15 @@ userLogin.init({
     password: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    profileId: {
+      type: DataTypes.UUID,
     }
   },
   {
-    sequelize: sequelize
+    sequelize: sequelize,
+    freezeTableName: true
   }
 );
 
-export default userLogin;
+export default Login;

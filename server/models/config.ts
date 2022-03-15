@@ -5,8 +5,6 @@ const DATABASE = process.env.LEGACYDATABASE as string;
 const USER = process.env.USER as string;
 const PASSWORD = process.env.PASSWORD as string;
 
-console.log(DATABASE, USER, PASSWORD)
-
 const dbConfig = {
   host: 'localhost',
   dialect: 'postgres' as Dialect,
