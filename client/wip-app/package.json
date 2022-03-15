@@ -18,6 +18,7 @@
     "@types/react": "^17.0.40",
     "@types/react-dom": "^17.0.13",
     "@types/react-router-dom": "^5.3.3",
+    "@typescript-eslint/parser": "^5.15.0",
     "emotion-theming": "^11.0.0",
     "eslint": "^8.10.0",
     "firebase": "^8.10.0",

@@ -9,14 +9,13 @@ function ArtistCollectionForm() {
   const [collectionName, setCollectionName] = useState([]);
   const [name, setName] = useState("");
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    setCollectionName([...collectionName, name]);
-
+    setCollectionName([name, ...collectionName]);
     setCollection({ ...collection, collectionName: collectionName });
     setName("");
 
-    console.log(collection, "this is the collection state");
+    console.log(collectionName, "this is the collection state");
 
     // await methods.createCollection(collection);
   }

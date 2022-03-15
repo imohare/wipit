@@ -6,51 +6,74 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import { useContext } from "react";
-import { CollectionContext } from "../userContext";
+import { useContext, useState } from "react";
+import { CollectionContext, WipContext } from "../userContext";
 
 function ArtistCardForm(): JSX.Element {
   const { collection } = useContext(CollectionContext);
-  return (
-    <form action="submit">
-      <Stack spacing={3} mt={6}>
-        <Text ml={1} fontSize={"14"} fontWeight={"semibold"}>
-          Add New WIP Collection
-        </Text>
-        <Select placeholder="Select WIP Collection">
-          <option value="option1">
-            {collection ? collection.collectionName : "no collections"}
-          </option>
-          <option value="option2">Option 2</option>
-          <option value="option3">Option 3</option>
-        </Select>
-        <FormControl isRequired>
-          <Input
-            type="text"
-            placeholder="Enter Title of New WIP"
-            value="Title"
-            onChange={(e) => console.log("hi")}
-          />
-        </FormControl>
-        <FormControl isRequired>
-          <Input
-            type="text"
-            placeholder="Enter Title of New WIP"
-            value="Image"
-            onChange={(e) => console.log("hi")}
-          />
-        </FormControl>
+  const { wip, setWip } = useContext(WipContext);
+  const [wipName, setWipName] = useState("");
+  const [wipImage, setWipImage] = useState("");
+  const [wipCol, setWipCol] = useState("");
 
-        <Button
-          colorScheme="teal"
-          size="sm"
-          type="submit"
-          onClick={() => console.log("submit")}
-        >
-          Add WIP
-        </Button>
-      </Stack>
-    </form>
+  function handleSubmit(e: any) {
+    e.preventDefault();
+    const newWip = { wipName, wipImage, wipCol };
+    setWip(newWip);
+    console.log(newWip, "newWip is here");
+    setWipName("");
+    setWipImage("");
+    setWipCol("");
+    // const wipCard = await methods.createWipCard(newWip);
+  }
+
+  return (
+    <>
+      <form action="submit">
+        <Stack spacing={3} mt={6}>
+          <Text ml={1} fontSize={"14"} fontWeight={"semibold"}>
+            Add New WIP Collection
+          </Text>
+          <Select
+            placeholder="Select WIP Collection"
+            onChange={(e) => setWipCol(e.target.value)}
+          >
+            {collection
+              ? collection.collectionName.map((col: any) => {
+                  return <option value={col}>{col}</option>;
+                })
+              : "no collections"}
+          </Select>
+          <FormControl isRequired>
+            <Input
+              type="text"
+              placeholder="Enter Title of New WIP"
+              value={wipName}
+              onChange={(e) => setWipName(e.target.value)}
+            />
+          </FormControl>
+          <FormControl isRequired>
+            <Input
+              border={0}
+              p={0}
+              type="file"
+              placeholder="Enter Title of New WIP"
+              value={wipImage}
+              onChange={(e) => setWipImage(e.target.value)}
+            />
+          </FormControl>
+
+          <Button
+            colorScheme="teal"
+            size="sm"
+            type="submit"
+            onClick={handleSubmit}
+          >
+            Add WIP
+          </Button>
+        </Stack>
+      </form>
+    </>
   );
 }
 
