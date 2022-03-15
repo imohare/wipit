@@ -12,6 +12,7 @@ import Register from "./screens/Register";
 import Home from "./screens/Home";
 import { useMemo, useState } from "react";
 import { CollectionContext, UserContext, WipContext } from "./userContext";
+import Collection from "./screens/Collection";
 
 function App(): JSX.Element {
   const [user, setUser] = useState(null);
@@ -43,7 +44,7 @@ function App(): JSX.Element {
                 <Route path="/a" element={<ArtistProfile />} />
                 <Route path="/a/wips" element={<ArtistWips />} />
                 <Route path="/a/wip/:title" element={<ArtistWip />} />
-
+                <Route path="/collection" element={<Collection />} />
                 <Route path="/g" element={<GalleristProfile />} />
                 <Route path="/g/wips" element={<GalleristWips />} />
                 <Route path="/g/wip/:title" element={<GalleristWip />} />
