@@ -17,7 +17,7 @@ exports.registerUser = async(req:express.Request, res:express.Response) => {
       bcrypt.hash(password, salt, async () => {
         const userId = uuidv4();
         const profileId = uuidv4();
-        const newUserProfile = await db.Profile.create({
+        await db.Profile.create({
           profileId: profileId,
           name: name,
           type: type
@@ -69,7 +69,7 @@ exports.addWipCollection = async (req:express.Request, res:express.Response) => 
     const wipCollectionId = uuidv4();
     const post = await db.WipCollections.create({
       wipCollectionsId: wipCollectionId,
-      title: req.body.title,
+      wipCollectionTitle: req.body.title,
       profileId: req.body.profileId
     });
     res.send(post);
@@ -82,10 +82,20 @@ exports.addWipCollection = async (req:express.Request, res:express.Response) => 
   }
 };
 
-exports.getWipCollections = async (req:express.Request, res:express.Response) => {
+exports.getWipCollectionByUser = async (req:express.Request, res:express.Response) => {
   try {
-    const results = await db.WipCollections.findAll({});
-    res.send(results);
+    const results = await db.WipCollections.findAll({
+        where: {profileId: req.body.profileId},
+        attributes: [
+          'wipCollectionTitle',
+        ],
+        include: [{
+          model: db.Wips,
+          required: false,
+          right: true,
+        }],
+    });
+    res.send(results[0]);
     res.status(200);
   } catch (e) {
     console.log(e);
@@ -100,14 +110,13 @@ exports.addWip = async (req:express.Request, res:express.Response) => {
     const wipId = uuidv4();
     const post = await db.Wips.create({
       wipId: wipId,
-      title: req.body.title,
+      wipTitle: req.body.title,
       image: req.body.image,
       uploadDate: Date.now().toString(),
       wipCollectionId: req.body.wipCollectionId,
-
     });
     res.send(post);
-    res.status(201);
+    res.status(200);
   } catch (e) {
     console.log(e);
     console.error('addWip is failing');
