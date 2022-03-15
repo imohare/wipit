@@ -34,7 +34,6 @@ export function Register({ userType }: registerProps): JSX.Element {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const [uid, setUid] = useState("");
 
   async function handleSubmit(e: any): Promise<void> {
     e.preventDefault();
@@ -45,14 +44,6 @@ export function Register({ userType }: registerProps): JSX.Element {
     console.log("user: ", newUser);
 
     const userInfo = await methods.createUser(newUser);
-    //NEED A BACKEND UPDATE
-    //userInfo should look comething like this
-    // {name: 'name',
-    // email: 'email',
-    // password: 'password',
-    // type: "artist/gallerist",
-    // uid: 'id'
-    // }
     setUser(userInfo);
     console.log('user created: ', user)
     if(user) {
@@ -62,8 +53,6 @@ export function Register({ userType }: registerProps): JSX.Element {
     } else {
       alert("Try again with a different email!");
     }
-    // updateLoginStatus(userInfo[0]);
-    // setUid(userInfo[1].profileId);
   }
 
   return (
