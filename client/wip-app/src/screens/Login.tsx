@@ -16,6 +16,7 @@ import { useContext, useState } from "react";
 import { EmailIcon, LockIcon } from "@chakra-ui/icons";
 import { UserContext } from "../userContext";
 import methods from "../services";
+import { useNavigate } from "react-router-dom";
 const logo = require("../assets/wipit-logo-2.png");
 // import Theme from "../styled-components/theme/theme";
 
@@ -30,12 +31,13 @@ interface loginProps {
 }
 
 function Login({ userType }: loginProps): JSX.Element {
-  const { user, setUser, loginStatus, updateLoginStatus } =
-    useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-  async function handleSubmit(): Promise<void> {
+  async function handleSubmit(e: any): Promise<void> {
+    e.preventDefault();
     const userLogin = { email, password, type: userType };
     setEmail("");
     setPassword("");
@@ -43,13 +45,20 @@ function Login({ userType }: loginProps): JSX.Element {
 
     //setting the user and updating the status with the info from the fetch request
     const userInfo = await methods.getUser(userLogin);
+    let path = "";
+    console.log("user created: ", userInfo);
     if (userInfo) {
-      updateLoginStatus(userInfo[0]);
-      setUser(userInfo[1]);
+      setUser(userInfo);
+      path = path.concat(
+        userInfo.type == "artist"
+          ? `/a/${userInfo.profileId}`
+          : `/g/${userInfo.profileId}`
+      );
+      console.log(path);
+      navigate(path);
     } else {
-      alert("Wrong email or password");
+      alert("Try again with a different email!");
     }
-    console.log("userInfo ", userInfo);
   }
   return (
     <>
@@ -85,22 +94,25 @@ function Login({ userType }: loginProps): JSX.Element {
                 </InputGroup>
               </FormControl>
               <Flex flexDirection={"row"}>
-                <Link to="/a">
-                  <Button colorScheme="teal" size="md" type="submit" mr={8}>
-                    Artist
-                  </Button>
-                </Link>
-                <Link to="/g">
-                  <Button
-                    colorScheme="teal"
-                    size="md"
-                    type="submit"
-                    color="white"
-                    onClick={handleSubmit}
-                  >
-                    Gallerist
-                  </Button>
-                </Link>
+                <Button
+                  colorScheme="teal"
+                  size="md"
+                  type="submit"
+                  mr={8}
+                  onClick={handleSubmit}
+                >
+                  Artist
+                </Button>
+
+                <Button
+                  colorScheme="teal"
+                  size="md"
+                  type="submit"
+                  color="white"
+                  onClick={handleSubmit}
+                >
+                  Gallerist
+                </Button>
               </Flex>
             </Stack>
           </form>
