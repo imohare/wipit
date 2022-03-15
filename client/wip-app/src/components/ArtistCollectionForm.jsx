@@ -9,19 +9,22 @@ function ArtistCollectionForm() {
   const [collectionName, setCollectionName] = useState([]);
   const [name, setName] = useState("");
 
+  // setCollectionName([...collectionName, name]);
+  // setCollection({ ...collection, collectionName: collectionName });
+
   async function handleSubmit(e) {
     e.preventDefault();
-    setCollectionName([...collectionName, name]);
-    setCollection({ ...collection, collectionName: collectionName });
+    const newCollectionName = [...collectionName, name];
+    setCollectionName(newCollectionName);
+    setCollection({ ...collection, collectionName: newCollectionName });
     setName("");
-
-    console.log(collectionName, "this is the collection state");
 
     // await methods.createCollection(collection);
   }
 
   useEffect(() => {
     // setCollection({ ...collection, collectionName: collectionName });
+    console.log(collection, "this is the collection state");
   }, [collection]);
   return (
     <form action="submit">

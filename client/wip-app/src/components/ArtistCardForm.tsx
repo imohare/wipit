@@ -6,7 +6,7 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { CollectionContext, WipContext } from "../userContext";
 
 function ArtistCardForm(): JSX.Element {
@@ -18,14 +18,23 @@ function ArtistCardForm(): JSX.Element {
 
   function handleSubmit(e: any) {
     e.preventDefault();
+    //  const newCollectionName = [...collectionName, name];
+    // setCollectionName(newCollectionName);
+    // setCollection({ ...collection, collectionName: newCollectionName });
+    // setName("");
+    const newWip = { name: wipName, image: wipImage, col: wipCol };
 
-    setWip([wip, { name: wipName, image: wipImage, col: wipCol }]);
-    console.log(wip, "newWip is here");
+    setWip({ ...wip, newWip });
+
     setWipName("");
     setWipImage("");
     setWipCol("");
     // const wipCard = await methods.createWipCard(newWip);
   }
+  useEffect(() => {
+    // setCollection({ ...collection, collectionName: collectionName });
+    console.log(wip, "this is the wip state");
+  }, [wip]);
 
   return (
     <>
@@ -39,8 +48,12 @@ function ArtistCardForm(): JSX.Element {
             onChange={(e) => setWipCol(e.target.value)}
           >
             {collection
-              ? collection.collectionName.map((col: any) => {
-                  return <option value={col}>{col}</option>;
+              ? collection.collectionName.map((col: any, index: number) => {
+                  return (
+                    <option key={index} value={col}>
+                      {col}
+                    </option>
+                  );
                 })
               : "no collections"}
           </Select>
