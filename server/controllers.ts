@@ -86,13 +86,16 @@ exports.getWipCollection = async (req:express.Request, res:express.Response) => 
   try {
     const results = await db.WipCollections.findAll({
         attributes: [
-          'wipCollectionTitle',
+          'wipCollectionTitle'
         ],
         include: [{
+          model: db.Profile,
+          required: false
+        }, {
           model: db.Wips,
           required: false,
           order: [['uploadDate', 'desc']]
-        }],
+        }]
     });
     res.send(results);
     res.status(200);
@@ -110,6 +113,7 @@ exports.getWipCollectionByUser = async (req:express.Request, res:express.Respons
         where: {profileId: req.body.profileId},
         attributes: [
           'wipCollectionTitle',
+          'profileId'
         ],
         include: [{
           model: db.Wips,
