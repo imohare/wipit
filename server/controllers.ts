@@ -92,7 +92,7 @@ exports.getWipCollectionByUser = async (req:express.Request, res:express.Respons
         include: [{
           model: db.Wips,
           required: false,
-          right: true,
+          order: [['uploadDate', 'desc']]
         }],
     });
     res.send(results[0]);
