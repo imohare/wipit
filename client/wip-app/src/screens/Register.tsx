@@ -44,6 +44,7 @@ export function Register({ userType }: registerProps): JSX.Element {
     console.log(user, "this is the user state");
 
     const userInfo = await methods.createUser(newUser);
+
     updateLoginStatus(userInfo[0]);
     setUid(userInfo[1].profileId);
   }
