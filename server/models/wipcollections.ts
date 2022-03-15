@@ -3,13 +3,13 @@ import sequelize from './config';
 
 interface WipCollectionsInterface {
   wipCollectionsId: string;
-  title: string;
+  wipCollectionTitle: string;
   profileId: string;
 }
 
 class WipCollections extends Model<WipCollectionsInterface> implements WipCollectionsInterface {
   public wipCollectionsId!: string;
-  public title!: string;
+  public wipCollectionTitle!: string;
   public profileId!: string;
 }
 
@@ -19,7 +19,7 @@ WipCollections.init({
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true
     },
-    title: {
+    wipCollectionTitle: {
       type: DataTypes.STRING,
       allowNull: false
     },
