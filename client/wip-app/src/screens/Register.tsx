@@ -14,6 +14,8 @@ import { EmailIcon, InfoIcon, LockIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
 import { UserContext } from "../userContext";
 import methods from "../services";
+import { useNavigate } from 'react-router-dom';
+
 const logo = require("../assets/wipit-logo-2.png");
 
 interface User {
@@ -27,27 +29,32 @@ interface registerProps {
 }
 
 export function Register({ userType }: registerProps): JSX.Element {
-  const { user, setUser, loginStatus, updateLoginStatus } =
-    useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
+  const navigate = useNavigate();
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [uid, setUid] = useState("");
 
   async function handleSubmit(e: any): Promise<void> {
     e.preventDefault();
-    const newUser = { name, email, password, type: userType, uid };
-    setUser(newUser);
+    const newUser = { name, email, password, type: userType };
     setName("");
     setEmail("");
     setPassword("");
-    console.log(user, "this is the user state");
+    console.log("user: ", newUser);
 
     const userInfo = await methods.createUser(newUser);
-
-    updateLoginStatus(userInfo[0]);
-    setUid(userInfo[1].profileId);
+    setUser(userInfo);
+    let path = ''
+    console.log('user created: ', userInfo[1])
+    if(userInfo) {
+      path = path.concat(userInfo[1].type == 'artist' ? `/a` : `/g`);
+      console.log(path);
+      navigate(path);
+    } else {
+      alert("Try again with a different email!");
+    }
   }
 
   return (
