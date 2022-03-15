@@ -89,7 +89,7 @@ function GalleristProfile(): JSX.Element {
   //   backgroundSize="cover"
   //   backgroundRepeat="no-repeat"
   // >
-    <Flex backgroundColor='#f0f0f0' flexDirection='column'
+    <Flex backgroundColor='#f0f0f0' flexDirection='column' h='100vh'
     // maxW="container.xl"
     // h="50vh"
     // backgroundImage={galleristBackground}
@@ -98,7 +98,7 @@ function GalleristProfile(): JSX.Element {
     // backgroundRepeat="no-repeat"
     >
       <Container display='flex' mt='2' alignItems='center' justifyContent='space-between' bg='white' w='100%' p={5} color='black' boxShadow='md'
-        maxW="container.xl"
+        maxW="container.2xl"
         h="50vh"
         backgroundImage={galleristBackground}
         backgroundPosition="center"

@@ -77,22 +77,13 @@ function GalleristWips(): JSX.Element {
       backgroundSize="cover"
       backgroundRepeat="no-repeat"
       backgroundPosition="center"
-
-      //width={}
-      height="880"
+      height="100vh"
       >
-      {/* <Container
-      maxW="container.xl"
-      maxH='container.2xl'
-      //backgroundImage={gallery}
-      backgroundPosition="center"
-      backgroundSize="cover"
-      backgroundRepeat="no-repeat"
-    > */}
         <Button  m={2}
         backgroundColor='teal'
         color='white'
         onClick={profileRouteChange}>profile</Button>
+        <Flex justifyContent='center' mt={130}>
         <Wrap justify='center'>
         {wips.map((wip) => {
         return (
@@ -116,13 +107,13 @@ function GalleristWips(): JSX.Element {
         </WrapItem>)
     })}
     </Wrap>
+        </Flex>
         {/* <GalleristWipsList wips={wips} /> */}
         {/* {wips.map( one_wip =>
         <div key={one_wip._id}>
           <NavLink to={`/g/wip/${one_wip.wip_title}`}>{one_wip.wip_title}</NavLink>
           { (one_wip.wip_cards) ? <CardsListForWipsList one_wip={one_wip}/> : null}
         </div>} */}
-    {/* </Container> */}
     </Box>
   );
 }
