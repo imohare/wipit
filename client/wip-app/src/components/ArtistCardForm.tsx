@@ -16,24 +16,25 @@ function ArtistCardForm(): JSX.Element {
   const [wipImage, setWipImage] = useState("");
   const [wipCol, setWipCol] = useState("");
 
+  function changeHandler(e: any) {
+    if (e.target.files && e.target.files[0]) {
+      setWipImage(URL.createObjectURL(e.target.files[0]));
+      console.log(e.target.files[0], "IMAGE HERE");
+    }
+  }
   function handleSubmit(e: any) {
     e.preventDefault();
-    //  const newCollectionName = [...collectionName, name];
-    // setCollectionName(newCollectionName);
-    // setCollection({ ...collection, collectionName: newCollectionName });
-    // setName("");
     const newWip = { name: wipName, image: wipImage, col: wipCol };
 
     setWip({ ...wip, newWip });
 
     setWipName("");
-    setWipImage("");
     setWipCol("");
     // const wipCard = await methods.createWipCard(newWip);
   }
   useEffect(() => {
     // setCollection({ ...collection, collectionName: collectionName });
-    console.log(wip, "this is the wip state");
+    console.log(wip, "this is the wip WIPPPstate");
   }, [wip]);
 
   return (
@@ -64,17 +65,19 @@ function ArtistCardForm(): JSX.Element {
               value={wipName}
               onChange={(e) => setWipName(e.target.value)}
             />
+            {/* <Image src={wipImage} alt="preview image" /> */}
           </FormControl>
           <FormControl isRequired>
             <Input
               border={0}
               p={0}
               type="file"
-              placeholder="Enter Title of New WIP"
-              value={wipImage}
-              onChange={(e) => setWipImage(e.target.value)}
+              name="Image"
+              accept="image/*"
+              onChange={changeHandler}
             />
           </FormControl>
+          {/* <img src={wipImage} alt="banana" /> */}
 
           <Button
             colorScheme="teal"
