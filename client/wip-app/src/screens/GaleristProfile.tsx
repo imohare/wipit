@@ -6,7 +6,7 @@ import {Box, Text, Flex, Center, Container } from '@chakra-ui/react';
 import { Link, NavLink } from 'react-router-dom';
 import { Wrap, WrapItem, Button } from '@chakra-ui/react';
 import { useNavigate } from 'react-router';
-const galleristBackground = require('../assets/gallerist-background.png');
+const galleristBackground = require('../assets/galleristBackground.png');
 
 function GalleristProfile(): JSX.Element {
 
@@ -81,22 +81,7 @@ function GalleristProfile(): JSX.Element {
   // }, []);
   // flexDirection='row' justifyContent='flex-end'
   return (
-  //   <Container
-  //   maxW="container.xl"
-  //   h="50vh"
-  //   backgroundImage={galleristBackground}
-  //   backgroundPosition="center"
-  //   backgroundSize="cover"
-  //   backgroundRepeat="no-repeat"
-  // >
-    <Flex backgroundColor='#f0f0f0' flexDirection='column' h='100vh'
-    // maxW="container.xl"
-    // h="50vh"
-    // backgroundImage={galleristBackground}
-    // backgroundPosition="center"
-    // backgroundSize="cover"
-    // backgroundRepeat="no-repeat"
-    >
+    <Flex backgroundColor='#f0f0f0' flexDirection='column' h='100vh'>
       <Container display='flex' mt='2' alignItems='center' justifyContent='space-between' bg='white' w='100%' p={5} color='black' boxShadow='md'
         maxW="container.2xl"
         h="50vh"
@@ -145,37 +130,6 @@ function GalleristProfile(): JSX.Element {
       })}
       </Wrap>
     </Flex>
-    // </Container>
-    // <div>
-    //   <p> @ROMAN_ROAD </p>
-    //   <Box>
-    //     <p> followed artists.</p>
-    //     <form>
-    //       <input placeholder='Artist Name'></input>
-    //     </form>
-    //     <p>
-    //       @ANNA_SKLADMANN
-    //       <br />
-    //       @ARIANE_HUGHES
-    //       <br />
-    //       <Link to='/g/wips'> @ELIZA_BLAKEMORE </Link>
-    //       <br />
-    //       @JACK_LAVER
-    //       <br />
-    //       @YULIA_IOLSIZON
-    //     </p>
-    //   </Box>
-      // <Text> New Wip Updates from</Text>
-      // <NavLink to={`/g/wips`}>@ELIZA_BLAKEMORE:</NavLink>
-      // {{cards.map((card) =>
-      //   card.seen_by_state === 'false' ? (
-      //     <Card width={[256, 320]} mx='auto'>
-      //       <Image src={card.img_url}></Image>
-      //       <Text>{card.upload_date}</Text>
-      //     </Card>
-      //   ) : null
-      // )}
-    // </div>
   );
 }
 export default GalleristProfile;
