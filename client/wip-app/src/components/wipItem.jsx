@@ -1,9 +1,10 @@
-import { Box, Text } from "@chakra-ui/react";
+import { Box, Image, Text } from "@chakra-ui/react";
 import React, { useContext } from "react";
 import { WipContext } from "../userContext";
 
 function WipItem() {
   const { wip } = useContext(WipContext);
+  const wipInfo = {};
   return (
     <Box
       ml={10}
@@ -13,7 +14,10 @@ function WipItem() {
       rounded="7px"
       bg={"whiteAlpha.100"}
       overflow="hidden"
-    ></Box>
+    >
+      {/* <Text>{wip.newWip.name}</Text> */}
+      <Image src={wip.newWip.image} alt="user Image" />
+    </Box>
   );
 }
 

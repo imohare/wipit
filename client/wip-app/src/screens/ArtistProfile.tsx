@@ -55,6 +55,7 @@ function ArtistProfile(): JSX.Element {
             fontSize={"24"}
             fontWeight={"bold"}
             ml={8}
+            mb={10}
           >
             Collections
           </Text>
