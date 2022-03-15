@@ -35,7 +35,8 @@ export function Register({ userType }: registerProps): JSX.Element {
   const [password, setPassword] = useState("");
   const [uid, setUid] = useState("");
 
-  async function handleSubmit(): Promise<void> {
+  async function handleSubmit(e: any): Promise<void> {
+    e.preventDefault();
     const newUser = { name, email, password, type: userType, uid };
     setUser(newUser);
     setName("");

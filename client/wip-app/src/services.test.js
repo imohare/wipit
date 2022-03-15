@@ -3,7 +3,6 @@ const { rest } = require('msw');
 // import { setupWorker } from 'msw';
 const { setupServer } = require('msw/node');
 const methods = require('./services');
-
 const mockWips = [
   {
     wip_title: 'Art',
