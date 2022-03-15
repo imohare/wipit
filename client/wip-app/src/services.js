@@ -34,6 +34,7 @@ const methods = {
     });
     return result.json();
   },
+
   createWip: async (wip) => {
     const result = await fetch("http://localhost:3456/wip", {
       method: "POST",
@@ -47,12 +48,23 @@ const methods = {
     return result.json();
   },
 
-  getWips: async () => {
-    const result = await fetch("http://localhost:3456/wips");
+  getWipCollectionByUser: async (user) => {
+    const result = await fetch("http://localhost:3456/userwipcollections", {
+      method: "POST",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify({
+        profileId: user.profileId
+      }),
+    });
     return result.json();
   },
 
-  addWip: async (wip_title, update_request, update_request_date) => {
+  getWipCollection: async () => {
+    const result = await fetch("http://localhost:3456/wipcollections");
+    return result.json();
+  },
+
+  addUserWipCollection: async (wip_title, update_request, update_request_date) => {
     const response = await fetch("http://localhost:3456/wips", {
       method: "POST",
       headers: { "Content-type": "application/json" },
