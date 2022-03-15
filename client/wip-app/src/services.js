@@ -24,6 +24,28 @@ const methods = {
     });
     return result.json();
   },
+  createCollection: async (newCollection) => {
+    const result = await fetch("http://localhost:3456/collection", {
+      method: "POST",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify({
+        collectionName: newCollection.collectionName,
+      }),
+    });
+    return result.json();
+  },
+  createWip: async (wip) => {
+    const result = await fetch("http://localhost:3456/wip", {
+      method: "POST",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify({
+        wipName: wip.wipName,
+        wipImage: wip.wipImage,
+        wipCol: wip.wipCol,
+      }),
+    });
+    return result.json();
+  },
 
   getWips: async () => {
     const result = await fetch("http://localhost:3456/wips");

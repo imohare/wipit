@@ -10,45 +10,49 @@ import GalleristWipCard from "./components/GalleristWipCard";
 import { ChakraProvider } from "@chakra-ui/react";
 import Register from "./screens/Register";
 import Home from "./screens/Home";
-import { useMemo, useState } from "react";
-import { CollectionContext, UserContext } from "./userContext";
+import { useEffect, useMemo, useState } from "react";
+import { CollectionContext, UserContext, WipContext } from "./userContext";
 
 function App(): JSX.Element {
   const [user, setUser] = useState(null);
   const [userType, setUserType] = useState<string>("");
   const [collection, setCollection] = useState<any>(null);
+  const [wip, setWip] = useState<any>(null);
 
   const valueUser = useMemo(() => ({ user, setUser }), [user, setUser]);
   const valueCollection = useMemo(
     () => ({ collection, setCollection }),
     [collection, setCollection]
   );
+  const valueWip = useMemo(() => ({ wip, setWip }), [wip, setWip]);
 
   return (
     <ChakraProvider>
       <Router>
         <UserContext.Provider value={valueUser}>
           <CollectionContext.Provider value={valueCollection}>
-            <Routes>
-              <Route path="/" element={<Home setUserType={setUserType} />} />
-              <Route
-                path="/register"
-                element={<Register userType={userType} />}
-              />
+            <WipContext.Provider value={valueWip}>
+              <Routes>
+                <Route path="/" element={<Home setUserType={setUserType} />} />
+                <Route
+                  path="/register"
+                  element={<Register userType={userType} />}
+                />
 
-              <Route path="/login" element={<Login userType={userType} />} />
-              <Route path="/a" element={<ArtistProfile />} />
-              <Route path="/a/wips" element={<ArtistWips />} />
-              <Route path="/a/wip/:title" element={<ArtistWip />} />
+                <Route path="/login" element={<Login userType={userType} />} />
+                <Route path="/a" element={<ArtistProfile />} />
+                <Route path="/a/wips" element={<ArtistWips />} />
+                <Route path="/a/wip/:title" element={<ArtistWip />} />
 
-              <Route path="/g" element={<GalleristProfile />} />
-              <Route path="/g/wips" element={<GalleristWips />} />
-              <Route path="/g/wip/:title" element={<GalleristWip />} />
-              <Route
-                path="/g/wip/:title/:wip_card_id"
-                element={<GalleristWipCard />}
-              />
-            </Routes>
+                <Route path="/g" element={<GalleristProfile />} />
+                <Route path="/g/wips" element={<GalleristWips />} />
+                <Route path="/g/wip/:title" element={<GalleristWip />} />
+                <Route
+                  path="/g/wip/:title/:wip_card_id"
+                  element={<GalleristWipCard />}
+                />
+              </Routes>
+            </WipContext.Provider>
           </CollectionContext.Provider>
         </UserContext.Provider>
       </Router>

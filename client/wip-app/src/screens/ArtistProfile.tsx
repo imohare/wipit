@@ -6,6 +6,7 @@ import ArtistCollectionForm from "../components/ArtistCollectionForm";
 import ArtistCardForm from "../components/ArtistCardForm";
 import { useContext, useState } from "react";
 import { CollectionContext } from "../userContext";
+import WipItem from "../components/wipItem";
 const nftBanner = require("../assets/nft.png");
 
 function ArtistProfile(): JSX.Element {
@@ -13,7 +14,7 @@ function ArtistProfile(): JSX.Element {
     <>
       {/* <ArtistWipsButton /> */}
       <Container
-        maxW="container.xl"
+        maxW="container.2xl"
         h="50vh"
         backgroundImage={nftBanner}
         backgroundPosition="center"
@@ -57,6 +58,7 @@ function ArtistProfile(): JSX.Element {
           >
             Collections
           </Text>
+          <WipItem />
         </Box>
       </Wrap>
     </>
