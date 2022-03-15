@@ -22,15 +22,15 @@ exports.registerUser = async(req:express.Request, res:express.Response) => {
           name: name,
           type: type
         });
-        const newUserLogin = await db.Login.create({
+        await db.Login.create({
           loginId: userId,
           email: email,
           password: password,
           profileId: profileId
         });
-        res.send(newUserProfile)
+        res.send({'profileId': profileId, 'name': name, 'email': email, 'type': type})
         res.status(200);
-      })
+      });
     });
   } catch (e) {
     console.log(e);
