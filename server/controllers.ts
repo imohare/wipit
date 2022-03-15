@@ -116,6 +116,36 @@ exports.addWip = async (req:express.Request, res:express.Response) => {
   }
 };
 
+exports.addFollower = async (req:express.Request, res:express.Response) => {
+  try {
+    const follow = await db.Followers.create({
+      followId: uuidv4(),
+      userId:  req.body.userId,
+      followerId: req.body.targetId
+    });
+    res.status(200);
+    res.send('Followed');
+  } catch(e) {
+    console.log(e);
+    console.error('addFollower is failing');
+    res.status(401);
+    res.end();
+  }
+}
+
+exports.getFollowers = async (req:express.Request, res:express.Response) => {
+  try {
+    const followers = await db.Followers.findAll({where: {userId: req.body.userId}});
+    res.status(200);
+    res.send(followers);
+  } catch(e) {
+    console.log(e);
+    console.error('addFollower is failing');
+    res.status(401);
+    res.end();
+  }
+}
+
 /*
 exports.getAllCards = async (req:express.Request, res:express.Response) => {
   try {
