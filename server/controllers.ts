@@ -28,14 +28,14 @@ exports.registerUser = async(req:express.Request, res:express.Response) => {
           password: password,
           profileId: profileId
         });
-        res.send({'profileId': profileId, 'name': name, 'email': email, 'type': type})
+        res.send({'profileId': profileId, 'name': name, 'email': email, 'type': type});
         res.status(200);
       });
     });
   } catch (e) {
     console.log(e);
     console.error('failed registration');
-    res.send(false);
+    res.send(undefined);
     res.status(400);
   }
 }
@@ -95,7 +95,7 @@ exports.getWipCollectionByUser = async (req:express.Request, res:express.Respons
           order: [['uploadDate', 'desc']]
         }],
     });
-    res.send(results[0]);
+    res.send(results);
     res.status(200);
   } catch (e) {
     console.log(e);
