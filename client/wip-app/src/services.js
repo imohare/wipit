@@ -24,12 +24,14 @@ const methods = {
     });
     return result.json();
   },
-  createCollection: async (newCollection) => {
+
+  createCollection: async (wipCollectionName, profileId) => {
     const result = await fetch("http://localhost:3456/collection", {
       method: "POST",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify({
-        collectionName: newCollection.collectionName,
+        title: wipCollectionName,
+        userId: profileId,
       }),
     });
     return result.json();
