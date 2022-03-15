@@ -82,6 +82,28 @@ exports.addWipCollection = async (req:express.Request, res:express.Response) => 
   }
 };
 
+exports.getWipCollection = async (req:express.Request, res:express.Response) => {
+  try {
+    const results = await db.WipCollections.findAll({
+        attributes: [
+          'wipCollectionTitle',
+        ],
+        include: [{
+          model: db.Wips,
+          required: false,
+          order: [['uploadDate', 'desc']]
+        }],
+    });
+    res.send(results);
+    res.status(200);
+  } catch (e) {
+    console.log(e);
+    console.error('getWipCollections is failing');
+    res.status(500);
+    res.end();
+  }
+};
+
 exports.getWipCollectionByUser = async (req:express.Request, res:express.Response) => {
   try {
     const results = await db.WipCollections.findAll({

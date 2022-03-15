@@ -8,6 +8,7 @@ router.post("/login", methods.loginUser);
 router.post("/wipcollections", methods.addWipCollection);
 router.post("/wip", methods.addWip);
 router.post('/userwipcollections', methods.getWipCollectionByUser);
+router.get("/wipcollections", methods.getWipCollection);
 /*router.get('/cards', methods.getAllCards);
 router.get('/wip/:wipId/cards', methods.getCards);
 router.delete('/wips/:wipId', methods.deleteWip);
