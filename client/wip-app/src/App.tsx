@@ -17,13 +17,13 @@ import Collection from "./screens/Collection";
 function App(): JSX.Element {
   const [user, setUser] = useState(null);
   const [userType, setUserType] = useState<string>("");
-  const [collection, setCollection] = useState<any>(null);
+  const [collection, setWipCollection] = useState<any>(null);
   const [wip, setWip] = useState<any>(null);
 
   const valueUser = useMemo(() => ({ user, setUser }), [user, setUser]);
   const valueCollection = useMemo(
-    () => ({ collection, setCollection }),
-    [collection, setCollection]
+    () => ({ collection, setWipCollection }),
+    [collection, setWipCollection]
   );
   const valueWip = useMemo(() => ({ wip, setWip }), [wip, setWip]);
 
