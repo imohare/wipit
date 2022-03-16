@@ -14,20 +14,6 @@ const nftBanner = require("../assets/nft.png");
 function ArtistProfile(): JSX.Element {
   const { user, setUser } = useContext(UserContext);
 
-  // async const userFunction = ()=> {
-  //   const userInfo = await methods.getUser(userLogin);
-  //   let path = "";
-  //   console.log("user created: ", userInfo);
-  //   if (userInfo) {
-  //     setUser(userInfo);
-  //     path = path.concat(
-  //       userInfo.type == "artist"
-  //         ? `/a/${userInfo.profileId}`
-  //         : `/g/${userInfo.profileId}`
-  //     );
-  // }
-
-  useEffect(() => {}, []);
   return (
     <>
       {/* <ArtistWipsButton /> */}
@@ -77,6 +63,7 @@ function ArtistProfile(): JSX.Element {
           >
             Collections
           </Text>
+          <WipItem />
         </Box>
       </Wrap>
     </>
