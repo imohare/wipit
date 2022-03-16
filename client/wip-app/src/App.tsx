@@ -11,27 +11,27 @@ import { ChakraProvider } from "@chakra-ui/react";
 import Register from "./screens/Register";
 import Home from "./screens/Home";
 import { useMemo, useState } from "react";
-import { CollectionContext, UserContext, WipContext } from "./userContext";
+import { WipCollectionContext, UserContext, WipContext } from "./userContext";
 import Collection from "./screens/Collection";
 
 function App(): JSX.Element {
   const [user, setUser] = useState(null);
   const [userType, setUserType] = useState<string>("");
-  const [collection, setWipCollection] = useState<any>(null);
+  const [wipCollection, setWipCollection] = useState<any>(null);
   const [wip, setWip] = useState<any>(null);
 
   const valueUser = useMemo(() => ({ user, setUser }), [user, setUser]);
   const valueCollection = useMemo(
-    () => ({ collection, setWipCollection }),
-    [collection, setWipCollection]
+    () => ({ wipCollection, setWipCollection }),
+    [wipCollection, setWipCollection]
   );
   const valueWip = useMemo(() => ({ wip, setWip }), [wip, setWip]);
-
+  //${user?.profileId}
   return (
     <ChakraProvider>
       <Router>
         <UserContext.Provider value={valueUser}>
-          <CollectionContext.Provider value={valueCollection}>
+          <WipCollectionContext.Provider value={valueCollection}>
             <WipContext.Provider value={valueWip}>
               <Routes>
                 <Route path="/" element={<Home setUserType={setUserType} />} />
@@ -41,17 +41,11 @@ function App(): JSX.Element {
                 />
 
                 <Route path="/login" element={<Login userType={userType} />} />
-                <Route
-                  path={`/a/${user?.profileId}`}
-                  element={<ArtistProfile />}
-                />
+                <Route path={`/a/:profileId`} element={<ArtistProfile />} />
                 <Route path="/a/wips" element={<ArtistWips />} />
                 <Route path="/a/wip/:title" element={<ArtistWip />} />
                 <Route path="/collection" element={<Collection />} />
-                <Route
-                  path={`/g/${user?.profileId}`}
-                  element={<GalleristProfile />}
-                />
+                <Route path={`/g/:profileId`} element={<GalleristProfile />} />
                 <Route path="/g/wips" element={<GalleristWips />} />
                 <Route path="/g/wip/:title" element={<GalleristWip />} />
                 <Route
@@ -60,7 +54,7 @@ function App(): JSX.Element {
                 />
               </Routes>
             </WipContext.Provider>
-          </CollectionContext.Provider>
+          </WipCollectionContext.Provider>
         </UserContext.Provider>
       </Router>
     </ChakraProvider>

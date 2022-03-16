@@ -40,9 +40,9 @@ const methods = {
       method: 'POST',
       headers: { 'Content-type': 'application/json' },
       body: JSON.stringify({
-        wipName: wip.wipName,
+        wipTitle: wip.wipTitle,
         wipImage: wip.wipImage,
-        wipCol: wip.wipCol,
+        wipCollectionId: wip.wipCollectionId,
       }),
     });
     return result.json();

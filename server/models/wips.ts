@@ -4,7 +4,7 @@ import sequelize from './config';
 interface WipsInterface {
   wipId: string;
   wipTitle: string;
-  image: string;
+  wipImage: string;
   uploadDate: string;
   wipCollectionId: string;
 }
@@ -12,7 +12,7 @@ interface WipsInterface {
 class Wips extends Model<WipsInterface> implements WipsInterface {
   public wipId!: string;
   public wipTitle!: string;
-  public image!: string;
+  public wipImage!: string;
   public uploadDate!: string;
   public wipCollectionId!: string;
 }
@@ -27,7 +27,7 @@ Wips.init({
       type: DataTypes.STRING,
       allowNull: false
     },
-    image: {
+    wipImage: {
       type: DataTypes.STRING,
       allowNull: false
     },
