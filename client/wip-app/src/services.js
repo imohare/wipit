@@ -1,8 +1,8 @@
 const methods = {
   createUser: async (newUser) => {
-    const result = await fetch("http://localhost:3456/register", {
-      method: "POST",
-      headers: { "Content-type": "application/json" },
+    const result = await fetch('http://localhost:3456/register', {
+      method: 'POST',
+      headers: { 'Content-type': 'application/json' },
       body: JSON.stringify({
         name: newUser.name,
         email: newUser.email,
@@ -14,9 +14,9 @@ const methods = {
   },
 
   getUser: async (user) => {
-    const result = await fetch("http://localhost:3456/login", {
-      method: "POST",
-      headers: { "Content-type": "application/json" },
+    const result = await fetch('http://localhost:3456/login', {
+      method: 'POST',
+      headers: { 'Content-type': 'application/json' },
       body: JSON.stringify({
         email: user.email,
         password: user.password,
@@ -25,9 +25,9 @@ const methods = {
     return result.json();
   },
   createCollection: async (wipCollectionName, profileId) => {
-    const result = await fetch("http://localhost:3456/wipcollections", {
-      method: "POST",
-      headers: { "Content-type": "application/json" },
+    const result = await fetch('http://localhost:3456/wipcollections', {
+      method: 'POST',
+      headers: { 'Content-type': 'application/json' },
       body: JSON.stringify({
         title: wipCollectionName,
         profileId: profileId,
@@ -36,9 +36,9 @@ const methods = {
     return result.json();
   },
   createWip: async (wip) => {
-    const result = await fetch("http://localhost:3456/wip", {
-      method: "POST",
-      headers: { "Content-type": "application/json" },
+    const result = await fetch('http://localhost:3456/wip', {
+      method: 'POST',
+      headers: { 'Content-type': 'application/json' },
       body: JSON.stringify({
         wipTitle: wip.wipTitle,
         wipImage: wip.wipImage,
@@ -48,15 +48,15 @@ const methods = {
     return result.json();
   },
 
-  getWips: async () => {
-    const result = await fetch("http://localhost:3456/wips");
+  getWipCollections: async () => {
+    const result = await fetch('http://localhost:3456/wipCollections');
     return result.json();
   },
 
   addWip: async (wip_title, update_request, update_request_date) => {
-    const response = await fetch("http://localhost:3456/wips", {
-      method: "POST",
-      headers: { "Content-type": "application/json" },
+    const response = await fetch('http://localhost:3456/wips', {
+      method: 'POST',
+      headers: { 'Content-type': 'application/json' },
       body: JSON.stringify({
         wip_title: wip_title,
         update_request: update_request,
@@ -75,8 +75,8 @@ const methods = {
     seen_by_date
   ) => {
     const response = await fetch(`http://localhost:3456/wips/${wipId}`, {
-      method: "POST",
-      headers: { "Content-type": "application/json" },
+      method: 'POST',
+      headers: { 'Content-type': 'application/json' },
       body: JSON.stringify({
         img_url: img_url,
         upload_date: upload_date,
@@ -89,12 +89,12 @@ const methods = {
   },
 
   deleteWip: async (wipId) => {
-    await fetch(`http://localhost:3456/wips/${wipId}`, { method: "DELETE" });
+    await fetch(`http://localhost:3456/wips/${wipId}`, { method: 'DELETE' });
   },
 
   deleteCard: async (wipId, cardId) => {
     await fetch(`http://localhost:3456/wips/${wipId}/card/${cardId}`, {
-      method: "DELETE",
+      method: 'DELETE',
     });
   },
 
@@ -107,8 +107,8 @@ const methods = {
   ) => {
     try {
       await fetch(`http://localhost:3456/wips/updateCard/${wipId}/${cardId}`, {
-        method: "PATCH",
-        headers: { "Content-type": "application/json" },
+        method: 'PATCH',
+        headers: { 'Content-type': 'application/json' },
         body: JSON.stringify({
           seen_by_state: seen_by_state,
           seen_by_user: seen_by_user,
@@ -123,8 +123,8 @@ const methods = {
   updateTitle: async (wipId, wip_title) => {
     try {
       await fetch(`http://localhost:3456/wips/updateTitle/${wipId}`, {
-        method: "PATCH",
-        headers: { "Content-type": "application/json" },
+        method: 'PATCH',
+        headers: { 'Content-type': 'application/json' },
         body: JSON.stringify({ wip_title: wip_title }),
       });
     } catch (e) {
@@ -135,8 +135,8 @@ const methods = {
   updateRequest: async (wipId, update_request, update_request_date) => {
     try {
       await fetch(`http://localhost:3456/wips/updateRequest/${wipId}`, {
-        method: "PATCH",
-        headers: { "Content-type": "application/json" },
+        method: 'PATCH',
+        headers: { 'Content-type': 'application/json' },
         body: JSON.stringify({
           update_request: update_request,
           update_request_date: update_request_date,
@@ -148,7 +148,7 @@ const methods = {
   },
 
   getAllCards: async () => {
-    const result = await fetch("http://localhost:3456/cards");
+    const result = await fetch('http://localhost:3456/cards');
     return result.json();
   },
 
@@ -162,8 +162,8 @@ const methods = {
     const response = await fetch(
       `http://localhost:3456/wips/addComment/${cardId}`,
       {
-        method: "PUT",
-        headers: { "Content-type": "application/json" },
+        method: 'PUT',
+        headers: { 'Content-type': 'application/json' },
         body: JSON.stringify({
           comment: comment,
           upload_date: upload_date,
