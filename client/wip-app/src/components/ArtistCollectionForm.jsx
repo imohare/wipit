@@ -20,9 +20,13 @@ function ArtistCollectionForm() {
     setWipCollectionName(newCollectionName);
     setWipCollection({ ...collection, wipCollectionName: newCollectionName });
     setName("");
+    console.log(
+      collection.wipCollectionName[collection.wipCollectionName.length - 1],
+      "this is the WIPCOLLECTION state"
+    );
 
     await methods.createCollection(
-      collection[collection.length - 1],
+      collection.wipCollectionName[collection.wipCollectionName.length - 1],
       user.profileId
     );
   }
