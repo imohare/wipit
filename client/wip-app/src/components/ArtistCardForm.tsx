@@ -7,14 +7,16 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useContext, useEffect, useState } from "react";
-import { CollectionContext, WipContext } from "../userContext";
+import methods from "../services";
+import { WipCollectionContext, WipContext } from "../userContext";
 
 function ArtistCardForm(): JSX.Element {
-  const { collection } = useContext(CollectionContext);
+  const { wipCollection } = useContext(WipCollectionContext);
   const { wip, setWip } = useContext(WipContext);
-  const [wipName, setWipName] = useState("");
+  const [wipTitle, setWipTitle] = useState("");
   const [wipImage, setWipImage] = useState("");
-  const [wipCol, setWipCol] = useState("");
+  const [wipColId, setWipColId] = useState(null);
+  const [wipCol, setWipCol] = useState(null);
 
   function changeHandler(e: any) {
     if (e.target.files && e.target.files[0]) {
@@ -22,15 +24,17 @@ function ArtistCardForm(): JSX.Element {
       console.log(e.target.files[0], "IMAGE HERE");
     }
   }
-  function handleSubmit(e: any) {
-    e.preventDefault();
-    const newWip = { name: wipName, image: wipImage, col: wipCol };
+  // use collectioncontext to grab wipid & make call
+  // wipcol = [wipcollid, wipcollname]
 
-    setWip({ ...wip, newWip });
+  async function handleSubmit(e: any) {
+    e.preventDefault();
+    /*const newWip = { wipTitle: wipTitle, wipImage: wipImage, WipCollectionId: wipCol };
+    setWipTitle("");
     setWipImage("");
-    setWipName("");
     setWipCol("");
-    // const wipCard = await methods.createWipCard(newWip);
+    const result = await methods.createWip(newWip);
+    setWip(wip === null ? [result] : wip.concat([result]));*/
   }
   useEffect(() => {
     // setCollection({ ...collection, collectionName: collectionName });
@@ -46,13 +50,13 @@ function ArtistCardForm(): JSX.Element {
           </Text>
           <Select
             placeholder="Select WIP Collection"
-            onChange={(e) => setWipCol(e.target.value)}
+            onChange={(e:any) => setWipCol(e.target.value)}
           >
-            {collection
-              ? collection.wipCollectionName.map((col: any, index: number) => {
+            {wipCollection
+              ? wipCollection.map((col: any) => {
                   return (
-                    <option key={index} value={col}>
-                      {col}
+                    <option key={col.wipCollectionId} value={col.wipCollectionTitle}>
+                      {col.wipCollectionTitle}
                     </option>
                   );
                 })
@@ -62,8 +66,8 @@ function ArtistCardForm(): JSX.Element {
             <Input
               type="text"
               placeholder="Enter Title of New WIP"
-              value={wipName}
-              onChange={(e) => setWipName(e.target.value)}
+              value={wipTitle}
+              onChange={(e) => setWipTitle(e.target.value)}
             />
             {/* <Image src={wipImage} alt="preview image" /> */}
           </FormControl>
