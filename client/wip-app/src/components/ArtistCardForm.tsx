@@ -32,7 +32,7 @@ function ArtistCardForm(): JSX.Element {
     const newWip = {
       wipTitle: wipTitle,
       wipImage: wipImage,
-      WipCollectionId: wipCol,
+      wipCollectionId: wipCol,
     };
     setWipTitle("");
     setWipImage("");
