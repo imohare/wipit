@@ -64,6 +64,11 @@ function Home({ setUserType }: homeProps): JSX.Element {
               </Button>
             </Link>
           </Flex>
+          <Link to="/login">
+            <Text align="center" color="gray.600">
+              Already a User? Login.
+            </Text>
+          </Link>
         </Box>
       </Stack>
     </>

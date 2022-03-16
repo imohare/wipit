@@ -66,7 +66,7 @@ function Login({ userType }: loginProps): JSX.Element {
       <Flex alignItems="center">
         <Box mx="auto">
           <form action="submit">
-            <Stack spacing={3} marginTop="50%">
+            <Stack spacing={3} marginTop="50%" align="center">
               <Text fontSize={"34"} align="center">
                 Login
               </Text>
@@ -93,7 +93,7 @@ function Login({ userType }: loginProps): JSX.Element {
                   />
                 </InputGroup>
               </FormControl>
-              <Flex flexDirection={"row"}>
+              <Flex align="center">
                 <Button
                   colorScheme="teal"
                   size="md"
@@ -101,27 +101,20 @@ function Login({ userType }: loginProps): JSX.Element {
                   mr={8}
                   onClick={handleSubmit}
                 >
-                  Artist
-                </Button>
-
-                <Button
-                  colorScheme="teal"
-                  size="md"
-                  type="submit"
-                  color="white"
-                  onClick={handleSubmit}
-                >
-                  Gallerist
+                  Login
                 </Button>
               </Flex>
             </Stack>
           </form>
           <Flex flexDirection={"row"}>
-            <Text mr={2} mt={3}>
+            <Text mr={2} mt={3} color="gray.600">
               Don't have a login?{" "}
             </Text>
-            <Link to="/">
-              <Text mt={3}> Register here.</Text>
+            <Link to="/register">
+              <Text mt={3} color="teal">
+                {" "}
+                Register here.
+              </Text>
             </Link>
           </Flex>
         </Box>
