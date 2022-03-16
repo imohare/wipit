@@ -1,183 +1,198 @@
-import express from 'express';
-import {v4 as uuidv4} from 'uuid';
-import bcrypt from 'bcrypt';
-import assert from 'assert';
-import { Sequelize } from '@sequelize/core';
+import express from 'express'
+import { v4 as uuidv4 } from 'uuid'
+import bcrypt from 'bcrypt'
+import assert from 'assert'
+import { Sequelize } from '@sequelize/core'
 
-import db from './models/index';
+import db from './models/index'
 
-exports.registerUser = async(req:express.Request, res:express.Response) => {
+exports.registerUser = async (req: express.Request, res: express.Response) => {
   try {
-    const {name, email, password, type} = req.body;
-    const myUser = await db.Login.findOne({where: {email: email}});
-    assert(myUser === null);
-    const saltRounds = 12;
+    const { name, email, password, type } = req.body
+    const myUser = await db.Login.findOne({ where: { email: email } })
+    assert(myUser === null)
+    const saltRounds = 12
     bcrypt.genSalt(saltRounds, (err, salt) => {
-      if(err) err
+      if (err) err
       bcrypt.hash(password, salt, async () => {
-        const userId = uuidv4();
-        const profileId = uuidv4();
+        const userId = uuidv4()
+        const profileId = uuidv4()
         await db.Profile.create({
           profileId: profileId,
           name: name,
           type: type
-        });
+        })
         await db.Login.create({
           loginId: userId,
           email: email,
           password: password,
           profileId: profileId
-        });
-        res.send({'profileId': profileId, 'name': name, 'email': email, 'type': type});
-        res.status(200);
-      });
-    });
+        })
+        res.send({ profileId: profileId, name: name, email: email, type: type })
+        res.status(200)
+      })
+    })
   } catch (e) {
-    console.log(e);
-    console.error('failed registration');
-    res.send(undefined);
-    res.status(400);
+    console.log(e)
+    console.error('failed registration')
+    res.send(undefined)
+    res.status(400)
   }
 }
 
-exports.loginUser = async (req:express.Request, res:express.Response) => {
+exports.loginUser = async (req: express.Request, res: express.Response) => {
   try {
-    const {email, password} = req.body;
-    const result = await db.Login.findOne(
-      {
-        where: {email: email, password: password},
-        include: [{
+    const { email, password } = req.body
+    const result = await db.Login.findOne({
+      where: { email: email, password: password },
+      include: [
+        {
           model: db.Profile,
           attributes: []
-        }],
-        attributes: ['profileId', [Sequelize.col('Profile.name'), 'name'], [Sequelize.col('Profile.type'), 'type']]
-      }
-    );
-    assert(result !== null);
-    res.send(result);
-    res.status(200);
-  } catch(e) {
-    console.log(e);
-    console.error('failed login');
-    res.send([false, []]);
-    res.status(401);
+        }
+      ],
+      attributes: [
+        'profileId',
+        [Sequelize.col('Profile.name'), 'name'],
+        [Sequelize.col('Profile.type'), 'type']
+      ]
+    })
+    assert(result !== null)
+    res.send(result)
+    res.status(200)
+  } catch (e) {
+    console.log(e)
+    console.error('failed login')
+    res.send([false, []])
+    res.status(401)
   }
 }
 
-exports.addWipCollection = async (req:express.Request, res:express.Response) => {
+exports.addWipCollection = async (
+  req: express.Request,
+  res: express.Response
+) => {
   try {
-    const wipCollectionId = uuidv4();
+    const wipCollectionId = uuidv4()
     const post = await db.WipCollections.create({
       wipCollectionId: wipCollectionId,
       wipCollectionTitle: req.body.title,
       profileId: req.body.profileId
-    });
-    res.send(post);
-    res.status(201);
+    })
+    res.send(post)
+    res.status(201)
   } catch (e) {
-    console.log(e);
-    console.error('addWipCollection is failing');
-    res.status(500);
-    res.end();
+    console.log(e)
+    console.error('addWipCollection is failing')
+    res.status(500)
+    res.end()
   }
-};
+}
 
-exports.getWipCollection = async (req:express.Request, res:express.Response) => {
+exports.getWipCollection = async (
+  req: express.Request,
+  res: express.Response
+) => {
   try {
     const results = await db.WipCollections.findAll({
-        attributes: [
-          'wipCollectionTitle'
-        ],
-        include: [{
+      attributes: ['wipCollectionTitle'],
+      include: [
+        {
           model: db.Profile,
           required: false
-        }, {
+        },
+        {
           model: db.Wips,
           required: false,
           order: [['uploadDate', 'desc']]
-        }]
-    });
-    res.send(results);
-    res.status(200);
+        }
+      ]
+    })
+    res.send(results)
+    res.status(200)
   } catch (e) {
-    console.log(e);
-    console.error('getWipCollections is failing');
-    res.status(500);
-    res.end();
+    console.log(e)
+    console.error('getWipCollections is failing')
+    res.status(500)
+    res.end()
   }
-};
+}
 
-exports.getWipCollectionByUser = async (req:express.Request, res:express.Response) => {
+exports.getWipCollectionByUser = async (
+  req: express.Request,
+  res: express.Response
+) => {
   try {
     const results = await db.WipCollections.findAll({
-        where: {profileId: req.body.profileId},
-        attributes: [
-          'wipCollectionTitle',
-          'profileId'
-        ],
-        include: [{
+      where: { profileId: req.body.profileId },
+      attributes: ['wipCollectionTitle', 'profileId'],
+      include: [
+        {
           model: db.Wips,
           required: false,
           order: [['uploadDate', 'desc']]
-        }],
-    });
-    res.send(results);
-    res.status(200);
+        }
+      ]
+    })
+    res.send(results)
+    res.status(200)
   } catch (e) {
-    console.log(e);
-    console.error('getWipCollections is failing');
-    res.status(500);
-    res.end();
+    console.log(e)
+    console.error('getWipCollections is failing')
+    res.status(500)
+    res.end()
   }
-};
+}
 
-exports.addWip = async (req:express.Request, res:express.Response) => {
+exports.addWip = async (req: express.Request, res: express.Response) => {
   try {
-    const wipId = uuidv4();
+    const wipId = uuidv4()
     const post = await db.Wips.create({
       wipId: wipId,
       wipTitle: req.body.wipTitle,
       wipImage: req.body.wipImage,
       uploadDate: Date.now().toString(),
-      wipCollectionId: req.body.wipCollectionId,
-    });
-    res.send(post);
-    res.status(200);
+      wipCollectionId: req.body.wipCollectionId
+    })
+    res.send(post)
+    res.status(200)
   } catch (e) {
-    console.log(e);
-    console.error('addWip is failing');
-    res.status(500);
-    res.end();
-  }
-};
-
-exports.addFollower = async (req:express.Request, res:express.Response) => {
-  try {
-    const follow = await db.Followers.create({
-      followId: uuidv4(),
-      userId:  req.body.userId,
-      followerId: req.body.targetId
-    });
-    res.status(200);
-    res.send('Followed');
-  } catch(e) {
-    console.log(e);
-    console.error('addFollower is failing');
-    res.status(401);
-    res.end();
+    console.log(e)
+    console.error('addWip is failing')
+    res.status(500)
+    res.end()
   }
 }
 
-exports.getFollowers = async (req:express.Request, res:express.Response) => {
+exports.addFollower = async (req: express.Request, res: express.Response) => {
   try {
-    const followers = await db.Followers.findAll({where: {userId: req.body.userId}});
-    res.status(200);
-    res.send(followers);
-  } catch(e) {
-    console.log(e);
-    console.error('addFollower is failing');
-    res.status(401);
-    res.end();
+    const follow = await db.Followers.create({
+      followId: uuidv4(),
+      userId: req.body.userId,
+      followerId: req.body.targetId
+    })
+    res.status(200)
+    res.send('Followed')
+  } catch (e) {
+    console.log(e)
+    console.error('addFollower is failing')
+    res.status(401)
+    res.end()
+  }
+}
+
+exports.getFollowers = async (req: express.Request, res: express.Response) => {
+  try {
+    const followers = await db.Followers.findAll({
+      where: { userId: req.body.userId }
+    })
+    res.status(200)
+    res.send(followers)
+  } catch (e) {
+    console.log(e)
+    console.error('addFollower is failing')
+    res.status(401)
+    res.end()
   }
 }
 
