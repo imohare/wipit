@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import methods from '../services';
 import GalleristWipsList from '../styled-components/gallerist/lists/GalleristWipsList';
-import { Wrap, WrapItem, Button } from '@chakra-ui/react';
+import { Wrap, WrapItem, Button, ScaleFade } from '@chakra-ui/react';
 import { useNavigate } from 'react-router';
 import { Link, NavLink } from 'react-router-dom';
-import {Box, Text, Flex, Center, Container, Image } from '@chakra-ui/react';
+import {Box, Text, Flex, Center, Container, Image, Heading } from '@chakra-ui/react';
 //const gallery = require('../assets/gallery.png');
 const gallery = require('../assets/gallery2.jpeg');
+const addBtn = require('../assets/btn-add.svg').default;
+const addedBtn = require('../assets/btn-added.svg').default;
 
 function GalleristWips(): JSX.Element {
 
@@ -60,6 +62,14 @@ function GalleristWips(): JSX.Element {
     navigate(path);
   }
 
+  let toggleButton = addBtn;
+
+  const addFollower = () => {
+    console.log("clicked");
+    toggleButton = (toggleButton === addBtn ? addedBtn : addBtn);
+    console.log(toggleButton);
+  }
+
   // useEffect(() => {
   //   methods
   //     .getWips()
@@ -78,42 +88,48 @@ function GalleristWips(): JSX.Element {
       backgroundRepeat="no-repeat"
       backgroundPosition="center"
       height="100vh"
+      w="full"
       >
         <Button  m={2}
         backgroundColor='teal'
         color='white'
-        onClick={profileRouteChange}>profile</Button>
+          onClick={profileRouteChange}>profile</Button>
         <Flex justifyContent='center' mt={130}>
         <Wrap justify='center'>
         {wips.map((wip) => {
         return (
-          <WrapItem>
-          <NavLink to='./users/:id'>
-          <Box
-          maxW='sm'
-          borderWidth='1px'
-          borderRadius='lg'
-          overflow='hidden'
-          display='flex'
-          w='250px'
-          h='300px'
-          margin='10px'
-          bg='white'
-          boxShadow='md'>
-            <Image src={wip.wip_cards[0]} />
-            <Text color='white'>Author: ${wip.author}</Text>
-          </Box>
-          </NavLink>
-        </WrapItem>)
-    })}
-    </Wrap>
-        </Flex>
-        {/* <GalleristWipsList wips={wips} /> */}
-        {/* {wips.map( one_wip =>
-        <div key={one_wip._id}>
-          <NavLink to={`/g/wip/${one_wip.wip_title}`}>{one_wip.wip_title}</NavLink>
-          { (one_wip.wip_cards) ? <CardsListForWipsList one_wip={one_wip}/> : null}
-        </div>} */}
+          <ScaleFade initialScale={0.9} in={true} whileHover={{scale: 1.1}}>
+            <WrapItem>
+                <Box
+                marginTop='150px'
+                borderWidth='1px'
+                w='full'
+                marginX='10px'
+                background='rgba(255, 255, 255, .5)'
+                boxShadow='md'
+                borderRadius='lg'
+                pt='20px'
+                px='10px'
+                cursor='pointer'>
+                <NavLink to='./users/:id'>
+                  <Center>
+                    <Image src={wip.wip_cards[0]}/>
+                  </Center>
+                </NavLink>
+                  <Box display='flex' flexDirection='row' p='2'>
+                  <Button background='transparent' color='black' opacity={1} onClick={addFollower} >
+                    <Image src={toggleButton} />
+                  </Button>
+                  <Box mt='2'>
+                    <Text color='black' textAlign='center' fontSize='18px' >Author: ${wip.author} </Text>
+                  </Box>
+                </Box>
+              </Box>
+            </WrapItem>
+          </ScaleFade>)
+        })}
+        </Wrap>
+      </Flex>
     </Box>
   );
 }

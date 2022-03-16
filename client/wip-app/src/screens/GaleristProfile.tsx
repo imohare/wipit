@@ -80,6 +80,7 @@ function GalleristProfile(): JSX.Element {
   //   //   });
   // }, []);
   // flexDirection='row' justifyContent='flex-end'
+
   return (
     <Flex backgroundColor='#f0f0f0' flexDirection='column' h='100vh'>
       <Container display='flex' mt='2' alignItems='center' justifyContent='space-between' bg='white' w='100%' p={5} color='black' boxShadow='md'
@@ -89,9 +90,9 @@ function GalleristProfile(): JSX.Element {
         backgroundPosition="center"
         backgroundSize="cover"
         backgroundRepeat="no-repeat">
-        <Box>
-        <Text fontWeight='bold' color='white' fontSize={34}>{`${user.name}'s profile`}</Text>
-        <Text fontWeight='bold' color='white'>{`email: ${user.email}`}</Text>
+        <Box background='rgba(255, 255, 255, .8)' borderWidth='1' borderRadius='lg' p='10px'>
+        <Text fontWeight='bold' color='black' fontSize={34}>{`${user.name}'s profile`}</Text>
+        <Text fontWeight='bold' color='black'>{`email: ${user.email}`}</Text>
         </Box>
         <Box>
           <Button
