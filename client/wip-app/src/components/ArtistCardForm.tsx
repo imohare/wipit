@@ -29,12 +29,16 @@ function ArtistCardForm(): JSX.Element {
 
   async function handleSubmit(e: any) {
     e.preventDefault();
-    /*const newWip = { wipTitle: wipTitle, wipImage: wipImage, WipCollectionId: wipCol };
+    const newWip = {
+      wipTitle: wipTitle,
+      wipImage: wipImage,
+      WipCollectionId: wipCol,
+    };
     setWipTitle("");
     setWipImage("");
     setWipCol("");
     const result = await methods.createWip(newWip);
-    setWip(wip === null ? [result] : wip.concat([result]));*/
+    setWip(wip === null ? [result] : wip.concat([result]));
   }
   useEffect(() => {
     // setCollection({ ...collection, collectionName: collectionName });
@@ -50,12 +54,15 @@ function ArtistCardForm(): JSX.Element {
           </Text>
           <Select
             placeholder="Select WIP Collection"
-            onChange={(e:any) => setWipCol(e.target.value)}
+            onChange={(e: any) => setWipCol(e.target.value)}
           >
             {wipCollection
               ? wipCollection.map((col: any) => {
                   return (
-                    <option key={col.wipCollectionId} value={col.wipCollectionTitle}>
+                    <option
+                      key={col.wipCollectionId}
+                      value={col.wipCollectionTitle}
+                    >
                       {col.wipCollectionTitle}
                     </option>
                   );
