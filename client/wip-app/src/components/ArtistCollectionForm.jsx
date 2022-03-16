@@ -1,25 +1,34 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Button, FormControl, Input, Stack, Text } from "@chakra-ui/react";
 import React, { useContext, useEffect, useState } from "react";
-import { CollectionContext } from "../userContext";
+import methods from "../services";
+import { CollectionContext, UserContext } from "../userContext";
 
 function ArtistCollectionForm() {
-  const { collection, setCollection } = useContext(CollectionContext);
+  const { user } = useContext(UserContext);
+  const { collection, setWipCollection } = useContext(CollectionContext);
 
-  const [collectionName, setCollectionName] = useState([]);
+  const [wipCollectionName, setWipCollectionName] = useState([]);
   const [name, setName] = useState("");
 
   // setCollectionName([...collectionName, name]);
   // setCollection({ ...collection, collectionName: collectionName });
-
+  // WipCollectionName: newCollection.collectionName,
   async function handleSubmit(e) {
     e.preventDefault();
-    const newCollectionName = [...collectionName, name];
-    setCollectionName(newCollectionName);
-    setCollection({ ...collection, collectionName: newCollectionName });
+    const newCollectionName = [...wipCollectionName, name];
+    setWipCollectionName(newCollectionName);
+    setWipCollection({ ...collection, wipCollectionName: newCollectionName });
     setName("");
+    console.log(
+      collection.wipCollectionName[collection.wipCollectionName.length - 1],
+      "this is the WIPCOLLECTION state"
+    );
 
-    // await methods.createCollection(collection);
+    await methods.createCollection(
+      collection.wipCollectionName[collection.wipCollectionName.length - 1],
+      user.profileId
+    );
   }
 
   useEffect(() => {

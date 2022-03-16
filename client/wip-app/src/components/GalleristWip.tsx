@@ -6,8 +6,8 @@ import LogoutButton from "../components/LogoutButton";
 // import GalleristProfileButton from "../styled-components/gallerist/route-buttons/ProfileButton";
 import GalleristCardList from "../styled-components/gallerist/lists/GalleristCardList";
 import GalleristWipsButton from "../styled-components/gallerist/route-buttons/WipsButton";
-import {Box, Text, Flex, Center, Button } from '@chakra-ui/react';
-import { Link, NavLink } from 'react-router-dom';
+import { Box, Text, Flex, Center, Button } from "@chakra-ui/react";
+import { Link, NavLink } from "react-router-dom";
 
 function GalleristWip() {
   type wipType = {
@@ -20,21 +20,21 @@ function GalleristWip() {
   const { title } = useParams();
   const [wip, setWip] = useState<wipType | null>(null);
 
-  useEffect(() => {
-    methods
-      .getWips()
-      .then((response) => {
-        console.log(response);
-        const wip = response.filter((card: any | null) =>
-          card.wip_title.includes(title)
-        )[0];
-        setWip(wip);
-      })
-      .catch((error) => {
-        console.log(error);
-        console.log("Error occured.");
-      });
-  }, [title]);
+  // useEffect(() => {
+  //   methods
+  //     .getWips()
+  //     .then((response) => {
+  //       console.log(response);
+  //       const wip = response.filter((card: any | null) =>
+  //         card.wip_title.includes(title)
+  //       )[0];
+  //       setWip(wip);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //       console.log("Error occured.");
+  //     });
+  // }, [title]);
 
   // console.log(wip);
   // wip_title: {type: String, required: true},
@@ -66,9 +66,12 @@ function GalleristWip() {
       navigate(path); */}
       {/* <GalleristWipsButton /> */}
       <Link to="/g/wips">
-        <Button backgroundColor="teal" color="white" variant="outline" mr={2}>
-
-        </Button>
+        <Button
+          backgroundColor="teal"
+          color="white"
+          variant="outline"
+          mr={2}
+        ></Button>
       </Link>
       <LogoutButton />
       {/* {wip.wip_cards ? (
