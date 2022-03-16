@@ -29,20 +29,25 @@ function ArtistCardForm(): JSX.Element {
 
   async function handleSubmit(e: any) {
     e.preventDefault();
+    console.log('wipCol', wipCol);
+    console.log("wipCollection", wipCollection);
+    const WCI = wipCollection.filter((collection: any) => collection.wipCollectionTitle === wipCol)[0].wipCollectionId;
     const newWip = {
       wipTitle: wipTitle,
       wipImage: wipImage,
-      wipCollectionId: wipCol,
+      wipCollectionId: WCI,
     };
     setWipTitle("");
     setWipImage("");
     setWipCol("");
     const result = await methods.createWip(newWip);
+    console.log(result);
     setWip(wip === null ? [result] : wip.concat([result]));
   }
   useEffect(() => {
     // setCollection({ ...collection, collectionName: collectionName });
     console.log(wip, "this is the wip WIPPPstate");
+    console.log("hello: ", wipCollection)
   }, [wip]);
 
   return (
