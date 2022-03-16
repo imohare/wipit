@@ -53,6 +53,7 @@ exports.loginUser = async (req: express.Request, res: express.Response) => {
       ],
       attributes: [
         'profileId',
+        'email',
         [Sequelize.col('Profile.name'), 'name'],
         [Sequelize.col('Profile.type'), 'type']
       ]
@@ -66,6 +67,7 @@ exports.loginUser = async (req: express.Request, res: express.Response) => {
     res.send([false, []])
     res.status(401)
   }
+  console.log(res)
 }
 
 exports.addWipCollection = async (
