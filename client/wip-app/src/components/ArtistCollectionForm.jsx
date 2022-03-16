@@ -25,10 +25,11 @@ function ArtistCollectionForm() {
       "this is the WIPCOLLECTION state"
     );
 
-    await methods.createCollection(
+    const result = await methods.createCollection(
       collection.wipCollectionName[collection.wipCollectionName.length - 1],
       user.profileId
     );
+    console.log(result);
   }
 
   useEffect(() => {

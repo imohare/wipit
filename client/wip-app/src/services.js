@@ -30,7 +30,7 @@ const methods = {
       headers: { "Content-type": "application/json" },
       body: JSON.stringify({
         title: wipCollectionName,
-        userId: profileId,
+        profileId: profileId,
       }),
     });
     return result.json();
