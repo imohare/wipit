@@ -25,7 +25,7 @@ const methods = {
     return result.json();
   },
   createCollection: async (wipCollectionName, profileId) => {
-    const result = await fetch("http://localhost:3456/collection", {
+    const result = await fetch("http://localhost:3456/wipcollections", {
       method: "POST",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify({
