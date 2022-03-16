@@ -68,7 +68,7 @@ exports.addWipCollection = async (req:express.Request, res:express.Response) => 
   try {
     const wipCollectionId = uuidv4();
     const post = await db.WipCollections.create({
-      wipCollectionsId: wipCollectionId,
+      wipCollectionId: wipCollectionId,
       wipCollectionTitle: req.body.title,
       profileId: req.body.profileId
     });
@@ -136,8 +136,8 @@ exports.addWip = async (req:express.Request, res:express.Response) => {
     const wipId = uuidv4();
     const post = await db.Wips.create({
       wipId: wipId,
-      wipTitle: req.body.title,
-      image: req.body.image,
+      wipTitle: req.body.wipTitle,
+      wipImage: req.body.wipImage,
       uploadDate: Date.now().toString(),
       wipCollectionId: req.body.wipCollectionId,
     });

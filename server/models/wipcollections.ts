@@ -2,19 +2,19 @@ import {DataTypes, Model} from '@sequelize/core';
 import sequelize from './config';
 
 interface WipCollectionsInterface {
-  wipCollectionsId: string;
+  wipCollectionId: string;
   wipCollectionTitle: string;
   profileId: string;
 }
 
 class WipCollections extends Model<WipCollectionsInterface> implements WipCollectionsInterface {
-  public wipCollectionsId!: string;
+  public wipCollectionId!: string;
   public wipCollectionTitle!: string;
   public profileId!: string;
 }
 
 WipCollections.init({
-    wipCollectionsId: {
+    wipCollectionId: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true

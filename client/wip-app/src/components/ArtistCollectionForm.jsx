@@ -2,40 +2,28 @@
 import { Button, FormControl, Input, Stack, Text } from "@chakra-ui/react";
 import React, { useContext, useEffect, useState } from "react";
 import methods from "../services";
-import { CollectionContext, UserContext } from "../userContext";
+import { WipCollectionContext, UserContext } from "../userContext";
 
 function ArtistCollectionForm() {
   const { user } = useContext(UserContext);
-  const { collection, setWipCollection } = useContext(CollectionContext);
+  const { wipCollection, setWipCollection} = useContext(WipCollectionContext);
+  const [wipCollectionTitle, setWipCollectionTitle] = useState('');
 
-  const [wipCollectionName, setWipCollectionName] = useState([]);
-  const [name, setName] = useState("");
-
-  // setCollectionName([...collectionName, name]);
-  // setCollection({ ...collection, collectionName: collectionName });
-  // WipCollectionName: newCollection.collectionName,
   async function handleSubmit(e) {
     e.preventDefault();
-    const newCollectionName = [...wipCollectionName, name];
-    setWipCollectionName(newCollectionName);
-    setWipCollection({ ...collection, wipCollectionName: newCollectionName });
-    setName("");
-    console.log(
-      collection.wipCollectionName[collection.wipCollectionName.length - 1],
-      "this is the WIPCOLLECTION state"
-    );
-
     const result = await methods.createCollection(
-      collection.wipCollectionName[collection.wipCollectionName.length - 1],
+      wipCollectionTitle,
       user.profileId
     );
-    console.log(result);
+    const newWipCollectionEntry = {wipCollectionId: result.wipCollectionId, wipCollectionTitle: wipCollectionTitle};
+    setWipCollection(wipCollection === null ? [newWipCollectionEntry] : wipCollection.concat([newWipCollectionEntry]));
+    setWipCollectionTitle('');
   }
 
   useEffect(() => {
     // setCollection({ ...collection, collectionName: collectionName });
-    console.log(collection, "this is the collection state");
-  }, [collection]);
+    console.log(wipCollection, "LOOK HERE");
+  }, [wipCollection]);
   return (
     <form action="submit">
       <Stack spacing={3} mt={6}>
@@ -46,8 +34,8 @@ function ArtistCollectionForm() {
           <Input
             type="text"
             placeholder="Enter Collection Title"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={wipCollectionTitle}
+            onChange={(e) => setWipCollectionTitle(e.target.value)}
           />
         </FormControl>
 

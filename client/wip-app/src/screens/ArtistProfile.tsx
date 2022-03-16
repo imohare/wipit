@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import ArtistCollectionForm from "../components/ArtistCollectionForm";
 import ArtistCardForm from "../components/ArtistCardForm";
 import { useContext, useState } from "react";
-import { CollectionContext, UserContext } from "../userContext";
+import { WipCollectionContext, UserContext } from "../userContext";
 import WipItem from "../components/wipItem";
 import { userInfo } from "os";
 const nftBanner = require("../assets/nft.png");
@@ -42,7 +42,7 @@ function ArtistProfile(): JSX.Element {
             boxShadow={"md"}
           >
             <Text fontSize={"24"} fontWeight={"bold"}>
-              {user.name}
+              {user?.name}
             </Text>
             <Text fontWeight={"bold"}>260</Text>
             <Text>Followers</Text>
@@ -61,7 +61,6 @@ function ArtistProfile(): JSX.Element {
           >
             Collections
           </Text>
-          <WipItem />
         </Box>
       </Wrap>
     </>
