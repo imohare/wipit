@@ -1,4 +1,6 @@
+require('dotenv').config({path: `${__dirname}/../.env`});
 import express from 'express';
+import session from 'express-session';
 import cors from 'cors';
 import db from './models/index';
 
@@ -7,6 +9,13 @@ const router = require('./router');
 const app = express();
 const port = 3456;
 
+app.use(session({
+  secret: process.env.SECRET as string,
+  cookie: {
+    httpOnly: true,
+    secure: false
+  }
+}));
 app.use(cors());
 app.use(express.json()); //body parser
 app.use(router);
