@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import React from 'react';
 import methods from '../services';
 import LogoutButton from '../components/LogoutButton';
@@ -6,7 +6,11 @@ import {Box, Text, Flex, Center, Container } from '@chakra-ui/react';
 import { Link, NavLink } from 'react-router-dom';
 import { Wrap, WrapItem, Button } from '@chakra-ui/react';
 import { useNavigate } from 'react-router';
+import { UserContext } from '../userContext';
+// import { createBrowserHistory } from 'history';
+// import { useHistory } from "react-router-dom";
 const galleristBackground = require('../assets/galleristBackground.png');
+
 
 function GalleristProfile(): JSX.Element {
 
@@ -36,28 +40,35 @@ function GalleristProfile(): JSX.Element {
         update_request_date: "March 13th"}
     ]
 
-  const [wips, setWips] = useState<wipType[] | null>(mockWips);
 
-  interface cardType {
-    img_url: String;
-    upload_date: String;
-    seen_by_state: String;
-    seen_by_user: String;
-    seen_by_date: String;
-    comments: String[];
-    wipId?: {}
-    //object id???
-  }
-  const [cards, setCards] = useState<[cardType] | null>(null);
+    const [wips, setWips] = useState<wipType[] | null>(mockWips);
 
-  const user = {
-    _id: '1234',
-    type: 'gallerist',
-    name: '@ROMAN_ROAD',
-    email: 'roman@gmail.com',
-    password: 'secret',
-    followed_artists: ['@ANNA_SKLADMANN', '@ARIANE_HUGHES', '@JACK_LAVER', '@YULIA_IOLSIZON', '@ELIZA_BLAKEMORE']
-  }
+    interface cardType {
+      img_url: String;
+      upload_date: String;
+      seen_by_state: String;
+      seen_by_user: String;
+      seen_by_date: String;
+      comments: String[];
+      wipId?: {}
+      //object id???
+    }
+    const [cards, setCards] = useState<[cardType] | null>(null);
+
+    const { user } = useContext(UserContext);
+    console.log('hello', user);
+
+    // const history = createBrowserHistory();
+    // history.push(`/g/${user.profileId}`);
+
+  // const user = {
+  //   _id: '1234',
+  //   type: 'gallerist',
+  //   name: '@ROMAN_ROAD',
+  //   email: 'roman@gmail.com',
+  //   password: 'secret',
+  //   followed_artists: ['@ANNA_SKLADMANN', '@ARIANE_HUGHES', '@JACK_LAVER', '@YULIA_IOLSIZON', '@ELIZA_BLAKEMORE']
+  // }
 
   console.log(wips);
   const navigate = useNavigate();
@@ -109,7 +120,7 @@ function GalleristProfile(): JSX.Element {
         </Container>
         <Center fontWeight='bold' margin='15px'>Followed Artists</Center>
         <Wrap justify='center'>
-        {user.followed_artists.map((artist) => {
+        {/* {user.followed_artists.map((artist) => {
           return (
             <WrapItem key={artist}>
             <NavLink to='./users/:id'>
@@ -128,7 +139,7 @@ function GalleristProfile(): JSX.Element {
             </Box>
             </NavLink>
           </WrapItem>)
-      })}
+      })} */}
       </Wrap>
     </Flex>
   );
