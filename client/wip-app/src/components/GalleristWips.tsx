@@ -8,8 +8,13 @@ import { UserContext } from '../userContext';
 const gallery = require('../assets/gallery2.jpeg');
 const addBtn = require('../assets/btn-add.svg').default;
 const addedBtn = require('../assets/btn-added.svg').default;
+const ballerina = require('../assets/nice-painting-from-artist.jpeg');
+const nature = require('../assets/nature_painting.jpeg');
 
 function GalleristWips(): JSX.Element {
+  //mocking the images because their blob urls don't work
+  const mockImages = [ballerina, nature];
+
   interface wipCollectionInterface {
     wipCollectionTitle: String,
     Profile: {
@@ -40,8 +45,6 @@ function GalleristWips(): JSX.Element {
     let path = `/g/${user.profileId}`;
     navigate(path);
   }
-  // const [toggleButton, setToggleButton] = useState(addBtn);
-  // let toggleButton = addBtn;
 
   const addFollower = async (collection: wipCollectionInterface, index: number) => {
     const copyWips = wips.slice();
@@ -49,39 +52,22 @@ function GalleristWips(): JSX.Element {
     setWips(copyWips);
     const result = await methods.addFollower(collection.Profile.profileId, user.profileId);
     console.log('this is result: ',result);
-    //need an api service that sends this to the backend
-    //no api service yet
-    //userId:
-    //targetId:
-
-    // methods.addFollower({
-    //   userId: user.profileId,
-    //   tagretId: ???
-    // })
-    // methids.getFollowers({
-    //   userId: profileId
-    // })
-
-    // [{user1}, {user2}]
-
   }
-  //getting all the wips
-  //not working
-const apiCall = async () => {
-  await methods
-    .getWipCollections()
-    .then((response) => {
-      response.forEach((col: any) => col.added = false)
-      // setWipCollections(response);
-      setWips(response);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-}
-  useEffect(() => {
-    apiCall();
-  }, []);
+
+  const apiCall = async () => {
+    await methods
+      .getWipCollections()
+      .then((response) => {
+        response.forEach((col: any) => col.added = false)
+        setWips(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+    useEffect(() => {
+      apiCall();
+    }, []);
 
   console.log(wips);
 
@@ -117,7 +103,8 @@ const apiCall = async () => {
                 cursor='pointer'>
                 <NavLink to='./users/:id'>
                   <Center>
-                    <Image width='100px' src={collection.Wips[0].wipImage}/>
+                    {/* <Image width='100px' src={collection.Wips[0].wipImage}/> */}
+                    <Image width='200px' src={mockImages[index]}/>
                   </Center>
                 </NavLink>
                   <Box display='flex' flexDirection='row' p='2'>
@@ -127,7 +114,7 @@ const apiCall = async () => {
                     <Image src={addBtn} />}
                   </Button>
                   <Box mt='2'>
-                    <Text color='black' textAlign='center' fontSize='18px' >Author: ${collection.Profile.name} </Text>
+                    <Text color='black' textAlign='center' fontSize='18px' >Author: {collection.Profile.name} </Text>
                   </Box>
                 </Box>
               </Box>

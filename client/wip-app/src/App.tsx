@@ -11,14 +11,13 @@ import { ChakraProvider } from "@chakra-ui/react";
 import Register from "./screens/Register";
 import Home from "./screens/Home";
 import { useMemo, useState } from "react";
-import { WipCollectionsContext ,WipCollectionContext, UserContext, WipContext } from "./userContext";
+import { WipCollectionContext, UserContext, WipContext } from "./userContext";
 import Collection from "./screens/Collection";
 
 function App(): JSX.Element {
   const [user, setUser] = useState(null);
   const [userType, setUserType] = useState<string>("");
   const [wipCollection, setWipCollection] = useState<any>(null);
-  const [wipCollections, setWipCollections] = useState<any>(null);
   const [wip, setWip] = useState<any>(null);
 
   const valueUser = useMemo(() => ({ user, setUser }), [user, setUser]);
@@ -27,15 +26,12 @@ function App(): JSX.Element {
     [wipCollection, setWipCollection]
   );
   const valueWip = useMemo(() => ({ wip, setWip }), [wip, setWip]);
-  const valueWipCollections = useMemo(()=> ({wipCollections, setWipCollections}), [wipCollections, setWipCollections]);
-  //${user?.profileId}
   return (
     <ChakraProvider>
       <Router>
         <UserContext.Provider value={valueUser}>
           <WipCollectionContext.Provider value={valueCollection}>
             <WipContext.Provider value={valueWip}>
-            <WipCollectionsContext.Provider value={valueWipCollections}>
               <Routes>
                 <Route path="/" element={<Home setUserType={setUserType} />} />
                 <Route
@@ -56,7 +52,6 @@ function App(): JSX.Element {
                   element={<GalleristWipCard />}
                 />
               </Routes>
-              </WipCollectionsContext.Provider>
             </WipContext.Provider>
           </WipCollectionContext.Provider>
         </UserContext.Provider>
