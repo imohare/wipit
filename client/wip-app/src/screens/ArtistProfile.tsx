@@ -15,6 +15,7 @@ import { useContext, useEffect, useState } from "react";
 import { WipCollectionContext, UserContext } from "../userContext";
 import methods from "../services";
 import GalleryButton from "../components/GalleryButton";
+import "./artistProfile.css";
 const nftBanner = require("../assets/nft.png");
 const japanGirl = require("../assets/nft (3).jpeg");
 const eyes = require("../assets/nft (4).jpeg");
@@ -62,7 +63,6 @@ function ArtistProfile(): JSX.Element {
             wips.
           </Button>
         </Link>
-        <GalleryButton />
 
         <LogoutButton />
         <GalleryButton />
