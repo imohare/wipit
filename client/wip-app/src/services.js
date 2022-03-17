@@ -49,7 +49,7 @@ const methods = {
   },
 
   getWipCollections: async () => {
-    const result = await fetch('http://localhost:3456/wipCollections');
+    const result = await fetch('http://localhost:3456/wipcollections');
     return result.json();
   },
 
