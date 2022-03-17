@@ -51,7 +51,7 @@ const methods = {
   },
 
   getWipCollections: async () => {
-    const result = await fetch('http://localhost:3456/wipcollections');
+    const result = await fetch('http://localhost:3456/wipCollections');
     return result.json();
   },
 

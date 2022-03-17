@@ -47,10 +47,10 @@ function GalleristWips(): JSX.Element {
     const copyWips = wips.slice();
     copyWips[index].added = !copyWips[index].added;
     setWips(copyWips);
-    // console.log("clicked ", wipCollection.added, 'author: ', wipCollection.Profile.name);
-    // wipCollection.added = !wipCollection.added;
-    // setToggleButton(toggleButton === addBtn ? addedBtn : addBtn);
-    // console.log(toggleButton);
+    // methods.addFollower({
+    //   followeeId: followeeId,
+    //   profileId: profileId,
+    // });
     //need an api service that sends this to the backend
     //no api service yet
     //userId:
