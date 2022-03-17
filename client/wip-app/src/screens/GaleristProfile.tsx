@@ -2,15 +2,20 @@ import { useEffect, useState, useContext } from 'react';
 import React from 'react';
 import methods from '../services';
 import LogoutButton from '../components/LogoutButton';
-import {Box, Text, Flex, Center, Container } from '@chakra-ui/react';
-import { Link, NavLink } from 'react-router-dom';
-import { Wrap, WrapItem, Button } from '@chakra-ui/react';
-import { useNavigate } from 'react-router';
+import {Box, Text, Flex, Center, Container, ScaleFade, Image, Button } from '@chakra-ui/react';
+import { NavLink } from 'react-router-dom';
+import { Wrap, WrapItem } from '@chakra-ui/react';
 import { UserContext } from '../userContext';
+import GalleryButton from '../components/GalleryButton';
 const galleristBackground = require('../assets/galleristBackground.png');
+const ballerina = require('../assets/nice-painting-from-artist.jpeg');
+const nature = require('../assets/nature_painting.jpeg');
+const {uniqBy} = require('lodash');
 
 
 function GalleristProfile(): JSX.Element {
+  //mocking the images because their blob urls don't work
+  const mockImages = [ballerina, nature];
 
  interface followeesInterFace {
   followId: String;
@@ -18,6 +23,7 @@ function GalleristProfile(): JSX.Element {
   followerId: String;
   createdAt: String;
   updatedAt: String;
+  artistWips?: any;
   profile: {
       profileId: String;
       name: String;
@@ -27,20 +33,17 @@ function GalleristProfile(): JSX.Element {
   };
 }
     const [followees, setFollowees] = useState<[followeesInterFace] | []>([]);
-
     const { user } = useContext(UserContext);
-    console.log('hello', user);
-
-  const navigate = useNavigate();
-  const galleryRoute = () => {
-    const path = `/g/wips`;
-    navigate(path);
-  }
 
   useEffect(() => {
     methods.getFollowees(user.profileId).then((response) => {
       console.log(response)
-      setFollowees(response);
+      response.forEach(async(artist: any)=> artist.artistWips = await methods.getWipCollectionByUser(artist.profile.profileId));
+      let noDuplicates: any = uniqBy(response,'profileId');
+      setFollowees(noDuplicates);
+      // console.log('artistWips: ', followees[0].artistWips[0].Wips[0].wipImage);
+      console.log(followees);
+      return response;
     }).catch((error) => {
       console.log(error);
       console.log('Error occured.');
@@ -61,40 +64,42 @@ function GalleristProfile(): JSX.Element {
         <Text fontWeight='bold' color='black'>{`email: ${user.email}`}</Text>
         </Box>
         <Box>
-          <Button
-          name='galleryRoute'
-          m={2}
-          onClick={galleryRoute}
-          backgroundColor="teal"
-          color="white"
-          >
-            gallery
-          </Button>
+          <GalleryButton />
           <LogoutButton />
         </Box>
         </Container>
         <Center fontWeight='bold' margin='15px'>Followed Artists</Center>
         <Wrap justify='center'>
-        { followees.map((artist, index) => {
-          return (
-            <WrapItem key={index}>
-            <NavLink to='./users/:id'>
-            <Box
-            maxW='sm'
-            borderWidth='1px'
-            borderRadius='lg'
-            overflow='hidden'
-            display='flex'
-            w='250px'
-            h='300px'
-            margin='10px'
-            bg='white'
-            boxShadow='md'>
-              <Text>{artist.profile.name}</Text>
-            </Box>
-            </NavLink>
-          </WrapItem>)
-      })}
+        {followees.map((artist: any, index: number) => {
+        return (
+          <ScaleFade key={index} initialScale={0.9} in={true} whileHover={{scale: 1.1}}>
+            <WrapItem >
+                <Box
+                marginTop='150px'
+                borderWidth='1px'
+                w='full'
+                marginX='10px'
+                background='rgba(255, 255, 255, .5)'
+                boxShadow='md'
+                borderRadius='lg'
+                pt='20px'
+                px='10px'
+                cursor='pointer'>
+                <NavLink to='./users/:id'>
+                  <Center>
+                    <Image width='200px' src={mockImages[index]}/>
+                    {/* <Image src={artist.artistWips && artist.artistWips[0].Wips[0].wipImage} /> */}
+                  </Center>
+                </NavLink>
+                  <Box display='flex' flexDirection='row' p='2'>
+                  <Box mt='2'>
+                    <Text color='black' textAlign='center' fontSize='18px' >Author: {artist.profile.name} </Text>
+                  </Box>
+                </Box>
+              </Box>
+            </WrapItem>
+          </ScaleFade>)
+        })}
       </Wrap>
     </Flex>
   );

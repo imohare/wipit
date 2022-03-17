@@ -8,8 +8,13 @@ import { UserContext } from "../userContext";
 const gallery = require("../assets/gallery2.jpeg");
 const addBtn = require("../assets/btn-add.svg").default;
 const addedBtn = require("../assets/btn-added.svg").default;
+const ballerina = require("../assets/nice-painting-from-artist.jpeg");
+const nature = require("../assets/nature_painting.jpeg");
 
 function GalleristWips(): JSX.Element {
+  //mocking the images because their blob urls don't work
+  const mockImages = [ballerina, nature];
+
   interface wipCollectionInterface {
     wipCollectionTitle: String;
     Profile: {
@@ -41,8 +46,6 @@ function GalleristWips(): JSX.Element {
     let path = `/g/${user.profileId}`;
     navigate(path);
   };
-  // const [toggleButton, setToggleButton] = useState(addBtn);
-  // let toggleButton = addBtn;
 
   const addFollower = async (
     collection: wipCollectionInterface,
@@ -56,29 +59,13 @@ function GalleristWips(): JSX.Element {
       user.profileId
     );
     console.log("this is result: ", result);
-    //need an api service that sends this to the backend
-    //no api service yet
-    //userId:
-    //targetId:
-
-    // methods.addFollower({
-    //   userId: user.profileId,
-    //   tagretId: ???
-    // })
-    // methids.getFollowers({
-    //   userId: profileId
-    // })
-
-    // [{user1}, {user2}]
   };
-  //getting all the wips
-  //not working
+
   const apiCall = async () => {
     await methods
       .getWipCollections()
       .then((response) => {
         response.forEach((col: any) => (col.added = false));
-        // setWipCollections(response);
         setWips(response);
       })
       .catch((error) => {
@@ -134,6 +121,7 @@ function GalleristWips(): JSX.Element {
                     <NavLink to="./users/:id">
                       <Center>
                         {/* <Image width='100px' src={collection.Wips[0].wipImage}/> */}
+                        <Image width="200px" src={mockImages[index]} />
                       </Center>
                     </NavLink>
                     <Box display="flex" flexDirection="row" p="2">
@@ -152,7 +140,7 @@ function GalleristWips(): JSX.Element {
                       </Button>
                       <Box mt="2">
                         <Text color="black" textAlign="center" fontSize="18px">
-                          Author: ${collection.Profile.name}{" "}
+                          Author: {collection.Profile.name}{" "}
                         </Text>
                       </Box>
                     </Box>
