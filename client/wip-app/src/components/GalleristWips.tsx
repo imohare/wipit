@@ -47,11 +47,8 @@ function GalleristWips(): JSX.Element {
     const copyWips = wips.slice();
     copyWips[index].added = !copyWips[index].added;
     setWips(copyWips);
-    const result = await methods.addFollower({
-      followeeId: collection.Profile.profileId,
-      profileId: user.profileId,
-    });
-    console.log(result);
+    const result = await methods.addFollower(collection.Profile.profileId, user.profileId);
+    console.log('this is result: ',result);
     //need an api service that sends this to the backend
     //no api service yet
     //userId:
@@ -105,8 +102,8 @@ const apiCall = async () => {
         <Wrap justify='center'>
         {wips.map((collection: any, index: number) => {
         return (
-          <ScaleFade initialScale={0.9} in={true} whileHover={{scale: 1.1}}>
-            <WrapItem key={index}>
+          <ScaleFade key={index} initialScale={0.9} in={true} whileHover={{scale: 1.1}}>
+            <WrapItem >
                 <Box
                 marginTop='150px'
                 borderWidth='1px'

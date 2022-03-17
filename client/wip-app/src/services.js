@@ -56,9 +56,9 @@ const methods = {
   },
 
   getWipCollectionByUser: async (profileId) => {
-    const result = await fetch("http://localhost:3456/userwipcollections", {
-      method: "POST",
-      headers: { "Content-type": "application/json" },
+    const result = await fetch('http://localhost:3456/userwipcollections', {
+      method: 'POST',
+      headers: { 'Content-type': 'application/json' },
       body: JSON.stringify({
         profileId: profileId,
       }),
@@ -125,7 +125,7 @@ const methods = {
   },
 
   getFollowees: async (profileId) => {
-    const response = await fetch(`http://localhost:3456/wips/followees`, {
+    const response = await fetch(`http://localhost:3456/followees`, {
       method: 'POST',
       headers: { 'Content-type': 'application/json' },
       body: JSON.stringify({
