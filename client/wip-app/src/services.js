@@ -55,6 +55,17 @@ const methods = {
     return result.json();
   },
 
+  getWipCollectionByUser: async (profileId) => {
+    const result = await fetch("http://localhost:3456/userwipcollections", {
+      method: "POST",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify({
+        profileId: profileId,
+      }),
+    });
+    return result.json();
+  },
+
   addWip: async (wip_title, update_request, update_request_date) => {
     const response = await fetch('http://localhost:3456/wips', {
       method: 'POST',

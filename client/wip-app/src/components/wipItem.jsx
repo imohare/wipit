@@ -15,7 +15,11 @@ function WipItem() {
       bg={"whiteAlpha.100"}
       overflow="hidden"
     >
-      <Image src={wip ? wip[wip.length - 1].wipImage : 'None'} alt="user Image" />
+      <Image
+        src={wip ? wip[wip.length - 1].wipImage : "None"}
+        alt="user Image"
+      />
+      <Text>{wip.wipTitle}</Text>
     </Box>
   );
 }
