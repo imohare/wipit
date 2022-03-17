@@ -43,14 +43,15 @@ function GalleristWips(): JSX.Element {
   // const [toggleButton, setToggleButton] = useState(addBtn);
   // let toggleButton = addBtn;
 
-  const addFollower = (index: number) => {
+  const addFollower = async (collection: wipCollectionInterface, index: number) => {
     const copyWips = wips.slice();
     copyWips[index].added = !copyWips[index].added;
     setWips(copyWips);
-    // methods.addFollower({
-    //   followeeId: followeeId,
-    //   profileId: profileId,
-    // });
+    const result = await methods.addFollower({
+      followeeId: collection.Profile.profileId,
+      profileId: user.profileId,
+    });
+    console.log(result);
     //need an api service that sends this to the backend
     //no api service yet
     //userId:
@@ -67,7 +68,6 @@ function GalleristWips(): JSX.Element {
     // [{user1}, {user2}]
 
   }
-
   //getting all the wips
   //not working
 const apiCall = async () => {
@@ -124,7 +124,7 @@ const apiCall = async () => {
                   </Center>
                 </NavLink>
                   <Box display='flex' flexDirection='row' p='2'>
-                  <Button background='transparent' color='black' opacity={1} border='none' onClick={() => addFollower(index)} >
+                  <Button background='transparent' color='black' opacity={1} border='none' onClick={() => addFollower(collection, index)} >
                     {collection.added ?
                     <Image src={addedBtn} /> :
                     <Image src={addBtn} />}
