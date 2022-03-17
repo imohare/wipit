@@ -5,8 +5,6 @@ import ArtistWips from "./screens/ArtistWips";
 import ArtistWip from "./components/ArtistWip";
 import GalleristProfile from "./screens/GaleristProfile";
 import GalleristWips from "./components/GalleristWips";
-import GalleristWip from "./components/GalleristWip";
-import GalleristWipCard from "./components/GalleristWipCard";
 import { ChakraProvider } from "@chakra-ui/react";
 import Register from "./screens/Register";
 import Home from "./screens/Home";
@@ -38,7 +36,6 @@ function App(): JSX.Element {
                   path="/register"
                   element={<Register userType={userType} />}
                 />
-
                 <Route path="/login" element={<Login userType={userType} />} />
                 <Route path={`/a/:profileId`} element={<ArtistProfile />} />
                 <Route path="/a/wips" element={<ArtistWips />} />
@@ -46,11 +43,6 @@ function App(): JSX.Element {
                 <Route path="/collection" element={<Collection />} />
                 <Route path={`/g/:profileId`} element={<GalleristProfile />} />
                 <Route path="/g/wips" element={<GalleristWips />} />
-                <Route path="/g/wip/:title" element={<GalleristWip />} />
-                <Route
-                  path="/g/wip/:title/:wip_card_id"
-                  element={<GalleristWipCard />}
-                />
               </Routes>
             </WipContext.Provider>
           </WipCollectionContext.Provider>
@@ -61,22 +53,3 @@ function App(): JSX.Element {
 }
 
 export default App;
-
-// <Router>
-// <Routes>
-//   {/* maybe we should add a nav bar or a home page */}
-//   {/* <Route path='/' element={<Home />} /> */}
-//   <Route path="/" element={<Login />} />
-//   <Route path="/a" element={<ArtistProfile />} />
-//   <Route path="/a/wips" element={<ArtistWips />} />
-//   <Route path="/a/wip/:title" element={<ArtistWip />} />
-//   <Route path="/a/wip/:title/:wip_card_id" element={<ArtistWipCard />} />
-//   <Route path="/g" element={<GalleristProfile />} />
-//   <Route path="/g/wips" element={<GalleristWips />} />
-//   <Route path="/g/wip/:title" element={<GalleristWip />} />
-//   <Route
-//     path="/g/wip/:title/:wip_card_id"
-//     element={<GalleristWipCard />}
-//   />
-// </Routes>
-// </Router>

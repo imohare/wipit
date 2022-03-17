@@ -10,10 +10,14 @@ const addBtn = require('../assets/btn-add.svg').default;
 const addedBtn = require('../assets/btn-added.svg').default;
 const ballerina = require('../assets/nice-painting-from-artist.jpeg');
 const nature = require('../assets/nature_painting.jpeg');
+const art2 = require('../assets/art2.jpeg');
+const fish = require('../assets/fish.jpeg');
+const art3 = require('../assets/art3.webp');
+const tiger = require('../assets/tiger.jpeg');
 
 function GalleristWips(): JSX.Element {
   //mocking the images because their blob urls don't work
-  const mockImages = [ballerina, nature];
+  const mockImages = [ballerina, nature,tiger, art2, fish, art3];
 
   interface wipCollectionInterface {
     wipCollectionTitle: String,
@@ -41,8 +45,13 @@ function GalleristWips(): JSX.Element {
   const {user} = useContext(UserContext);
 
   const navigate = useNavigate();
+  let path = "";
   const profileRouteChange = () =>{
-    let path = `/g/${user.profileId}`;
+    path = path.concat(
+      user.type == "artist"
+        ? `/a/${user.profileId}`
+        : `/g/${user.profileId}`
+    );
     navigate(path);
   }
 
@@ -91,7 +100,7 @@ function GalleristWips(): JSX.Element {
           <ScaleFade key={index} initialScale={0.9} in={true} whileHover={{scale: 1.1}}>
             <WrapItem >
                 <Box
-                marginTop='150px'
+                marginTop='100px'
                 borderWidth='1px'
                 w='full'
                 marginX='10px'
@@ -104,7 +113,7 @@ function GalleristWips(): JSX.Element {
                 <NavLink to='./users/:id'>
                   <Center>
                     {/* <Image width='100px' src={collection.Wips[0].wipImage}/> */}
-                    <Image width='200px' src={mockImages[index]}/>
+                    <Image width='300px' src={mockImages[index]}/>
                   </Center>
                 </NavLink>
                   <Box display='flex' flexDirection='row' p='2'>

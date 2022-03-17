@@ -1,6 +1,4 @@
-// import 'whatwg-fetch';
 const { rest } = require('msw');
-// import { setupWorker } from 'msw';
 const { setupServer } = require('msw/node');
 const methods = require('./services');
 const mockWips = [
@@ -17,7 +15,6 @@ const mockWips = [
     update_request_date: 'March 16th',
   },
 ];
-// const worker = setupWorker(
 const server = setupServer(
   rest.get('http://localhost:3456/wips', (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(mockWips));
@@ -34,7 +31,6 @@ const server = setupServer(
 beforeAll(() => server.listen());
 afterAll(() => server.close());
 afterEach(() => server.resetHandlers());
-// worker.start();
 
 describe('Api service getting wips', () => {
   it('intercepts the get request', async () => {
