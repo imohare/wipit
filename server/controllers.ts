@@ -5,6 +5,7 @@ import assert from 'assert'
 import { Sequelize } from '@sequelize/core'
 
 import db from './models/index'
+import Profile from './models/userProfile'
 
 exports.registerUser = async (req: express.Request, res: express.Response) => {
   try {
@@ -170,11 +171,11 @@ exports.addFollower = async (req: express.Request, res: express.Response) => {
   try {
     const follow = await db.Followers.create({
       followId: uuidv4(),
-      userId: req.body.userId,
-      followerId: req.body.targetId
+      profileId: req.body.followeeId,
+      followerId: req.body.profileId,
     })
     res.status(200)
-    res.send('Followed')
+    res.send(follow);
   } catch (e) {
     console.log(e)
     console.error('addFollower is failing')
@@ -186,10 +187,41 @@ exports.addFollower = async (req: express.Request, res: express.Response) => {
 exports.getFollowers = async (req: express.Request, res: express.Response) => {
   try {
     const followers = await db.Followers.findAll({
-      where: { userId: req.body.userId }
+      where: { profileId: req.body.profileId },
+      include: [
+        {
+          model: db.Profile,
+          as: 'follower',
+          required: false,
+          order: [['createdAt', 'desc']]
+        }
+      ]
     })
     res.status(200)
     res.send(followers)
+  } catch (e) {
+    console.log(e)
+    console.error('addFollower is failing')
+    res.status(401)
+    res.end()
+  }
+}
+
+exports.getFollowees = async (req: express.Request, res: express.Response) => {
+  try {
+    const followees = await db.Followers.findAll({
+      where: { followerId: req.body.profileId },
+      include: [
+        {
+          model: db.Profile,
+          as: 'profile',
+          required: false,
+          order: [['createdAt', 'desc']]
+        }
+      ]
+    })
+    res.status(200)
+    res.send(followees)
   } catch (e) {
     console.log(e)
     console.error('addFollower is failing')

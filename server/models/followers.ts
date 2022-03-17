@@ -3,13 +3,13 @@ import sequelize from './config';
 
 interface FollowersInterface {
   followId: string;
-  userId: string;
+  profileId: string;
   followerId: string;
 }
 
 class Followers extends Model<FollowersInterface> implements FollowersInterface {
   public followId!: string;
-  public userId!: string;
+  public profileId!: string;
   public followerId!: string;
 }
 
@@ -20,7 +20,7 @@ Followers.init({
       primaryKey: true,
       allowNull: false
     },
-    userId: {
+    profileId: {
       type: DataTypes.UUID
     },
     followerId: {
