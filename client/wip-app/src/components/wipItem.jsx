@@ -8,7 +8,7 @@ function WipItem() {
   return (
     <Box
       ml={10}
-      w="400px"
+      w="350px"
       h="250px"
       boxShadow="lg"
       rounded="7px"
