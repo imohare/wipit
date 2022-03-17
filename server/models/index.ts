@@ -13,8 +13,8 @@ Profile.hasMany(WipCollections, { foreignKey: "profileId" });
 Wips.belongsTo(WipCollections, { foreignKey: "wipCollectionId" });
 WipCollections.hasMany(Wips, { foreignKey: "wipCollectionId" });
 Profile.hasOne(Followers, { foreignKey: "profileId" });
-Followers.belongsTo(Profile, { foreignKey: "userId" });
-Followers.belongsTo(Profile, { foreignKey: "followerId" });
+Followers.belongsTo(Profile, { as: "profile", foreignKey: "profileId"});
+Followers.belongsTo(Profile, { as: "follower", foreignKey: "followerId"});
 
 const db = {
   Login: Login,

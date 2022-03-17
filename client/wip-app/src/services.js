@@ -1,4 +1,5 @@
 const methods = {
+
   createUser: async (newUser) => {
     const result = await fetch('http://localhost:3456/register', {
       method: 'POST',
@@ -24,6 +25,7 @@ const methods = {
     });
     return result.json();
   },
+
   createCollection: async (wipCollectionName, profileId) => {
     const result = await fetch('http://localhost:3456/wipcollections', {
       method: 'POST',
@@ -35,6 +37,7 @@ const methods = {
     });
     return result.json();
   },
+
   createWip: async (wip) => {
     const result = await fetch('http://localhost:3456/wip', {
       method: 'POST',
@@ -88,7 +91,41 @@ const methods = {
     return response;
   },
 
-  deleteWip: async (wipId) => {
+  addFollower: async (followeeId, profileId) => {
+    const response = await fetch(`http://localhost:3456/wips/${wipId}`, {
+      method: 'POST',
+      headers: { 'Content-type': 'application/json' },
+      body: JSON.stringify({
+        followeeId: followeeId,
+        profileId: profileId
+      }),
+    }).then((response) => response.json());
+    return response;
+  },
+
+  getFollowers: async (profileId) => {
+    const response = await fetch(`http://localhost:3456/wips/${wipId}`, {
+      method: 'POST',
+      headers: { 'Content-type': 'application/json' },
+      body: JSON.stringify({
+        profileId: profileId
+      }),
+    }).then((response) => response.json());
+    return response;
+  },
+
+  getFollowees: async (profileId) => {
+    const response = await fetch(`http://localhost:3456/wips/${wipId}`, {
+      method: 'POST',
+      headers: { 'Content-type': 'application/json' },
+      body: JSON.stringify({
+        profileId: profileId
+      }),
+    }).then((response) => response.json());
+    return response;
+  }
+
+  /*deleteWip: async (wipId) => {
     await fetch(`http://localhost:3456/wips/${wipId}`, { method: 'DELETE' });
   },
 
@@ -173,7 +210,7 @@ const methods = {
       }
     ).then((response) => response.json());
     return response;
-  },
+  },*/
 };
 
 module.exports = methods;
