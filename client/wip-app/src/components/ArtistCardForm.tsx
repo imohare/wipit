@@ -15,39 +15,37 @@ function ArtistCardForm(): JSX.Element {
   const { wip, setWip } = useContext(WipContext);
   const [wipTitle, setWipTitle] = useState("");
   const [wipImage, setWipImage] = useState("");
-  const [wipColId, setWipColId] = useState(null);
   const [wipCol, setWipCol] = useState(null);
 
   function changeHandler(e: any) {
     if (e.target.files && e.target.files[0]) {
       setWipImage(URL.createObjectURL(e.target.files[0]));
-      console.log(e.target.files[0], "IMAGE HERE");
     }
   }
-  // use collectioncontext to grab wipid & make call
-  // wipcol = [wipcollid, wipcollname]
 
   async function handleSubmit(e: any) {
     e.preventDefault();
-    console.log('wipCol', wipCol);
-    console.log("wipCollection", wipCollection);
-    const WCI = wipCollection.filter((collection: any) => collection.wipCollectionTitle === wipCol)[0].wipCollectionId;
+
+    console.log("wipCollection length", wipCollection.length, wipCol);
+    const WCI = wipCollection.filter(
+      (collection: any) => collection.wipCollectionTitle === wipCol
+    )[0].wipCollectionId;
     const newWip = {
       wipTitle: wipTitle,
       wipImage: wipImage,
       wipCollectionId: WCI,
     };
+
+    const result = await methods.createWip(newWip);
+    console.log(result, "result object or something");
+    setWip(wip === null ? [result] : wip.concat([result]));
     setWipTitle("");
     setWipImage("");
-    setWipCol("");
-    const result = await methods.createWip(newWip);
-    console.log(result);
-    setWip(wip === null ? [result] : wip.concat([result]));
   }
   useEffect(() => {
     // setCollection({ ...collection, collectionName: collectionName });
     console.log(wip, "this is the wip WIPPPstate");
-    console.log("hello: ", wipCollection)
+    console.log("hello: ", wipCollection);
   }, [wip]);
 
   return (
