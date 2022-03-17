@@ -8,14 +8,17 @@ import { Wrap, WrapItem } from '@chakra-ui/react';
 import { UserContext } from '../userContext';
 import GalleryButton from '../components/GalleryButton';
 const galleristBackground = require('../assets/galleristBackground.png');
+const {uniqBy} = require('lodash');
 const ballerina = require('../assets/nice-painting-from-artist.jpeg');
 const nature = require('../assets/nature_painting.jpeg');
-const {uniqBy} = require('lodash');
-
+const art2 = require('../assets/art2.jpeg');
+const fish = require('../assets/fish.jpeg');
+const art3 = require('../assets/art3.webp');
+const tiger = require('../assets/tiger.jpeg');
 
 function GalleristProfile(): JSX.Element {
   //mocking the images because their blob urls don't work
-  const mockImages = [ballerina, nature];
+  const mockImages = [ballerina, nature,tiger, art2, fish, art3];
 
  interface followeesInterFace {
   followId: String;
@@ -75,7 +78,7 @@ function GalleristProfile(): JSX.Element {
           <ScaleFade key={index} initialScale={0.9} in={true} whileHover={{scale: 1.1}}>
             <WrapItem >
                 <Box
-                marginTop='150px'
+                marginTop='120px'
                 borderWidth='1px'
                 w='full'
                 marginX='10px'
@@ -87,7 +90,7 @@ function GalleristProfile(): JSX.Element {
                 cursor='pointer'>
                 <NavLink to='./users/:id'>
                   <Center>
-                    <Image width='200px' src={mockImages[index]}/>
+                    <Image width='300px' src={mockImages[index]}/>
                     {/* <Image src={artist.artistWips && artist.artistWips[0].Wips[0].wipImage} /> */}
                   </Center>
                 </NavLink>

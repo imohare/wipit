@@ -18,7 +18,6 @@ import { UserContext } from "../userContext";
 import methods from "../services";
 import { useNavigate } from "react-router-dom";
 const logo = require("../assets/wipit-logo-2.png");
-// import Theme from "../styled-components/theme/theme";
 
 interface User {
   name: string;
@@ -43,7 +42,6 @@ function Login({ userType }: loginProps): JSX.Element {
     setPassword("");
     console.log(user, "this is the user state");
 
-    //setting the user and updating the status with the info from the fetch request
     const userInfo = await methods.getUser(userLogin);
     let path = "";
     console.log("user created: ", userInfo);

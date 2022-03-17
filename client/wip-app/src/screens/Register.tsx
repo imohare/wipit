@@ -123,15 +123,6 @@ export function Register({ userType }: registerProps): JSX.Element {
                 />
               </InputGroup>
             </FormControl>
-
-            {/* <RadioGroup onChange={setValue} value={value}>
-              <Stack direction="row">
-                <Text fontWeight={"700"}>Would you like to register as:</Text>
-                <Radio value="artist">Artist</Radio>
-                <Radio value="Gallerist">Gallerist</Radio>
-              </Stack>
-            </RadioGroup> */}
-
             <Button
               colorScheme="teal"
               size="md"

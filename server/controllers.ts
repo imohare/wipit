@@ -172,10 +172,10 @@ exports.addFollower = async (req: express.Request, res: express.Response) => {
     const follow = await db.Followers.create({
       followId: uuidv4(),
       profileId: req.body.followeeId,
-      followerId: req.body.profileId,
+      followerId: req.body.profileId
     })
     res.status(200)
-    res.send(follow);
+    res.send(follow)
   } catch (e) {
     console.log(e)
     console.error('addFollower is failing')

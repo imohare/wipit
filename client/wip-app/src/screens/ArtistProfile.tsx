@@ -9,6 +9,7 @@ import { WipCollectionContext, UserContext } from "../userContext";
 import WipItem from "../components/wipItem";
 import { userInfo } from "os";
 import methods from "../services";
+import GalleryButton from "../components/GalleryButton";
 const nftBanner = require("../assets/nft.png");
 
 function ArtistProfile(): JSX.Element {
@@ -48,6 +49,7 @@ function ArtistProfile(): JSX.Element {
         </Link>
 
         <LogoutButton />
+        <GalleryButton />
       </Container>
       <Wrap m={8}>
         <Flex direction={"column"}>
