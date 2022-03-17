@@ -65,12 +65,9 @@ function ArtistCardForm(): JSX.Element {
             onChange={(e: any) => setWipCol(e.target.value)}
           >
             {wipCollection
-              ? wipCollection.map((col: any) => {
+              ? wipCollection.map((col: any, index: number) => {
                   return (
-                    <option
-                      key={col.wipCollectionId}
-                      value={col.wipCollectionTitle}
-                    >
+                    <option key={index} value={col.wipCollectionTitle}>
                       {col.wipCollectionTitle}
                     </option>
                   );

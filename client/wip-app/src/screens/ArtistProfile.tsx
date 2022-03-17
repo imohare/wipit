@@ -14,6 +14,7 @@ const nftBanner = require("../assets/nft.png");
 function ArtistProfile(): JSX.Element {
   const { user, setUser } = useContext(UserContext);
   const { wipCollection, setWipCollection } = useContext(WipCollectionContext);
+  const [followers, setFollowers] = useState(0);
 
   const apiCall = async () => {
     await methods
@@ -24,19 +25,14 @@ function ArtistProfile(): JSX.Element {
       .catch((error) => {
         console.log(error);
       });
+    await methods.getFollowers(user.profileId).then((response) => {
+      console.log(response);
+      setFollowers(response.length);
+    });
   };
-  const myFollowers = async () => {
-    let res = await methods.getFollowers(user.profileId);
-    if (!res) {
-      return "0";
-    } else {
-      return res.length;
-    }
-  };
+
   useEffect(() => {
     apiCall();
-    myFollowers();
-    console.log(myFollowers, "myfollowers");
   }, []);
 
   return (
@@ -71,7 +67,12 @@ function ArtistProfile(): JSX.Element {
             <Text fontSize={"24"} fontWeight={"bold"}>
               {user?.name}
             </Text>
-            <Text fontWeight={"bold"}>260</Text>
+            {followers ? (
+              <Text fontWeight={"bold"}>{followers}</Text>
+            ) : (
+              "no followers"
+            )}
+
             <Text>Followers</Text>
           </Box>
           <ArtistCollectionForm />
