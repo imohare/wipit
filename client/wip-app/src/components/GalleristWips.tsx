@@ -1,20 +1,15 @@
 import { useState, useEffect, useContext } from 'react';
 import methods from '../services';
-import GalleristWipsList from '../styled-components/gallerist/lists/GalleristWipsList';
 import { Wrap, WrapItem, Button, ScaleFade } from '@chakra-ui/react';
 import { useNavigate } from 'react-router';
-import { Link, NavLink } from 'react-router-dom';
-import {Box, Text, Flex, Center, Container, Image, Heading } from '@chakra-ui/react';
-import ArtistCardForm from './ArtistCardForm';
-import { UserContext, WipCollectionsContext } from '../userContext';
-// import { useHistory } from "react-router-dom";
-//const gallery = require('../assets/gallery.png');
+import { NavLink } from 'react-router-dom';
+import {Box, Text, Flex, Center, Image } from '@chakra-ui/react';
+import { UserContext } from '../userContext';
 const gallery = require('../assets/gallery2.jpeg');
 const addBtn = require('../assets/btn-add.svg').default;
 const addedBtn = require('../assets/btn-added.svg').default;
 
 function GalleristWips(): JSX.Element {
-  // const { wipCollections, setWipCollections } = useContext(WipCollectionsContext);
   interface wipCollectionInterface {
     wipCollectionTitle: String,
     Profile: {
