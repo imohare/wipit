@@ -1,27 +1,20 @@
-// import ArtistWipsButton from "../styled-components/artist/route-buttons/WipsButton";
 import LogoutButton from "../components/LogoutButton";
 import {
   Box,
   Button,
   Container,
   Flex,
-  Grid,
-  GridItem,
+  Image,
   Text,
   Wrap,
-  WrapItem,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import ArtistCollectionForm from "../components/ArtistCollectionForm";
 import ArtistCardForm from "../components/ArtistCardForm";
 import { useContext, useEffect, useState } from "react";
 import { WipCollectionContext, UserContext } from "../userContext";
-import WipItem from "../components/wipItem";
-import { userInfo } from "os";
 import methods from "../services";
 import GalleryButton from "../components/GalleryButton";
-import { Image } from "rebass";
-import "./artistProfile.css";
 const nftBanner = require("../assets/nft.png");
 const japanGirl = require("../assets/nft (3).jpeg");
 const eyes = require("../assets/nft (4).jpeg");
@@ -29,8 +22,8 @@ const nftLady = require("../assets/nftlady.jpeg");
 const duck = require("../assets/duck.jpeg");
 
 function ArtistProfile(): JSX.Element {
-  const { user, setUser } = useContext(UserContext);
-  const { wipCollection, setWipCollection } = useContext(WipCollectionContext);
+  const { user } = useContext(UserContext);
+  const { setWipCollection } = useContext(WipCollectionContext);
   const [followers, setFollowers] = useState(0);
 
   const apiCall = async () => {
@@ -72,6 +65,7 @@ function ArtistProfile(): JSX.Element {
         <GalleryButton />
 
         <LogoutButton />
+        <GalleryButton />
       </Container>
       <Flex direction="row" m={10}>
         <Flex direction={"column"} w="lg">
