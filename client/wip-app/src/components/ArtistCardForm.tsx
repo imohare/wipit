@@ -8,11 +8,12 @@ import {
 } from "@chakra-ui/react";
 import { useContext, useEffect, useState } from "react";
 import methods from "../services";
-import { WipCollectionContext, WipContext } from "../userContext";
+import { UserContext, WipCollectionContext, WipContext } from "../userContext";
 
 function ArtistCardForm(): JSX.Element {
-  const { wipCollection } = useContext(WipCollectionContext);
+  const { wipCollection, setWipCollection } = useContext(WipCollectionContext);
   const { wip, setWip } = useContext(WipContext);
+  const { user } = useContext(UserContext);
   const [wipTitle, setWipTitle] = useState("");
   const [wipImage, setWipImage] = useState("");
   const [wipCol, setWipCol] = useState(null);
@@ -35,13 +36,17 @@ function ArtistCardForm(): JSX.Element {
       wipImage: wipImage,
       wipCollectionId: WCI,
     };
-
     const result = await methods.createWip(newWip);
+    const collectionResult = await methods.getWipCollectionByUser(
+      user.profileId
+    );
+    setWipCollection(collectionResult);
     console.log(result, "result object or something");
     setWip(wip === null ? [result] : wip.concat([result]));
     setWipTitle("");
     setWipImage("");
   }
+
   useEffect(() => {
     // setCollection({ ...collection, collectionName: collectionName });
     console.log(wip, "this is the wip WIPPPstate");

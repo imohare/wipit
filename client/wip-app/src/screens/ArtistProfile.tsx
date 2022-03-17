@@ -13,6 +13,21 @@ const nftBanner = require("../assets/nft.png");
 
 function ArtistProfile(): JSX.Element {
   const { user, setUser } = useContext(UserContext);
+  const { wipCollection, setWipCollection } = useContext(WipCollectionContext);
+
+  const apiCall = async () => {
+    await methods
+      .getWipCollectionByUser(user.profileId)
+      .then((response) => {
+        setWipCollection(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  useEffect(() => {
+    apiCall();
+  }, []);
 
   return (
     <>
