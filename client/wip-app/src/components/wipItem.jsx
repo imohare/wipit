@@ -19,7 +19,6 @@ function WipItem() {
         src={wip ? wip[wip.length - 1].wipImage : "None"}
         alt="user Image"
       />
-      <Text>{wip.wipTitle}</Text>
     </Box>
   );
 }

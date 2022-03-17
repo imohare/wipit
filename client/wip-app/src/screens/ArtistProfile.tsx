@@ -25,8 +25,18 @@ function ArtistProfile(): JSX.Element {
         console.log(error);
       });
   };
+  const myFollowers = async () => {
+    let res = await methods.getFollowers(user.profileId);
+    if (!res) {
+      return "0";
+    } else {
+      return res.length;
+    }
+  };
   useEffect(() => {
     apiCall();
+    myFollowers();
+    console.log(myFollowers, "myfollowers");
   }, []);
 
   return (
