@@ -1,8 +1,8 @@
 const methods = {
   createUser: async (newUser) => {
-    const result = await fetch("http://localhost:3456/register", {
-      method: "POST",
-      headers: { "Content-type": "application/json" },
+    const result = await fetch('http://localhost:3456/register', {
+      method: 'POST',
+      headers: { 'Content-type': 'application/json' },
       body: JSON.stringify({
         name: newUser.name,
         email: newUser.email,
@@ -14,9 +14,9 @@ const methods = {
   },
 
   getUser: async (user) => {
-    const result = await fetch("http://localhost:3456/login", {
-      method: "POST",
-      headers: { "Content-type": "application/json" },
+    const result = await fetch('http://localhost:3456/login', {
+      method: 'POST',
+      headers: { 'Content-type': 'application/json' },
       body: JSON.stringify({
         email: user.email,
         password: user.password,
@@ -26,9 +26,9 @@ const methods = {
   },
 
   createCollection: async (wipCollectionName, profileId) => {
-    const result = await fetch("http://localhost:3456/wipcollections", {
-      method: "POST",
-      headers: { "Content-type": "application/json" },
+    const result = await fetch('http://localhost:3456/wipcollections', {
+      method: 'POST',
+      headers: { 'Content-type': 'application/json' },
       body: JSON.stringify({
         title: wipCollectionName,
         profileId: profileId,
@@ -38,9 +38,9 @@ const methods = {
   },
 
   createWip: async (wip) => {
-    const result = await fetch("http://localhost:3456/wip", {
-      method: "POST",
-      headers: { "Content-type": "application/json" },
+    const result = await fetch('http://localhost:3456/wip', {
+      method: 'POST',
+      headers: { 'Content-type': 'application/json' },
       body: JSON.stringify({
         wipTitle: wip.wipTitle,
         wipImage: wip.wipImage,
@@ -51,14 +51,14 @@ const methods = {
   },
 
   getWipCollections: async () => {
-    const result = await fetch("http://localhost:3456/wipCollections");
+    const result = await fetch('http://localhost:3456/wipCollections');
     return result.json();
   },
 
   getWipCollectionByUser: async (profileId) => {
-    const result = await fetch("http://localhost:3456/userwipcollections", {
-      method: "POST",
-      headers: { "Content-type": "application/json" },
+    const result = await fetch('http://localhost:3456/userwipcollections', {
+      method: 'POST',
+      headers: { 'Content-type': 'application/json' },
       body: JSON.stringify({
         profileId: profileId,
       }),
@@ -67,9 +67,9 @@ const methods = {
   },
 
   addWip: async (wip_title, update_request, update_request_date) => {
-    const response = await fetch("http://localhost:3456/wips", {
-      method: "POST",
-      headers: { "Content-type": "application/json" },
+    const response = await fetch('http://localhost:3456/wips', {
+      method: 'POST',
+      headers: { 'Content-type': 'application/json' },
       body: JSON.stringify({
         wip_title: wip_title,
         update_request: update_request,
@@ -88,8 +88,8 @@ const methods = {
     seen_by_date
   ) => {
     const response = await fetch(`http://localhost:3456/wips/${wipId}`, {
-      method: "POST",
-      headers: { "Content-type": "application/json" },
+      method: 'POST',
+      headers: { 'Content-type': 'application/json' },
       body: JSON.stringify({
         img_url: img_url,
         upload_date: upload_date,
@@ -103,8 +103,8 @@ const methods = {
 
   addFollower: async (followeeId, profileId) => {
     const response = await fetch(`http://localhost:3456/follower`, {
-      method: "POST",
-      headers: { "Content-type": "application/json" },
+      method: 'POST',
+      headers: { 'Content-type': 'application/json' },
       body: JSON.stringify({
         followeeId: followeeId,
         profileId: profileId,
@@ -115,8 +115,8 @@ const methods = {
 
   getFollowers: async (profileId) => {
     const response = await fetch(`http://localhost:3456/followers`, {
-      method: "POST",
-      headers: { "Content-type": "application/json" },
+      method: 'POST',
+      headers: { 'Content-type': 'application/json' },
       body: JSON.stringify({
         profileId: profileId,
       }),
@@ -125,9 +125,9 @@ const methods = {
   },
 
   getFollowees: async (profileId) => {
-    const response = await fetch(`http://localhost:3456/wips/followees`, {
-      method: "POST",
-      headers: { "Content-type": "application/json" },
+    const response = await fetch(`http://localhost:3456/followees`, {
+      method: 'POST',
+      headers: { 'Content-type': 'application/json' },
       body: JSON.stringify({
         profileId: profileId,
       }),
