@@ -1,82 +1,110 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import React from 'react';
 import methods from '../services';
 import LogoutButton from '../components/LogoutButton';
-import { Box, Card, Image, Text } from 'rebass';
-import { Link, NavLink } from 'react-router-dom';
+import {Box, Text, Flex, Center, Container, ScaleFade, Image, Button } from '@chakra-ui/react';
+import { NavLink } from 'react-router-dom';
+import { Wrap, WrapItem } from '@chakra-ui/react';
+import { UserContext } from '../userContext';
+import GalleryButton from '../components/GalleryButton';
+const galleristBackground = require('../assets/galleristBackground.png');
+const {uniqBy} = require('lodash');
+const ballerina = require('../assets/nice-painting-from-artist.jpeg');
+const nature = require('../assets/nature_painting.jpeg');
+const art2 = require('../assets/art2.jpeg');
+const fish = require('../assets/fish.jpeg');
+const art3 = require('../assets/art3.webp');
+const tiger = require('../assets/tiger.jpeg');
 
 function GalleristProfile(): JSX.Element {
+  //mocking the images because their blob urls don't work
+  const mockImages = [ballerina, nature,tiger, art2, fish, art3];
 
-  type wipType = {
-    _id: string
-    wip_title: string
-    wip_cards: [any]
-    update_request: string
-    update_request_date: string
-    }
+ interface followeesInterFace {
+  followId: String;
+  profileId:String;
+  followerId: String;
+  createdAt: String;
+  updatedAt: String;
+  artistWips?: any;
+  profile: {
+      profileId: String;
+      name: String;
+      type: String;
+      createdAt: String;
+      updatedAt: String;
+  };
+}
+    const [followees, setFollowees] = useState<[followeesInterFace] | []>([]);
+    const { user } = useContext(UserContext);
 
-  const [wips, setWips] = useState<[wipType] | null>(null);
-
-  type cardType = {
-    img_url: string
-    upload_date: string
-    seen_by_state: string
-    seen_by_user: string
-    seen_by_date: string
-    comments: [any]
-    wipId?: {}
-    //object id???
-  }
-  const [cards, setCards] = useState<[cardType] | null>(null);
-
-
-  // useEffect(() => {
-  //   methods.getWips().then((response) => {
-  //     setWips(response);
-  //   });
-  //   methods
-  //     .getAllCards()
-  //     .then((response) => {
-  //       setCards(response);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //       console.log('Error occured.');
-  //     });
-  // }, []);
+  useEffect(() => {
+    methods.getFollowees(user.profileId).then((response) => {
+      console.log(response)
+      response.forEach(async(artist: any)=> artist.artistWips = await methods.getWipCollectionByUser(artist.profile.profileId));
+      let noDuplicates: any = uniqBy(response,'profileId');
+      setFollowees(noDuplicates);
+      // console.log('artistWips: ', followees[0].artistWips[0].Wips[0].wipImage);
+      console.log(followees);
+      return response;
+    }).catch((error) => {
+      console.log(error);
+      console.log('Error occured.');
+      });
+  }, []);
 
   return (
-    <div>
-      <LogoutButton />
-      <p> @ROMAN_ROAD </p>
-      <Box>
-        <p> followed artists.</p>
-        <form>
-          <input placeholder='Artist Name'></input>
-        </form>
-        <p>
-          @ANNA_SKLADMANN
-          <br />
-          @ARIANE_HUGHES
-          <br />
-          <Link to='/g/wips'> @ELIZA_BLAKEMORE </Link>
-          <br />
-          @JACK_LAVER
-          <br />
-          @YULIA_IOLSIZON
-        </p>
-      </Box>
-      <Text> New Wip Updates from</Text>
-      <NavLink to={`/g/wips`}>@ELIZA_BLAKEMORE:</NavLink>
-      {/* {cards.map((card) =>
-        card.seen_by_state === 'false' ? (
-          <Card width={[256, 320]} mx='auto'>
-            <Image src={card.img_url}></Image>
-            <Text>{card.upload_date}</Text>
-          </Card>
-        ) : null
-      )} */}
-    </div>
+    <Flex backgroundColor='#f0f0f0' flexDirection='column' h='100vh'>
+      <Container display='flex' mt='2' alignItems='center' justifyContent='space-between' bg='white' w='100%' p={5} color='black' boxShadow='md'
+        maxW="container.2xl"
+        h="50vh"
+        backgroundImage={galleristBackground}
+        backgroundPosition="center"
+        backgroundSize="cover"
+        backgroundRepeat="no-repeat">
+        <Box background='rgba(255, 255, 255, .8)' borderWidth='1' borderRadius='lg' p='10px'>
+        <Text fontWeight='bold' color='black' fontSize={34}>{`${user.name}'s profile`}</Text>
+        <Text fontWeight='bold' color='black'>{`email: ${user.email}`}</Text>
+        </Box>
+        <Box>
+          <GalleryButton />
+          <LogoutButton />
+        </Box>
+        </Container>
+        <Center fontWeight='bold' margin='15px'>Followed Artists</Center>
+        <Wrap justify='center'>
+        {followees.map((artist: any, index: number) => {
+        return (
+          <ScaleFade key={index} initialScale={0.9} in={true} whileHover={{scale: 1.1}}>
+            <WrapItem >
+                <Box
+                marginTop='120px'
+                borderWidth='1px'
+                w='full'
+                marginX='10px'
+                background='rgba(255, 255, 255, .5)'
+                boxShadow='md'
+                borderRadius='lg'
+                pt='20px'
+                px='10px'
+                cursor='pointer'>
+                <NavLink to='./users/:id'>
+                  <Center>
+                    <Image width='300px' src={mockImages[index]}/>
+                    {/* <Image src={artist.artistWips && artist.artistWips[0].Wips[0].wipImage} /> */}
+                  </Center>
+                </NavLink>
+                  <Box display='flex' flexDirection='row' p='2'>
+                  <Box mt='2'>
+                    <Text color='black' textAlign='center' fontSize='18px' >Author: {artist.profile.name} </Text>
+                  </Box>
+                </Box>
+              </Box>
+            </WrapItem>
+          </ScaleFade>)
+        })}
+      </Wrap>
+    </Flex>
   );
 }
 export default GalleristProfile;

@@ -1,7 +1,7 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import { Button, Text } from "rebass";
+import { Button, Text } from '@chakra-ui/react';
 
 function LogoutButton() {
   let navigate = useNavigate();
@@ -11,8 +11,13 @@ function LogoutButton() {
   };
 
   return (
-    <Button mr={2} onClick={logoutRouteChange} backgroundColor="#33e">
-      <Text>logout.</Text>
+    <Button
+      m={2}
+      onClick={logoutRouteChange}
+      backgroundColor='teal'
+      color='white'
+    >
+      <Text>logout</Text>
     </Button>
   );
 }
