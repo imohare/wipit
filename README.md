@@ -7,10 +7,10 @@ Wipit is website that makes interaction between artists and galerists easier.
 ## Screenshots
 
 <p align="center">
-  <img src="images/screenshot1.png" />
-  <img src="images/screenshot2.png" />
-  <img src="images/screenshot3.png" />
   <img src="images/screenshot4.png" />
+  <img src="images/screenshot3.png" />
+  <img src="images/screenshot2.png" />
+  <img src="images/screenshot1.png" />
 </p>
 
 
