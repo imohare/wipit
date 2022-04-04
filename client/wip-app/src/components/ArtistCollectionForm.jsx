@@ -6,8 +6,8 @@ import { WipCollectionContext, UserContext } from "../userContext";
 
 function ArtistCollectionForm() {
   const { user } = useContext(UserContext);
-  const { wipCollection, setWipCollection} = useContext(WipCollectionContext);
-  const [wipCollectionTitle, setWipCollectionTitle] = useState('');
+  const { wipCollection, setWipCollection } = useContext(WipCollectionContext);
+  const [wipCollectionTitle, setWipCollectionTitle] = useState("");
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -15,13 +15,19 @@ function ArtistCollectionForm() {
       wipCollectionTitle,
       user.profileId
     );
-    const newWipCollectionEntry = {wipCollectionId: result.wipCollectionId, wipCollectionTitle: wipCollectionTitle};
-    setWipCollection(wipCollection === null ? [newWipCollectionEntry] : wipCollection.concat([newWipCollectionEntry]));
-    setWipCollectionTitle('');
+    const newWipCollectionEntry = {
+      wipCollectionId: result.wipCollectionId,
+      wipCollectionTitle: wipCollectionTitle,
+    };
+    setWipCollection(
+      wipCollection === null
+        ? [newWipCollectionEntry]
+        : wipCollection.concat([newWipCollectionEntry])
+    );
+    setWipCollectionTitle("");
   }
 
   useEffect(() => {
-    // setCollection({ ...collection, collectionName: collectionName });
     console.log(wipCollection, "LOOK HERE");
   }, [wipCollection]);
   return (

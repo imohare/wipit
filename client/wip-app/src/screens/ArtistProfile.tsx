@@ -1,20 +1,31 @@
-// import ArtistWipsButton from "../styled-components/artist/route-buttons/WipsButton";
 import LogoutButton from "../components/LogoutButton";
-import { Box, Button, Container, Flex, Text, Wrap } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Container,
+  Flex,
+  Image,
+  Text,
+  Wrap,
+} from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import ArtistCollectionForm from "../components/ArtistCollectionForm";
 import ArtistCardForm from "../components/ArtistCardForm";
 import { useContext, useEffect, useState } from "react";
 import { WipCollectionContext, UserContext } from "../userContext";
-import WipItem from "../components/wipItem";
-import { userInfo } from "os";
 import methods from "../services";
 import GalleryButton from "../components/GalleryButton";
+import "./artistProfile.css";
 const nftBanner = require("../assets/nft.png");
+const japanGirl = require("../assets/nft (3).jpeg");
+const eyes = require("../assets/nft (4).jpeg");
+const nftLady = require("../assets/nftlady.jpeg");
+const duck = require("../assets/duck.jpeg");
 
 function ArtistProfile(): JSX.Element {
-  const { user, setUser } = useContext(UserContext);
-  const { wipCollection, setWipCollection } = useContext(WipCollectionContext);
+  const { user } = useContext(UserContext);
+  const { setWipCollection } = useContext(WipCollectionContext);
+  const [followers, setFollowers] = useState(0);
 
   const apiCall = async () => {
     await methods
@@ -25,7 +36,12 @@ function ArtistProfile(): JSX.Element {
       .catch((error) => {
         console.log(error);
       });
+    await methods.getFollowers(user.profileId).then((response) => {
+      console.log(response);
+      setFollowers(response.length);
+    });
   };
+
   useEffect(() => {
     apiCall();
   }, []);
@@ -51,11 +67,11 @@ function ArtistProfile(): JSX.Element {
         <LogoutButton />
         <GalleryButton />
       </Container>
-      <Wrap m={8}>
-        <Flex direction={"column"}>
+      <Flex direction="row" m={10}>
+        <Flex direction={"column"} w="lg">
           <Box
             p={3}
-            maxW="sm"
+            maxW="md"
             borderWidth="1px"
             borderRadius="lg"
             boxShadow={"md"}
@@ -63,26 +79,85 @@ function ArtistProfile(): JSX.Element {
             <Text fontSize={"24"} fontWeight={"bold"}>
               {user?.name}
             </Text>
-            <Text fontWeight={"bold"}>260</Text>
+            {followers ? (
+              <Text fontWeight={"bold"}>{followers}</Text>
+            ) : (
+              "no followers"
+            )}
+
             <Text>Followers</Text>
           </Box>
           <ArtistCollectionForm />
           <ArtistCardForm />
         </Flex>
-        <Box>
-          <Text
-            borderBottomWidth={"2px"}
-            borderColor="grey"
-            fontSize={"24"}
-            fontWeight={"bold"}
-            ml={8}
-            mb={10}
-          >
-            Collections
-          </Text>
-          <WipItem />
-        </Box>
-      </Wrap>
+
+        <Flex justifyContent="flex-start" mt={2} direction="column">
+          <Box>
+            <Text
+              borderBottomWidth={"2px"}
+              borderColor="grey"
+              fontSize={"24"}
+              fontWeight={"bold"}
+              ml={8}
+              mb={1}
+            >
+              Collections
+            </Text>
+          </Box>
+          <Flex direction={"row"} justify="space-between" mt={5}>
+            <Wrap id="wrap-box-image">
+              <Box
+                id="box-image"
+                ml={2}
+                w="400px"
+                h="275px"
+                boxShadow="lg"
+                rounded="7px"
+                bg={"whiteAlpha.100"}
+                overflow="hidden"
+              >
+                <Image src={japanGirl} alt="user Image" />
+              </Box>
+
+              <Box
+                ml={2}
+                w="400px"
+                h="275px"
+                boxShadow="lg"
+                rounded="7px"
+                bg={"whiteAlpha.100"}
+                overflow="hidden"
+              >
+                <Image src={eyes} alt="user Image" />
+              </Box>
+
+              <Box
+                ml={2}
+                w="400px"
+                h="275px"
+                boxShadow="lg"
+                rounded="7px"
+                bg={"whiteAlpha.100"}
+                overflow="hidden"
+              >
+                <Image src={nftLady} alt="user Image" />
+              </Box>
+
+              <Box
+                ml={2}
+                w="400px"
+                h="275px"
+                boxShadow="lg"
+                rounded="7px"
+                bg={"whiteAlpha.100"}
+                overflow="hidden"
+              >
+                <Image src={duck} alt="user Image" />
+              </Box>
+            </Wrap>
+          </Flex>
+        </Flex>
+      </Flex>
     </>
   );
 }
