@@ -49,7 +49,9 @@ function GalleristWips(): JSX.Element {
   let path = "";
   const profileRouteChange = () => {
     path = path.concat(
-      user.type === "artist" ? `/a/${user.profileId}` : `/g/${user.profileId}`
+      user.type === "artist"
+        ? `/a/${user.profileId}`
+        : `/g/${user.profileId}`
     );
     navigate(path);
   };
