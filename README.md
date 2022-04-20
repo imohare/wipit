@@ -52,7 +52,7 @@ npm start
 5. Scan the barcode with the Expo app on your phone or follow the terminal instructions to load up the simulator on your machine.
 
  ## Tech Stack
- [React](https://reactjs.org/), [JavaScript](https://www.javascript.com/), [Express](https://expressjs.com/), [PostgreSQL](https://www.postgresql.org/), [Sequelize](https://sequelize.org/) [Chakra-ui](https://chakra-ui.com/)
+ [React](https://reactjs.org/), [JavaScript](https://www.javascript.com/), [Express](https://expressjs.com/), [PostgreSQL](https://www.postgresql.org/), [Sequelize](https://sequelize.org/), [Chakra-ui](https://chakra-ui.com/)
 
 
  ## Contributing
