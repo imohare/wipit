@@ -2,7 +2,7 @@
   <img src="images/wipitLogo.png" />
 </p>
 
-Wipit is website that makes interaction between artists and galerists easier.
+Wipit is website that makes interaction between artists and gallerists easier.
 
 ## Screenshots
 
